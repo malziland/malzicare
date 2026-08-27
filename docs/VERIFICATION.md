@@ -53,7 +53,7 @@ folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 
 | Anforderung               | Befehl                                                                 | Ergebnis                                                                             | Ungültig, sobald               |
 | ------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------ |
-| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 68 Dateien, alle 6 Schritte grün                                                     | jeder neue Tag                 |
+| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 69 Dateien, alle 6 Schritte grün                                                     | jeder neue Tag                 |
 | Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber | jeder neue Tag                 |
 | Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                   | Änderung an `tools/deploy.mjs` |
 
