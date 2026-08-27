@@ -1,0 +1,53 @@
+# Hinweise für die Arbeit an diesem Projekt
+
+## Was das hier ist
+
+malziCARE – ein Editor für Klassenchat-Regeln. Statische Seite, Vanilla JS,
+**kein Server, kein Konto, keine Datenbank**. Alles läuft im Browser.
+
+## Die drei Regeln, die dieses Projekt eigen machen
+
+**1. `public/` ist die Auslieferung.** Was dort liegt, geht auf den Webspace –
+vollständig, unsichtbare Dateien eingeschlossen. Was nicht dort liegt, geht nie
+mit. Keine Ausschlusslisten.
+
+**2. Jeder Download ist `application/octet-stream`.** Auch das PDF, auch der
+Entwurf. iPhone-Safari zeigt Typen an, die es kennt, statt sie zu laden – und
+der Editor wird auf iPhones benutzt. Ein Test wacht darüber; er ist kein
+Formalismus.
+
+**3. Das Plakat wird gedruckt und aus zwei bis drei Metern gelesen.**
+Kontrastwerte am Bildschirm sind nicht der Maßstab. Was Inhalt trägt, muss
+lesbar sein; die App-Nachbildung tritt dahinter zurück (ADR-0003).
+
+## Vor jedem Commit
+
+```bash
+npm run verify
+```
+
+Läuft die Kette nicht durch, wird nicht committet. Ein übersprungener Schritt
+ist ein Fehlschlag, kein Hinweis.
+
+## Was nicht angefasst wird
+
+- `public/js/vendor/` – Fremdcode, unverändert ausgeliefert
+- Die Formatkennung `klassenchat-plakat-v1` und der Speicherschlüssel in
+  `app.js`: Wer eine ältere Entwurfsdatei öffnet, soll sie öffnen können.
+- Der PDF-Dateiname `Klassenchat-Regeln.pdf` – er beschreibt das Ergebnis,
+  nicht die Marke.
+- `public/` wird nicht durchformatiert (ADR-0002).
+
+## Sprache
+
+Dokumentation, Kommentare und Commit-Nachrichten auf Deutsch. Bezeichner im
+Code folgen der vorhandenen Konvention der jeweiligen Datei.
+
+## Wo was steht
+
+| Frage                                         | Datei                    |
+| --------------------------------------------- | ------------------------ |
+| Warum ist etwas so entschieden?               | `docs/adr/`              |
+| Wie liefere ich aus, was tue ich bei Störung? | `docs/RUNBOOK.md`        |
+| Welcher Nachweis gilt, und bis wann?          | `docs/VERIFICATION.md`   |
+| Was ist zu schützen?                          | `docs/SECURITY-MODEL.md` |

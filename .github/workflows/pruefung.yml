@@ -1,0 +1,54 @@
+name: Pruefung
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Nur lesen. Die Auslieferung laeuft nicht ueber die Pipeline, sondern
+# bewusst von Hand aus dem Arbeitsverzeichnis - dort liegen die Zugangsdaten.
+permissions:
+  contents: read
+
+concurrency:
+  group: pruefung-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruefung:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      # Gesperrter Modus: es wird genau das installiert, was im Lockfile steht.
+      - name: Abhaengigkeiten
+        run: npm ci --no-fund --no-audit
+
+      - name: Testbrowser
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Pruefkette
+        run: npm run verify
+
+      # Ein bekannter Schwachpunkt ist keine Ausrede: die Frist richtet sich
+      # nach dem Schweregrad, weggeschaut wird nicht.
+      - name: Abhaengigkeiten pruefen
+        run: npm audit --audit-level=high
+
+      - name: Spuren bei Fehlschlag
+        if: failure()
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        with:
+          name: playwright-bericht
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

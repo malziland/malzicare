@@ -36,6 +36,27 @@ const PROBE = {
   'Schluessel-Zuweisung': 'api_' + 'key=' + 'ABCDEFGHIJKLMNOPQRST',
   'Google-API-Schluessel': 'AIza' + 'A'.repeat(35),
 };
+/* Gegenproben: Zeilen, die wie ein Fund aussehen, aber keiner sind. Ein
+   Scanner, der bei jedem `password: env.FTP_PASSWORD` anschlaegt, wird nach
+   der dritten Meldung ignoriert - und dann faellt der echte Fund auch nicht
+   mehr auf. */
+const KEIN_FUND = [
+  'password: env.FTP_PASSWORD,',
+  'password: process.env.FTP_PASSWORD,',
+  'FTP_PASSWORD=',
+  'const token = opts.token;',
+];
+
+/* Ein Geheimnis ist ein Wert, keine Referenz. Steht rechts ein Bezeichnerpfad
+   (env.X, process.env.X, opts.token) oder gar nichts, ist es keiner. */
+function istReferenz(zeile, muster) {
+  const treffer = muster.exec(zeile);
+  if (!treffer) return false;
+  const rest = zeile.slice(treffer.index + treffer[0].length - 60);
+  const wert = /[:=]\s*(.{0,60})/.exec(zeile.slice(treffer.index))?.[1] ?? rest;
+  return /^[A-Za-z_$][\w$]*(\.[\w$]+)+/.test(wert.trim());
+}
+
 for (const muster of MUSTER) {
   const probe = PROBE[muster.name];
   if (probe === undefined) {
@@ -48,6 +69,16 @@ for (const muster of MUSTER) {
     );
     console.error('Die Suche waere blind - Abbruch, kein Ergebnis.');
     process.exit(2);
+  }
+}
+
+for (const zeile of KEIN_FUND) {
+  for (const muster of MUSTER) {
+    muster.re.lastIndex = 0;
+    if (muster.re.test(zeile) && !istReferenz(zeile, muster.re)) {
+      console.error(`Selbsttest fehlgeschlagen: "${zeile}" wird faelschlich als Fund gemeldet.`);
+      process.exit(2);
+    }
   }
 }
 
@@ -70,7 +101,7 @@ for (const rel of dateien) {
   const text = await readFile(path.join(ROOT, rel), 'utf8').catch(() => '');
   text.split('\n').forEach((zeile, i) => {
     for (const m of MUSTER) {
-      if (m.re.test(zeile)) {
+      if (m.re.test(zeile) && !istReferenz(zeile, m.re)) {
         // Wert nie ausgeben, nur Fundstelle und Muster.
         funde.push(`${rel}:${i + 1}  [${m.name}]`);
       }
@@ -79,7 +110,10 @@ for (const rel of dateien) {
 }
 
 console.log(`Geprueft: ${dateien.length} versionierte Textdateien, ${MUSTER.length} Muster.`);
-console.log(`Selbsttest: ${MUSTER.length} Muster, je eine Probe, alle angeschlagen.`);
+console.log(
+  `Selbsttest: ${MUSTER.length} Muster mit je einer Probe angeschlagen, ` +
+    `${KEIN_FUND.length} Gegenproben nicht gemeldet.`
+);
 if (funde.length > 0) {
   console.error(`\n${funde.length} Fund(e) - vor Veroeffentlichung klaeren:`);
   for (const f of funde) console.error('  - ' + f);

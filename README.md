@@ -1,0 +1,77 @@
+# malziCARE
+
+Editor für Klassenchat-Regeln. Eine Klasse trägt ihre Vereinbarungen ein und
+druckt sie als A3-Plakat – in der Optik der App, die sie selbst benutzt:
+WhatsApp, Snapchat, TikTok oder Signal.
+
+Live: <https://klassenchat.malziland.at>
+
+## Was ihn ausmacht
+
+**Nichts verlässt das Gerät.** Kein Konto, kein Server, keine Datenbank, kein
+Tracking. Alles läuft im Browser; das PDF entsteht dort. Die eingetragenen
+Namen von Schülerinnen und Schülern bleiben, wo sie eingetippt wurden.
+
+**Das Plakat ist A3 quer.** Es hängt gedruckt im Klassenzimmer und wird aus
+zwei bis drei Metern gelesen – daran ist die Gestaltung ausgerichtet.
+
+## Loslegen
+
+```bash
+npm run setup     # Abhängigkeiten und Testbrowser einrichten
+npm run run       # Editor lokal starten
+npm run verify    # alle Prüfungen: Format, Linter, Verweise, Geheimnisse, Tests
+```
+
+Ein Nachbau von Grund auf, in einem leeren Verzeichnis:
+
+```bash
+git clone <repo> malzicare && cd malzicare
+npm run setup && npm run verify
+```
+
+## Aufbau
+
+| Ordner    | Inhalt                                                                |
+| --------- | --------------------------------------------------------------------- |
+| `public/` | **genau das, was auf dem Webspace liegt** – nichts sonst wird geladen |
+| `tools/`  | Bau, Prüfung, Auslieferung                                            |
+| `tests/`  | Unit-Tests (`node --test`) und Oberflächentests (Playwright)          |
+| `docs/`   | Entscheidungen, Runbook, Nachweise                                    |
+
+Die Trennung ist kein Ordnungssinn, sondern ein Riegel: Was nicht in `public/`
+liegt, kann nicht versehentlich mit ausgeliefert werden – und was darin liegt,
+wird vollständig ausgeliefert, unsichtbare Dateien eingeschlossen.
+
+## Ausliefern
+
+```bash
+npm run deploy            # Riegel, Upload per FTPS, Messung danach
+npm run deploy -- --probe # Trockenlauf ohne Verbindung
+npm run verify:live       # nur nachmessen, was oben liegt
+```
+
+Zugangsdaten stehen in `.env` (Vorlage: `.env.example`). Die Datei steht in
+`.gitignore` und gehört niemals ins Repository. Fehlt ein Wert, bricht die
+Auslieferung ab, statt halb zu laufen.
+
+Der Ablauf, die Rückwege und der Stand der Nachweise stehen in
+[docs/RUNBOOK.md](docs/RUNBOOK.md) und [docs/VERIFICATION.md](docs/VERIFICATION.md).
+
+## Mitarbeiten
+
+Fehlerberichte und Vorschläge sind willkommen. Vor jedem Commit läuft
+`npm run verify` – eine übersprungene Prüfung gilt als Fehlschlag, nicht als
+Hinweis. Sicherheitsrelevantes bitte nicht öffentlich melden, siehe
+[SECURITY.md](SECURITY.md).
+
+## Lizenz
+
+[MIT](LICENSE) – © 2026 Christoph Krieger, malziland – learning | training |
+consulting e.U.
+
+Die Schrift Poppins steht unter der SIL Open Font License
+(`public/assets/fonts/OFL.txt`). WhatsApp, Snapchat, TikTok und Signal sind
+Marken ihrer jeweiligen Inhaber; malziCARE steht in keiner Verbindung zu ihnen
+und bildet ihre Oberflächen nur nach, damit Jugendliche ihre eigenen Regeln
+darin wiedererkennen.
