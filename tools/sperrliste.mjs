@@ -31,6 +31,20 @@ const GESPERRT = [
     probe: 'http://localhost:8080/',
     grund: 'Entwicklungsadresse im ausgelieferten Text',
   },
+  {
+    /* Der Firmenwortlaut wird nie gekuerzt. Er ist die Rechtsform-Angabe im
+       Impressum; eine Kurzform waere dort schlicht falsch. */
+    muster: /malziland\s+e\.?\s?U\./i,
+    probe: 'malziland e.U.',
+    grund:
+      'gekuerzter Firmenwortlaut - er lautet "malziland – learning | training | consulting e.U."',
+  },
+  {
+    /* Und zwar mit Halbgeviertstrich (–, U+2013), nicht mit Bindestrich. */
+    muster: /malziland\s*-\s*learning/,
+    probe: 'malziland - learning',
+    grund: 'Bindestrich statt Halbgeviertstrich im Firmenwortlaut',
+  },
 ];
 
 /* Der Fremdcode ist ausgenommen: Wir aendern ihn nicht, und was dort steht,
