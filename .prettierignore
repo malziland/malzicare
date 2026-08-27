@@ -1,0 +1,10 @@
+# Der ausgelieferte Bestand wird nicht umformatiert: Whitespace-Aenderungen in
+# HTML und CSS koennen das Plakat-Layout verschieben. Begruendung in
+# docs/adr/0002-formatierer-nur-fuer-werkzeugcode.md
+public/
+
+node_modules/
+dist/
+playwright-report/
+test-results/
+package-lock.json

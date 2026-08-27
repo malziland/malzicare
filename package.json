@@ -1,0 +1,36 @@
+{
+  "name": "malzicare",
+  "version": "0.0.0",
+  "private": true,
+  "description": "malziCARE – Editor fuer Klassenchat-Regeln als A3-Plakat",
+  "license": "MIT",
+  "author": "Christoph Krieger, malziland – learning | training | consulting e.U.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "setup": "node tools/setup.mjs",
+    "lint": "npm run lint:js && npm run lint:format && npm run lint:html",
+    "lint:js": "eslint public/js/app.js tools tests",
+    "lint:format": "prettier --check .",
+    "lint:html": "node tools/lint-html.mjs",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test tests/unit/",
+    "test:e2e": "playwright test",
+    "build": "node tools/build.mjs",
+    "run": "node tools/serve.mjs",
+    "deploy": "node tools/deploy.mjs",
+    "verify:live": "node tools/live-check.mjs",
+    "scan:secrets": "node tools/scan-secrets.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.50.1",
+    "basic-ftp": "^5.0.5",
+    "eslint": "^10.9.1",
+    "globals": "^15.15.0",
+    "prettier": "^3.5.0"
+  }
+}

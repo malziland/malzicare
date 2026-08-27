@@ -1,0 +1,5 @@
+{
+  "_hinweis": "Kanonische Angaben zur ausgelieferten Seite. Wer die Adresse wechselt, aendert sie hier - tools/lint-html.mjs meldet danach jede Stelle im Quelltext, die noch nicht passt.",
+  "base_url": "https://klassenchat.malziland.at",
+  "cache_buster": "31"
+}
