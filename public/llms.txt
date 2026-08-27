@@ -1,4 +1,4 @@
-# Klassenchat-Plakat-Editor
+# malziCARE
 
 > Kostenloser Online-Editor, mit dem Schulklassen und Lehrkräfte ihre Klassenchat-Regeln als druckfertiges A3-Plakat gestalten. Die Chat-Ansicht ist wahlweise WhatsApp, Snapchat, TikTok oder Signal nachempfunden; Regeln, Admins, Konsequenzen und alle Texte sind frei editierbar. Der Export erzeugt direkt in der App ein PDF im Querformat (420 × 297 mm) mit dem Dateinamen „Klassenchat-Regeln.pdf".
 

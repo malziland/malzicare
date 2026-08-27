@@ -67,10 +67,58 @@ body {
 
 .topbar-title {
   margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
   font-size: 15px;
   font-weight: 500;
   color: var(--ml-anthracite);
   white-space: nowrap;
+}
+
+/* Wortmarke malziCARE - Aufbau, Abstaende und Rundung wie die Wortmarke von
+   malzi.me: "malzi" in der Textfarbe, die Endung als Kachel. Kein Bild,
+   sondern dieselbe Schrift, die die Seite ohnehin laedt: so bleibt sie in
+   jeder Groesse scharf, laesst sich vorlesen und kostet keinen Ladevorgang.
+   Eine Marke bricht nicht um - daher nowrap. */
+.wortmarke {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -0.028em;
+  color: var(--ml-teal);
+}
+
+.wortmarke-care {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px 3px;
+  border-radius: 4px;
+  background: var(--ml-teal);
+  color: #f9f7f4;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+/* Was der Dienst tut, steht neben der Marke: der Name allein erklaert ihn
+   nicht. */
+.topbar-untertitel {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ml-warmgray-text);
+}
+
+@media (max-width: 700px) {
+  .topbar-untertitel {
+    display: none;
+  }
 }
 
 .topbar-actions {

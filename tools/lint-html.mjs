@@ -79,6 +79,47 @@ for (const rel of ['sitemap.xml', 'robots.txt', 'llms.txt', 'site.webmanifest'])
   }
 }
 
+/* Was ausgeliefert wird, muss auch gebraucht werden. Verwaiste Dateien
+   kosten Ladezeit und tragen alte Staende weiter - die beiden Wortmarken mit
+   dem alten Produktnamen lagen so monatelang im Auslieferverzeichnis, ohne
+   dass eine Seite sie einband. Die Ausnahmen sind benannt und werden bei
+   jedem Lauf mit ausgegeben. */
+const BRAUCHT_KEINEN_VERWEIS = [
+  {
+    datei: 'assets/fonts/OFL.txt',
+    grund: 'Lizenztext der Schrift Poppins, muss mitgeliefert werden',
+  },
+  {
+    datei: 'assets/malziland-logo-petrol.svg',
+    grund: 'Markenmaterial, fuer spaetere Verwendung vorgehalten',
+  },
+  {
+    datei: 'assets/malziland-m-white.png',
+    grund: 'Wasserzeichen fuer ein dunkles Thema, noch nicht in Gebrauch',
+  },
+];
+const IMMER_NOETIG =
+  /^(index|impressum|datenschutz|agb)\.html$|^(robots\.txt|sitemap\.xml|llms\.txt|site\.webmanifest|favicon\.ico|\.htaccess)$/;
+
+const textInhalte = [];
+for (const rel of alleDateien) {
+  if (/\.(html|css|js|json|webmanifest|xml|txt)$/.test(rel)) {
+    textInhalte.push(await readFile(path.join(PUBLIC_DIR, rel), 'utf8'));
+  }
+}
+const gesamttext = textInhalte.join('\n');
+for (const rel of alleDateien) {
+  if (IMMER_NOETIG.test(rel)) continue;
+  const ausnahme = BRAUCHT_KEINEN_VERWEIS.find((a) => a.datei === rel);
+  const name = rel.split('/').pop();
+  if (gesamttext.includes(name)) continue;
+  if (ausnahme) {
+    console.log(`  [Ausnahme] ${rel}: ${ausnahme.grund}`);
+    continue;
+  }
+  melde(rel, 'liegt im Auslieferverzeichnis, wird aber von keiner Datei eingebunden');
+}
+
 console.log(
   `Geprueft: ${geprueft.seiten} Seiten, ${geprueft.verweise} lokale Verweise, ` +
     `${geprueft.adressen} eigene Adressen (Basis ${BASE}, Cache-Buster ${BUSTER}).`

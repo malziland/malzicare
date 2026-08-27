@@ -1,4 +1,4 @@
-# Cache-Regeln Klassenchat-Plakat-Editor
+# Cache-Regeln malziCARE
 # HTML wird bei jedem Aufruf neu geprueft (Updates kommen sofort an),
 # Assets duerfen lange gecacht werden (Versionierung laeuft ueber ?v=).
 <IfModule mod_headers.c>

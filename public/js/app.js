@@ -1,4 +1,4 @@
-/* Klassenchat-Plakat-Editor · malziland
+/* malziCARE – Editor für Klassenchat-Regeln · malziland
    Läuft komplett im Browser, keine Server-Speicherung. */
 
 (function () {
@@ -697,7 +697,7 @@
       if (!plausibel) {
         showModal({
           title: 'Keine Plakat-Datei',
-          message: 'Diese Datei stammt nicht aus dem Klassenchat-Plakat-Editor. Der aktuelle Stand bleibt unverändert.'
+          message: 'Diese Datei stammt nicht aus malziCARE. Der aktuelle Stand bleibt unverändert.'
         });
         return;
       }
