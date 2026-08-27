@@ -9,3 +9,11 @@
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
 </IfModule>
+
+# Die AGB heissen seit dem 27.08.2026 Nutzungsbedingungen. Wer die alte Adresse
+# noch hat - aus einem Lesezeichen, einem Ausdruck oder einer Suchmaschine -
+# landet dauerhaft bei der neuen, statt auf einer Fehlerseite.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^agb\.html$ /nutzungsbedingungen.html [R=301,L]
+</IfModule>

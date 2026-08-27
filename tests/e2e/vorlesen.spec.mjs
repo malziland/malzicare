@@ -10,7 +10,7 @@ import { test, expect } from './hilfen.mjs';
  * unbenannte Schaltflaechen, Felder ohne Beschriftung, fehlende Bereiche.
  */
 
-const SEITEN = ['/', '/impressum.html', '/datenschutz.html', '/agb.html'];
+const SEITEN = ['/', '/impressum.html', '/datenschutz.html', '/nutzungsbedingungen.html'];
 
 test('jede Schaltflaeche und jedes Feld hat einen vorlesbaren Namen', async ({ page }) => {
   await page.goto('/');

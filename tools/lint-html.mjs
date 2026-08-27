@@ -163,7 +163,7 @@ const BRAUCHT_KEINEN_VERWEIS = [
   },
 ];
 const IMMER_NOETIG =
-  /^(index|impressum|datenschutz|agb)\.html$|^(robots\.txt|sitemap\.xml|llms\.txt|site\.webmanifest|favicon\.ico|\.htaccess)$/;
+  /^(index|impressum|datenschutz|nutzungsbedingungen)\.html$|^(robots\.txt|sitemap\.xml|llms\.txt|site\.webmanifest|favicon\.ico|\.htaccess)$/;
 
 const textInhalte = [];
 for (const rel of alleDateien) {

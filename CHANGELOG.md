@@ -5,6 +5,29 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [1.6.0] – 2026-08-27
+
+### Geändert
+
+- **Aus den AGB werden die Nutzungsbedingungen** – neu geschrieben in
+  Abschnitten mit Fließtext statt vierzig nummerierten Unterpunkten, in
+  eigener Stimme und in verständlicher Sprache. Die Datei heißt jetzt
+  `nutzungsbedingungen.html`; die alte Adresse wird dauerhaft dorthin
+  weitergeleitet.
+- Die **Lizenzen der mitgelieferten Arbeit stehen jetzt sichtbar auf der
+  Seite** – mit Name, Version und Rechteinhaber. „Steht im Quelltext" ist für
+  ein Projekt, das mit Transparenz wirbt, zu wenig.
+
+### Behoben
+
+- **GitHub erkannte die Lizenz nicht mehr als MIT** (`NOASSERTION`), weil ich
+  den Markenvorbehalt an `LICENSE` angehängt hatte. Die Lizenzerkennung
+  vergleicht den Text; jeder Zusatz macht sie blind. `LICENSE` enthält jetzt
+  wieder den unveränderten MIT-Text, der Vorbehalt steht in `TRADEMARK.md`.
+- Zwei Links waren nur an der Farbe erkennbar: Eine Klassenregel im
+  Grundstylesheet war spezifischer als meine Korrektur und hat sie überstimmt.
+- Der Verweis auf den Quelltext hat jetzt dieselbe Größe wie in der Vorlage.
+
 ## [1.5.0] – 2026-08-27
 
 ### Entfernt

@@ -799,7 +799,7 @@ body.shot .poster { box-shadow: none; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
+  padding: 10px 22px;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;

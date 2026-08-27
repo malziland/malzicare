@@ -100,6 +100,11 @@ Chat-Regeln sollte sich an eigene halten. Sicherheitsrelevantes bitte nicht
 [MIT](LICENSE) – © 2026 Christoph Krieger, malziland – learning | training |
 consulting e.U.
 
+**Name und Zeichen sind davon ausgenommen** ([TRADEMARK.md](TRADEMARK.md)): Der
+Code darf weiterverwendet werden, der Name nicht. Alle Lizenzangaben – auch zu
+den mitgelieferten Bibliotheken und zur Schrift – stehen in
+[docs/LIZENZEN.md](docs/LIZENZEN.md).
+
 Die Schrift Poppins steht unter der SIL Open Font License
 (`public/assets/fonts/OFL.txt`). WhatsApp, Snapchat, TikTok und Signal sind
 Marken ihrer jeweiligen Inhaber; malziCARE steht in keiner Verbindung zu ihnen

@@ -104,7 +104,7 @@ test('der Editor ist mit der Tastatur bedienbar', async ({ page }) => {
   ).toBeTruthy();
 });
 
-for (const seite of ['/impressum.html', '/datenschutz.html', '/agb.html']) {
+for (const seite of ['/impressum.html', '/datenschutz.html', '/nutzungsbedingungen.html']) {
   test(`die Wortmarke fuehrt von ${seite} zurueck zum Editor`, async ({ page }) => {
     await page.goto(seite);
     const marke = page.locator('a.wortmarke');
@@ -258,7 +258,7 @@ test('ein Lesefehler meldet sich, statt still zu scheitern', async ({ page }, te
   await expect(page.locator('#inGroup')).toHaveValue('Klasse 10A');
 });
 
-for (const seite of ['/', '/impressum.html', '/datenschutz.html', '/agb.html']) {
+for (const seite of ['/', '/impressum.html', '/datenschutz.html', '/nutzungsbedingungen.html']) {
   test(`der Verweis auf den Quelltext steht auf ${seite}`, async ({ page }) => {
     await page.goto(seite);
     const knopf = page.locator('a.opensource-link');

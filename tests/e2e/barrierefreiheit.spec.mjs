@@ -1,7 +1,7 @@
 import { test, expect } from './hilfen.mjs';
 import AxeBuilder from '@axe-core/playwright';
 
-const SEITEN = ['/', '/impressum.html', '/datenschutz.html', '/agb.html'];
+const SEITEN = ['/', '/impressum.html', '/datenschutz.html', '/nutzungsbedingungen.html'];
 const APPS = [
   ['segWa', 'WhatsApp'],
   ['segSc', 'Snapchat'],

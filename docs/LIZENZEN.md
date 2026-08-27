@@ -41,6 +41,8 @@ Fassung darf **nicht** weiter Poppins heißen.
 
 ## Marke, Logo und Gestaltung — nicht von der MIT-Lizenz erfasst
 
+**Ausführlich in [TRADEMARK.md](../TRADEMARK.md).**
+
 **Das ist der Punkt, den Open-Source-Projekte am häufigsten übersehen.**
 
 Nicht unter MIT stehen:

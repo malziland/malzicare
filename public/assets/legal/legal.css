@@ -15,10 +15,13 @@
    2. Links im Fliesstext waren nur an der Farbe erkennbar (1,4:1 zum
       umgebenden Text). Wer Farben schlecht unterscheidet, sieht sie nicht. */
 .subtitle-date { opacity: 1; }
+/* Die Klassenregel .container a im Grundstylesheet ist spezifischer als
+   "li a" - deshalb steht .container hier mit davor, sonst greift nichts. */
 .container p a,
-section p a,
-li a { text-decoration: underline; }
-.footer__brand { text-decoration: underline; }
+.container section p a,
+.container li a { text-decoration: underline; }
+/* Dieselbe Falle wie oben: .container a ist spezifischer. */
+.container a.footer__brand { text-decoration: underline; }
 
 /* --- Wortmarke malziCARE, 27.08.2026 ------------------------------------
    Dieselben Werte wie in css/editor.css. Auf den Unterseiten ist sie zugleich
@@ -84,7 +87,7 @@ a.wortmarke:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
+  padding: 10px 22px;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -98,4 +101,15 @@ a.wortmarke:focus-visible {
   color: var(--ml-teal, #156480);
   border-color: var(--ml-teal, #156480);
   text-decoration: none;
+}
+
+/* Liste der mitgelieferten Fremdarbeit in den Nutzungsbedingungen. Sie steht
+   dort im Klartext, weil "schau in den Quelltext" fuer eine Seite, die mit
+   Transparenz wirbt, zu wenig ist. */
+.lizenzliste {
+  margin: 0 0 14px;
+  padding-left: 20px;
+}
+.lizenzliste li {
+  margin-bottom: 8px;
 }
