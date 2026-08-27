@@ -3,7 +3,9 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
-## [Unveröffentlicht]
+Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
+erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
+gemeint, was schon im Repository, aber noch nicht online ist.
 
 ## [1.6.0] – 2026-08-27
 
