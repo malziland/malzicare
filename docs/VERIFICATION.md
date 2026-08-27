@@ -56,15 +56,29 @@ folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 | ------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------ |
 | Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 69 Dateien, alle 6 Schritte grün                                                     | jeder neue Tag                 |
 | Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber | jeder neue Tag                 |
+| Verbindung zum Webspace   | `node tools/deploy.mjs --verbindung`                                   | Anmeldung erfolgreich, verschlüsselt, 13 Einträge gelesen                            | jede Änderung der Zugangsdaten |
 | Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                   | Änderung an `tools/deploy.mjs` |
+
+## Erste Messung am laufenden System (27.08.2026)
+
+Die Auslieferkette wurde zum ersten Mal gegen den echten Webspace geführt –
+lesend, ohne etwas zu übertragen. Drei Befunde, alle bestätigt:
+
+| Befund                                                 | Beleg                                                                                                                                                                         | Folge                                                                                                                                     |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Die `.htaccess` liegt **nicht** auf dem Server         | SFTP-Auflistung: 13 Einträge, keine unsichtbaren; `curl -I` liefert für HTML und CSS **keinen** `Cache-Control`-Kopf, während Apache mit `last-modified` und `etag` antwortet | Der Fehler vom 21.07.2026 ist nie behoben worden. HTML wird ohne `no-cache` ausgeliefert; eine Änderung kann bei Besuchern hängenbleiben. |
+| `Editor-lokal-starten.command` liegt öffentlich im Web | `HTTP 200`, 403 B, Inhalt abrufbar                                                                                                                                            | Ein lokales Startskript gehört nicht auf einen Webserver. Kein Geheimnis darin.                                                           |
+| Der Server beherrscht kein FTPS                        | `500 'AUTH': command unrecognized` auf Port 21; Port 22 nimmt dieselben Zugangsdaten verschlüsselt an                                                                         | Auslieferung läuft über SFTP. Unverschlüsseltes FTP kommt nicht in Frage.                                                                 |
+
+Alle drei verschwinden mit der ersten richtigen Auslieferung – die dritte war
+ihre Ursache.
 
 ## Was noch offen ist
 
-**Die Auslieferung ist nie gelaufen.** Die FTP-Zugangsdaten liegen nicht vor
-(Stand 27.08.2026). Damit sind unbewiesen: der Upload selbst, die Messung des
-Live-Standes, die Wirkungsprüfung der `.htaccess` und deren Negativprobe.
-Prüfbar, sobald die Zugangsdaten in `.env` stehen – der Ablauf dafür steht im
-Runbook.
+**Die Auslieferung ist nie bis zum Ende gelaufen.** Zugangsdaten liegen seit
+dem 27.08.2026 vor, Anmeldung und Verzeichnisauflistung sind belegt. Unbewiesen
+bleiben bis zur ersten echten Auslieferung: der Upload selbst, der Abgleich der
+Prüfsummen von außen und die Negativprobe des Live-Checks.
 
 **Screenreader-Prüfung von Hand.** Automatische Prüfung findet nur einen Teil.
 Fällig vor der Veröffentlichung des Repositories.

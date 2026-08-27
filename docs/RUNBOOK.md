@@ -17,11 +17,20 @@ Der Ablauf in dieser Reihenfolge, jeder Schritt ein Riegel:
 3. **Paket bauen.** `dist/` entsteht neu aus `public/`; fehlt die `.htaccess`,
    Abbruch.
 4. **Zugangsdaten vollständig?** Sonst Abbruch mit der Liste dessen, was fehlt.
-5. **Hochladen** per FTPS in `FTP_REMOTE_DIR`.
+5. **Hochladen** per SFTP in `SFTP_REMOTE_DIR`.
 6. **Nachmessen** von außen (siehe unten). Erst danach gilt die Auslieferung
    als erfolgreich.
 
 Ohne Verbindung, nur zum Prüfen des Ablaufs: `npm run deploy -- --probe`.
+Nur anmelden und nachsehen, ohne etwas zu ändern: `npm run deploy -- --verbindung`.
+
+**Warum SFTP und nicht FTPS:** Gemessen am 27.08.2026 lehnt der Server
+verschlüsseltes FTP ab (`500 'AUTH': command unrecognized`); Port 21 wäre
+Klartext. Port 22 nimmt dieselben Zugangsdaten verschlüsselt entgegen.
+
+**Fremde Dateien im Zielverzeichnis** werden nach dem Hochladen benannt, aber
+nicht angetastet – `--aufraeumen` entfernt sie. Grund für die Zurückhaltung:
+Was oben liegt und nicht aus dem Paket stammt, kann auch absichtlich dort sein.
 
 ## Vor dem Push
 
@@ -95,7 +104,7 @@ Druckdialog als Ausweg an. Auf iPhones hängt der Download daran, dass jeder
 Blob als `application/octet-stream` erzeugt wird – ein Test wacht darüber.
 
 **Zugangsdaten verloren oder kompromittiert.** Im IONOS-Panel neues
-FTP-Passwort setzen, `.env` aktualisieren. Die Datei steht in `.gitignore`;
+SFTP-Passwort setzen, `.env` aktualisieren. Die Datei steht in `.gitignore`;
 sollte sie je committet worden sein, gilt das Passwort als verbrannt und muss
 gewechselt werden – Entfernen aus der Historie genügt nicht.
 

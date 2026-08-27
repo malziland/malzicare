@@ -30,9 +30,9 @@
     "@axe-core/playwright": "^4.10.1",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.50.1",
-    "basic-ftp": "^5.0.5",
     "eslint": "^10.9.1",
     "globals": "^15.15.0",
-    "prettier": "^3.5.0"
+    "prettier": "^3.5.0",
+    "ssh2-sftp-client": "^12.1.1"
   }
 }
