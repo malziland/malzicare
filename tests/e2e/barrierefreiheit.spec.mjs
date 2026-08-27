@@ -56,7 +56,10 @@ async function pruefe(page, name) {
     for (const n of v.nodes) {
       const a = ausgenommen(n);
       if (a) stillgelegt.set(a.grund, (stillgelegt.get(a.grund) || 0) + 1);
-      else offen.push(`${v.id} (${v.impact}): ${n.target.join(' ')} :: ${n.failureSummary?.split('\n')[1]?.trim()}`);
+      else
+        offen.push(
+          `${v.id} (${v.impact}): ${n.target.join(' ')} :: ${n.failureSummary?.split('\n')[1]?.trim()}`
+        );
     }
   }
   for (const [grund, anzahl] of stillgelegt) {

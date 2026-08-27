@@ -38,9 +38,7 @@ test('ein Admin-Vorname landet in der Admin-Spalte', async ({ page }) => {
 test('der Wechsel der App aendert die Optik des Plakats', async ({ page }) => {
   const vorher = await page.locator('#poster').getAttribute('class');
   await page.click('#segSi');
-  await expect
-    .poll(async () => page.locator('#poster').getAttribute('class'))
-    .not.toBe(vorher);
+  await expect.poll(async () => page.locator('#poster').getAttribute('class')).not.toBe(vorher);
 });
 
 test('eingegebene Regeln ueberleben das Neuladen', async ({ page }) => {
@@ -55,10 +53,7 @@ test('der Entwurf wird als neutraler Binaertyp geladen', async ({ page }) => {
   // sonst zeigt iPhone-Safari die Datei an, statt sie zu speichern.
   await page.fill('#inGroup', 'Klasse 4D');
   await page.locator('#inGroup').blur();
-  const [download] = await Promise.all([
-    page.waitForEvent('download'),
-    page.click('#btnSave'),
-  ]);
+  const [download] = await Promise.all([page.waitForEvent('download'), page.click('#btnSave')]);
   expect(download.suggestedFilename()).toBe('klassenchat-klasse-4d.json');
 });
 
@@ -75,7 +70,9 @@ test('der PDF-Export liefert eine Datei mit dem erwarteten Namen', async ({ page
 
 test('der Editor ist mit der Tastatur bedienbar', async ({ page }) => {
   await page.keyboard.press('Tab');
-  const erstes = await page.evaluate(() => document.activeElement?.id || document.activeElement?.tagName);
+  const erstes = await page.evaluate(
+    () => document.activeElement?.id || document.activeElement?.tagName
+  );
   expect(erstes).toBeTruthy();
   // Der sichtbare Fokus darf nicht wegformatiert sein.
   const umriss = await page.evaluate(() => {
