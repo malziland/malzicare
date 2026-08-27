@@ -89,11 +89,10 @@ Damit wirkt die `.htaccess` erstmals seit dem 21.07.2026 nachweislich.
 **Screenreader-Prüfung von Hand.** Automatische Prüfung findet nur einen Teil.
 Fällig vor der Veröffentlichung des Repositories.
 
-**Schutz des Hauptzweigs und Push-Schutz für Geheimnisse.** Gemessen am
-27.08.2026: Für private Repositories verlangt GitHub dafür ein Bezahlkonto
-(`HTTP 403: Upgrade to GitHub Pro or make this repository public`). Beides wird
-gesetzt, sobald das Repo öffentlich ist – Schritt 4 der Reihenfolge. Bis dahin
-greift `npm run vor-dem-push` auf dem Rechner, von dem die Commits kommen.
+**Erledigt am 27.08.2026 mit der Veröffentlichung:** Schutz des Hauptzweigs
+(Regelwerk aktiv, Prüfkette als Pflicht, Ausnahme für den Eigentümer – siehe
+[ADR-0005](adr/0005-zweigschutz-mit-ausnahme.md)) und Push-Schutz für
+Geheimnisse (`secret_scanning_push_protection: enabled`).
 
 **`reader.onerror`** ist die einzige Funktion ohne Test: der Fehlerfall beim
 Lesen einer Datei, der sich von außen nicht zuverlässig auslösen lässt.
