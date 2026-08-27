@@ -103,6 +103,16 @@ for (const rel of htmlDateien) {
   }
 }
 
+/* Eine E-Mail-Adresse, zwei Schreibweisen - das faellt erst auf, wenn jemand
+   an die falsche schreibt. Deshalb wird auf allen Seiten dieselbe verlangt. */
+const MAIL = site.kontakt_mail;
+for (const rel of htmlDateien) {
+  const html = await readFile(path.join(PUBLIC_DIR, rel), 'utf8');
+  for (const m of html.matchAll(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g)) {
+    if (m[0] !== MAIL) melde(rel, `fremde E-Mail-Adresse: ${m[0]} (erwartet ${MAIL})`);
+  }
+}
+
 // Auch die Nicht-HTML-Dateien nennen die Adresse.
 for (const rel of ['sitemap.xml', 'robots.txt', 'llms.txt', 'site.webmanifest']) {
   if (!alleDateien.includes(rel)) {

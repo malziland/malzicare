@@ -25,7 +25,7 @@ Veröffentlichen privater Angaben Dritter, beharrliches Stören.
 
 ## Wenn etwas vorfällt
 
-Melde es an <info@malziland.at>. Die Meldung wird vertraulich behandelt.
+Melde es an <info@malzi.care>. Die Meldung wird vertraulich behandelt.
 
 Christoph Krieger entscheidet als Betreiber über die Folgen. Möglich sind ein
 Hinweis, das Entfernen von Beiträgen oder der Ausschluss aus dem Projekt – je

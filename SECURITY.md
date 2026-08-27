@@ -3,7 +3,7 @@
 ## Etwas gefunden?
 
 Bitte **nicht** als öffentliches Issue melden, sondern an
-<info@malziland.at>. Eine Rückmeldung kommt, sobald es geht; bis dahin bitte
+<info@malzi.care>. Eine Rückmeldung kommt, sobald es geht; bis dahin bitte
 nichts veröffentlichen.
 
 ## Was hier zu holen ist – und was nicht

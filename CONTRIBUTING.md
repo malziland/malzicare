@@ -58,5 +58,5 @@ Commit-Nachrichten und Kommentare auf Deutsch, passend zum Bestand.
 
 ## Sicherheitslücken
 
-Bitte nicht öffentlich melden, sondern an <info@malziland.at>. Siehe
+Bitte nicht öffentlich melden, sondern an <info@malzi.care>. Siehe
 [SECURITY.md](SECURITY.md).
