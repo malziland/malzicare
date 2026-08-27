@@ -4,7 +4,7 @@ Diese Datei ist die kanonische Quelle für alle veränderlichen Zahlen des
 Projekts – Testanzahlen, Prüfumfänge, Messwerte. An keiner anderen Stelle
 steht eine dieser Zahlen; sonst driften sie auseinander.
 
-**Stand aller Einträge: 2026-08-27, Tag `v1.0.0`.** Auf einen Commit-Hash
+**Stand aller Einträge: 2026-08-27, Tag `v1.3.0`.** Auf einen Commit-Hash
 verweist diese Datei bewusst nicht: Sie liegt selbst in dem Commit, den sie
 benennen müsste. Welcher Stand gemeint ist, sagt `git rev-parse v1.0.0`.
 Jeder Eintrag trägt einen Auslöser, der ihn ungültig macht. Ist er
@@ -20,6 +20,8 @@ eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 | Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 46 lokale Verweise, 18 eigene Adressen, keine Befunde                                          | jede Änderung in `public/`                        |
 | Geheimnis-Scan        | `npm run scan:secrets`              | 52 versionierte Textdateien, 6 Muster, keine Funde                                                       | jeder Commit, spätestens vor der Veröffentlichung |
 | Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                     | jede Änderung an `package-lock.json`              |
+| Testabdeckung         | `node tools/abdeckung.mjs`          | 84,3 % des ausgelieferten JavaScripts, 60 von 61 Funktionen laufen; Schwelle 80 %                        | jede Änderung in `public/js/`                     |
+| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11 KB)                                                      | jede Änderung in `public/js/`                     |
 | Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33103787728 auf `main` grün: Prüfkette und Abhängigkeitsprüfung, 36 Oberflächentests auf dem Runner | jeder Push                                        |
 
 ## Dass die Prüfungen überhaupt scheitern können
@@ -86,6 +88,29 @@ Damit wirkt die `.htaccess` erstmals seit dem 21.07.2026 nachweislich.
 
 **Screenreader-Prüfung von Hand.** Automatische Prüfung findet nur einen Teil.
 Fällig vor der Veröffentlichung des Repositories.
+
+**Schutz des Hauptzweigs und Push-Schutz für Geheimnisse.** Gemessen am
+27.08.2026: Für private Repositories verlangt GitHub dafür ein Bezahlkonto
+(`HTTP 403: Upgrade to GitHub Pro or make this repository public`). Beides wird
+gesetzt, sobald das Repo öffentlich ist – Schritt 4 der Reihenfolge. Bis dahin
+greift `npm run vor-dem-push` auf dem Rechner, von dem die Commits kommen.
+
+**`reader.onerror`** ist die einzige Funktion ohne Test: der Fehlerfall beim
+Lesen einer Datei, der sich von außen nicht zuverlässig auslösen lässt.
+
+## Modularisierung (27.08.2026)
+
+Die Zerlegung von `app.js` in elf Module ist mechanisch aus einer
+Abhängigkeitsanalyse entstanden, nicht abgeschrieben. Beleg, dass dabei nichts
+verlorenging:
+
+| Prüfung                                         | Ergebnis                                                 |
+| ----------------------------------------------- | -------------------------------------------------------- |
+| Alle Oberflächentests vor und nach dem Schnitt  | 29 grün, unverändert                                     |
+| Konsolenfehler auf der Live-Seite               | keine, in Chromium und WebKit                            |
+| Plakat, Regelzeilen, Chatblasen, Wortmarke live | vollständig vorhanden                                    |
+| Größtes Modul                                   | `plakat.js`, 11 KB (vorher: eine Datei mit 47 KB)        |
+| Vorher/Nachher-Stand der Datei                  | gesichert vor dem Umbau, Vergleich über die Git-Historie |
 
 ## Gegenstelle
 
