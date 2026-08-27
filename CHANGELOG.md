@@ -7,6 +7,34 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
+## [1.7.0] – 2026-08-27
+
+### Öffentlich
+
+**Ab dieser Fassung ist der Quelltext öffentlich** – unter
+<https://github.com/malziland/malzicare>, MIT-Lizenz.
+
+Das ist bewusst der letzte Schritt und nicht der erste. Vorher wurde geklärt,
+was ein offenes Projekt schuldig ist:
+
+- **Die Lizenzlage.** Eine mitgelieferte Bibliothek lag ohne Copyright-Hinweis
+  im Verzeichnis – die MIT-Lizenz verlangt genau das eine, dass er in jeder
+  Kopie mitgeht. Nachgetragen. Alle Lizenzen stehen belegt in `docs/LIZENZEN.md`
+  und sichtbar in den Nutzungsbedingungen, mit Name, Version und Rechteinhaber.
+- **Die Abgrenzung der Marke.** Der Code ist frei, der Name nicht
+  ([TRADEMARK.md](TRADEMARK.md)). Der Vorbehalt steht in einer eigenen Datei,
+  weil er in `LICENSE` die Lizenzerkennung zerstört hätte.
+- **Die Nutzungsbedingungen.** Umgeschrieben auf ein offenes Modell: Sie gelten
+  für den Dienst unter malzi.care, nicht für eigene Installationen; stelle ich
+  den Betrieb ein, bleibt der Quelltext nutzbar.
+- **Der Quelltext selbst.** Keine Zugangsdaten in der Historie – geprüft über
+  alle 32 Commits, nicht nur über den aktuellen Stand. `.env` war nie
+  versioniert.
+
+Erst danach ging das Repository auf öffentlich. Ab sofort gilt zusätzlich:
+Schutz des Hauptzweigs mit der Prüfkette als Pflicht, und der Push-Schutz von
+GitHub verhindert, dass ein Geheimnis überhaupt hochgeht.
+
 ## [1.6.0] – 2026-08-27
 
 ### Geändert
