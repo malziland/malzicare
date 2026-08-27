@@ -16,7 +16,13 @@ Entwurf. iPhone-Safari zeigt Typen an, die es kennt, statt sie zu laden – und
 der Editor wird auf iPhones benutzt. Ein Test wacht darüber; er ist kein
 Formalismus.
 
-**3. Das Plakat wird gedruckt und aus zwei bis drei Metern gelesen.**
+**3. Wer eine zwischenspeicherbare Datei ändert, erhöht den Cache-Buster.**
+CSS, JavaScript, Symbole, Manifest – alles trägt `max-age=604800`. Bleibt der
+Buster stehen, sehen Browser sieben Tage lang die alte Fassung; genau so
+verschwand am 27.08. die Wortmarke in Safari. `node tools/cache-buster.mjs
+--erhoehen` zieht alles nach, ein Wächter in der Prüfkette meldet den Fall.
+
+**4. Das Plakat wird gedruckt und aus zwei bis drei Metern gelesen.**
 Kontrastwerte am Bildschirm sind nicht der Maßstab. Was Inhalt trägt, muss
 lesbar sein; die App-Nachbildung tritt dahinter zurück (ADR-0003).
 

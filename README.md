@@ -24,6 +24,22 @@ npm run verify         # alle Prüfungen: Format, Linter, Verweise, Geheimnisse,
 npm run vor-dem-push   # dieselben Prüfungen wie die Pipeline, vor dem Push
 ```
 
+Wer CSS, JavaScript oder ein Symbol ändert, erhöht danach den Cache-Buster:
+
+```bash
+node tools/cache-buster.mjs --erhoehen
+```
+
+Sonst zeigen Browser bis zu sieben Tage die alte Fassung. Ein Wächter in der
+Prüfkette meldet den Fall; ein Buster, der bei Änderungen nicht steigt, ist
+keiner.
+
+Die Symbole der Marke entstehen aus einem Werkzeug, nicht aus Handarbeit:
+
+```bash
+node tools/icons-bauen.mjs
+```
+
 `vor-dem-push` unterscheidet sich von `verify` in einem Punkt: Es bleibt beim
 ersten Mangel nicht stehen, sondern zeigt alle auf einmal – und prüft zusätzlich,
 was die Pipeline prüft. Es läuft nur, wenn du es aufrufst; es gibt bewusst keinen

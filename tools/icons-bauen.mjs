@@ -14,7 +14,10 @@ import { createServer } from './serve.mjs';
 
 const TEAL = '#156480';
 const SCHRIFT = '#ffffff';
-const BUCHSTABE = 'C';
+/* Das Symbol zeigt die Endung der Marke, wie das malziland-Symbol das m
+   zeigt. Vier Buchstaben brauchen deutlich weniger Schrifthoehe als einer -
+   der Faktor haengt an der Zeichenzahl, nicht an einem festen Wert. */
+const WORT = 'CARE';
 
 /** Ein Symbol als HTML. rund = Anteil der Kantenlaenge; 0 heisst eckig. */
 function seite(groesse, rund, port) {
@@ -25,11 +28,12 @@ function seite(groesse, rund, port) {
   .i{width:${groesse}px;height:${groesse}px;display:flex;align-items:center;justify-content:center;
      background:${TEAL};color:${SCHRIFT};border-radius:${rund}%;
      font-family:Poppins,system-ui,sans-serif;font-weight:700;
-     font-size:${Math.round(groesse * 0.64)}px;line-height:1}
+     font-size:${Math.round(groesse * (WORT.length > 1 ? 0.235 : 0.64))}px;
+     letter-spacing:-0.02em;line-height:1}
   /* Grossbuchstaben sitzen optisch zu hoch, wenn man sie rein rechnerisch
      zentriert - die Unterlaenge fehlt. */
-  .i span{padding-bottom:${Math.max(1, Math.round(groesse * 0.04))}px}
-</style></head><body><div class="i"><span>${BUCHSTABE}</span></div></body></html>`;
+  .i span{padding-bottom:${Math.max(1, Math.round(groesse * 0.03))}px}
+</style></head><body><div class="i"><span>${WORT}</span></div></body></html>`;
 }
 
 /** ICO: Kopf, je Bild ein Verzeichniseintrag, dann die PNG-Daten. */

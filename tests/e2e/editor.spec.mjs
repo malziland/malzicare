@@ -95,6 +95,12 @@ for (const seite of ['/impressum.html', '/datenschutz.html', '/agb.html']) {
     await expect(marke).toContainText('malziCARE');
     // Sie ersetzt den frueheren Textlink - der darf nicht zurueckkommen.
     await expect(page.getByText('Zurück zum Editor')).toHaveCount(0);
+    // Die Marke ist EIN Zeichen. Ein Effekt, der nur "malzi" unterstreicht,
+    // zerlegt sie optisch in zwei Teile - genau das ist am 27.08. passiert.
+    await marke.hover();
+    const strich = await marke.evaluate((el) => getComputedStyle(el).textDecorationLine);
+    expect(strich, 'die Wortmarke wird beim Zeigen unterstrichen').toBe('none');
+
     await marke.click();
     await expect(page.locator('#poster')).toBeVisible();
   });

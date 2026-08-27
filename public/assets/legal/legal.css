@@ -42,19 +42,26 @@ li a { text-decoration: underline; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 3px calc(7px + 0.01em) 4px 7px;
+  padding: 3px 6.99px 4px 6.71px;
   border-radius: 5px;
   background: var(--ml-teal, #156480);
   color: #f9f7f4;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
-a.wortmarke {
+a.wortmarke,
+a.wortmarke:hover,
+a.wortmarke:focus {
+  /* Ausdruecklich auch fuer :hover - sonst gewinnt die allgemeine Regel
+     a:hover{text-decoration:underline} und unterstreicht nur "malzi". Die
+     Marke ist EIN Zeichen; ein Effekt, der nur die Haelfte erfasst, zerlegt
+     sie optisch in zwei Teile. */
   text-decoration: none;
   color: var(--ml-teal, #156480);
 }
-a.wortmarke:hover .wortmarke-care {
-  opacity: 0.88;
+/* Beim Zeigen reagiert die ganze Marke, nicht ein Teil davon. */
+a.wortmarke:hover {
+  opacity: 0.85;
 }
 a.wortmarke:focus-visible {
   outline: 2px solid var(--ml-teal, #156480);

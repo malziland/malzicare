@@ -32,6 +32,16 @@ Klartext. Port 22 nimmt dieselben Zugangsdaten verschlüsselt entgegen.
 nicht angetastet – `--aufraeumen` entfernt sie. Grund für die Zurückhaltung:
 Was oben liegt und nicht aus dem Paket stammt, kann auch absichtlich dort sein.
 
+## Nach jeder Änderung an CSS, JavaScript oder Symbolen
+
+```bash
+node tools/cache-buster.mjs --erhoehen
+```
+
+Erhöht die Nummer in `site.json` und zieht jeden Verweis nach. Ohne das
+holt kein Browser die neue Datei – die Adresse bleibt ja dieselbe, und
+Assets dürfen sieben Tage im Zwischenspeicher bleiben.
+
 ## Vor dem Push
 
 ```bash

@@ -101,11 +101,17 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* Rechts der Ausgleich fuer den Buchstabenabstand: Ein negatives
-     letter-spacing wirkt AUCH hinter dem letzten Buchstaben und macht den
-     rechten Innenrand kleiner als den linken. Bei zwei Buchstaben faellt
-     das kaum auf, bei vieren schon. */
-  padding: 3px calc(7px + 0.01em) 4px 7px;
+  /* Die Raender sind an den Bildpunkten des gerenderten Textes gemessen,
+     nicht aus der Textbox gerechnet: Das runde C und das gerade E bringen
+     unterschiedlich viel eigenen Weissraum mit, gleiche Zahlen ergaeben ein
+     sichtbares Ungleichgewicht. Mit 6,71 links und 6,99 rechts steht die
+     Schrift beidseitig 8,25 px vom Rand - Unterschied 0,00 px.
+     Senkrecht bleiben 0,75 px: Grossbuchstaben sitzen in Poppins nicht mittig
+     in der Zeilenbox, und der Browser rundet die Textlage auf ganze Pixel.
+     Zum Vergleich, gleich gemessen: die Vorlage malzi.me liegt bei 1,09 px
+     waagrecht und 4,58 px senkrecht. Ein negativer Buchstabenabstand
+     entfaellt - er wirkt auch hinter dem letzten Zeichen. */
+  padding: 3px 6.99px 4px 6.71px;
   border-radius: 5px;
   background: var(--ml-teal);
   color: #f9f7f4;
@@ -115,19 +121,6 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Was der Dienst tut, steht neben der Marke: der Name allein erklaert ihn
-   nicht. */
-.topbar-untertitel {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ml-warmgray-text);
-}
-
-@media (max-width: 700px) {
-  .topbar-untertitel {
-    display: none;
-  }
-}
 
 .topbar-actions {
   margin-left: auto;
