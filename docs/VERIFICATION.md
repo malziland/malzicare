@@ -27,18 +27,18 @@ eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 Eine Prüfung, die nicht rot werden kann, ist selbst der Befund. Jede der
 folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 
-| Prüfung              | Gegenprobe                                             | Ergebnis                                      | Ungültig, sobald                      |
-| -------------------- | ------------------------------------------------------ | --------------------------------------------- | ------------------------------------- |
-| Linter               | Datei mit ungenutzter und undefinierter Variable       | rot, 2 Befunde                                | Änderung an `eslint.config.js`        |
-| Paketvollständigkeit | `.htaccess` aus `public/` entfernt                     | rot: „die unsichtbare .htaccess ist dabei"    | Änderung an `tools/build.mjs`         |
-| Download-Typ         | PDF-Blob auf `application/pdf` gesetzt                 | rot                                           | Änderung an `saveFile`/`runPdfExport` |
-| Verwaiste Dateien    | unbenutzte Datei in `public/assets/` abgelegt          | rot, 1 Befund                                 | Änderung an `tools/lint-html.mjs`     |
-| Cache-Buster         | Zustand vor der Behebung                               | rot, 3 Befunde                                | Änderung an `site.json`               |
-| Geheimnis-Scan       | Datei mit echtem Passwort-Literal und Zugangsdaten-URL | rot, 2 Funde                                  | Änderung an den Mustern               |
-| Geheimnis-Scan       | 4 Gegenproben wie `password: env.FTP_PASSWORD`         | schweigt, wie es soll (im Selbsttest geprüft) | Änderung an den Mustern               |
-| axe-Messung          | kontrastarmes Element in die Seite eingefügt           | rot                                           | Änderung an der Messfunktion          |
-| Test-Runner          | Aufrufmuster ohne Treffer                              | rot: „Keine Testdatei gefunden"               | Änderung an `tools/run-tests.mjs`     |
-| Live-Prüfung         | `node tools/live-check.mjs --negativprobe`             | **offen** – braucht die laufende Seite        | sobald Zugangsdaten vorliegen         |
+| Prüfung              | Gegenprobe                                             | Ergebnis                                      | Ungültig, sobald                        |
+| -------------------- | ------------------------------------------------------ | --------------------------------------------- | --------------------------------------- |
+| Linter               | Datei mit ungenutzter und undefinierter Variable       | rot, 2 Befunde                                | Änderung an `eslint.config.js`          |
+| Paketvollständigkeit | `.htaccess` aus `public/` entfernt                     | rot: „die unsichtbare .htaccess ist dabei"    | Änderung an `tools/build.mjs`           |
+| Download-Typ         | PDF-Blob auf `application/pdf` gesetzt                 | rot                                           | Änderung an `saveFile`/`runPdfExport`   |
+| Verwaiste Dateien    | unbenutzte Datei in `public/assets/` abgelegt          | rot, 1 Befund                                 | Änderung an `tools/lint-html.mjs`       |
+| Cache-Buster         | Zustand vor der Behebung                               | rot, 3 Befunde                                | Änderung an `site.json`                 |
+| Geheimnis-Scan       | Datei mit echtem Passwort-Literal und Zugangsdaten-URL | rot, 2 Funde                                  | Änderung an den Mustern                 |
+| Geheimnis-Scan       | 4 Gegenproben wie `password: env.FTP_PASSWORD`         | schweigt, wie es soll (im Selbsttest geprüft) | Änderung an den Mustern                 |
+| axe-Messung          | kontrastarmes Element in die Seite eingefügt           | rot                                           | Änderung an der Messfunktion            |
+| Test-Runner          | Aufrufmuster ohne Treffer                              | rot: „Keine Testdatei gefunden"               | Änderung an `tools/run-tests.mjs`       |
+| Live-Prüfung         | `node tools/live-check.mjs --negativprobe`             | rot mit verfälschtem Sollwert, wie verlangt   | jede Änderung an `tools/live-check.mjs` |
 
 ## Barrierefreiheit (Profil UI)
 
@@ -52,12 +52,13 @@ folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 
 ## Reproduzierbarkeit und Rückweg
 
-| Anforderung               | Befehl                                                                 | Ergebnis                                                                             | Ungültig, sobald               |
-| ------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------ |
-| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 69 Dateien, alle 6 Schritte grün                                                     | jeder neue Tag                 |
-| Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber | jeder neue Tag                 |
-| Verbindung zum Webspace   | `node tools/deploy.mjs --verbindung`                                   | Anmeldung erfolgreich, verschlüsselt, 13 Einträge gelesen                            | jede Änderung der Zugangsdaten |
-| Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                   | Änderung an `tools/deploy.mjs` |
+| Anforderung               | Befehl                                                                 | Ergebnis                                                                                                | Ungültig, sobald               |
+| ------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 69 Dateien, alle 6 Schritte grün                                                                        | jeder neue Tag                 |
+| Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber                    | jeder neue Tag                 |
+| Verbindung zum Webspace   | `node tools/deploy.mjs --verbindung`                                   | Anmeldung erfolgreich, verschlüsselt, 13 Einträge gelesen                                               | jede Änderung der Zugangsdaten |
+| Auslieferung, vollständig | `npm run deploy -- --aufraeumen`                                       | 35 Dateien per SFTP übertragen, Fremddatei entfernt, Live-Check grün: Kennung und 33 Prüfsummen stimmen | jede Auslieferung              |
+| Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                                      | Änderung an `tools/deploy.mjs` |
 
 ## Erste Messung am laufenden System (27.08.2026)
 
@@ -70,15 +71,18 @@ lesend, ohne etwas zu übertragen. Drei Befunde, alle bestätigt:
 | `Editor-lokal-starten.command` liegt öffentlich im Web | `HTTP 200`, 403 B, Inhalt abrufbar                                                                                                                                            | Ein lokales Startskript gehört nicht auf einen Webserver. Kein Geheimnis darin.                                                           |
 | Der Server beherrscht kein FTPS                        | `500 'AUTH': command unrecognized` auf Port 21; Port 22 nimmt dieselben Zugangsdaten verschlüsselt an                                                                         | Auslieferung läuft über SFTP. Unverschlüsseltes FTP kommt nicht in Frage.                                                                 |
 
-Alle drei verschwinden mit der ersten richtigen Auslieferung – die dritte war
-ihre Ursache.
+**Alle drei am 27.08.2026 mit der ersten Auslieferung behoben und gegengeprüft:**
+
+| Gegenprobe                                                           | Ergebnis                                   |
+| -------------------------------------------------------------------- | ------------------------------------------ |
+| `curl -I https://malzi.care/`                                        | `cache-control: no-cache`                  |
+| `curl -I https://malzi.care/css/editor.css`                          | `cache-control: public, max-age=604800`    |
+| `curl -o /dev/null -w %{http_code} .../Editor-lokal-starten.command` | `404`                                      |
+| `curl -s https://malzi.care/ \| grep canonical`                      | `https://malzi.care/`, Titel `malziCARE …` |
+
+Damit wirkt die `.htaccess` erstmals seit dem 21.07.2026 nachweislich.
 
 ## Was noch offen ist
-
-**Die Auslieferung ist nie bis zum Ende gelaufen.** Zugangsdaten liegen seit
-dem 27.08.2026 vor, Anmeldung und Verzeichnisauflistung sind belegt. Unbewiesen
-bleiben bis zur ersten echten Auslieferung: der Upload selbst, der Abgleich der
-Prüfsummen von außen und die Negativprobe des Live-Checks.
 
 **Screenreader-Prüfung von Hand.** Automatische Prüfung findet nur einen Teil.
 Fällig vor der Veröffentlichung des Repositories.
