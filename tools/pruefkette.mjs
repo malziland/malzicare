@@ -18,6 +18,7 @@ const SCHRITTE = [
   ['Geheimnis-Scan', process.execPath, ['tools/scan-secrets.mjs']],
   ['Unit-Tests', process.execPath, ['tools/run-tests.mjs']],
   ['Oberflaechentests', 'npx', ['playwright', 'test']],
+  ['Abdeckung', process.execPath, ['tools/abdeckung.mjs']],
 ];
 
 const nurSchnell = process.argv.includes('--schnell');
@@ -25,7 +26,7 @@ const ergebnisse = [];
 let alleGruen = true;
 
 for (const [name, cmd, args] of SCHRITTE) {
-  if (nurSchnell && name === 'Oberflaechentests') {
+  if (nurSchnell && (name === 'Oberflaechentests' || name === 'Abdeckung')) {
     ergebnisse.push([name, 'uebersprungen (--schnell)']);
     alleGruen = false; // Uebersprungen ist nie "bestanden".
     continue;

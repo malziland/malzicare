@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './hilfen.mjs';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -118,4 +118,96 @@ test('die Marke traegt ein eigenes Symbol, nicht das der Dachmarke', async ({ pa
     const antwort = await page.request.get(s);
     expect(antwort.status(), `Symbol nicht abrufbar: ${s}`).toBe(200);
   }
+});
+
+/* --- Bereiche, die der erste Testlauf nie erreicht hat -------------------
+   Gemessen mit tools/abdeckung.mjs: Datumswaehler, Entwurf laden, Dialoge,
+   Umsortieren und der Reiterwechsel liefen in keinem Test. Genau dort sitzt
+   aber die Arbeit einer Lehrkraft im Unterricht. */
+
+test('der Reiter Texte zeigt die Textfelder', async ({ page }) => {
+  await expect(page.locator('#panelInhalt')).toBeVisible();
+  await page.click('#tabTexte');
+  await expect(page.locator('#panelTexte')).toBeVisible();
+  await expect(page.locator('#panelInhalt')).toBeHidden();
+  await page.fill('#inTxtTitle', 'Unsere Regeln für den Chat');
+  await page.locator('#inTxtTitle').blur();
+  await expect(page.locator('#txtTitle')).toContainText('Unsere Regeln für den Chat');
+  await page.click('#tabInhalt');
+  await expect(page.locator('#panelInhalt')).toBeVisible();
+});
+
+test('ein Datum laesst sich aus dem Kalender waehlen', async ({ page }) => {
+  await page.click('#btnDatePick');
+  await expect(page.locator('#datePick')).toBeVisible();
+  await expect(page.locator('#btnDatePick')).toHaveAttribute('aria-expanded', 'true');
+  await page.locator('#datePick .dp-day').filter({ hasText: /^15$/ }).first().click();
+  await expect(page.locator('#datePick')).toBeHidden();
+  const wert = await page.inputValue('#inDate');
+  expect(wert, 'im Feld steht kein Datum').toMatch(/\d/);
+  await expect(page.locator('#signDate')).toContainText(wert.slice(-4));
+});
+
+test('ein gespeicherter Entwurf laesst sich wieder oeffnen', async ({ page }) => {
+  await page.fill('#inGroup', 'Klasse 7C');
+  await page.locator('#inGroup').blur();
+  await page.fill('#inAdmin', 'Mira');
+  await page.click('#btnAddAdmin');
+  const [download] = await Promise.all([page.waitForEvent('download'), page.click('#btnSave')]);
+  const pfad = await download.path();
+
+  // Zuruecksetzen, damit das Laden auch wirklich etwas veraendert.
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await expect(page.locator('#inGroup')).not.toHaveValue('Klasse 7C');
+
+  await page.setInputFiles('#fileInput', pfad);
+  await expect(page.locator('#inGroup')).toHaveValue('Klasse 7C');
+  await expect(page.locator('#posterAdmins')).toContainText('Mira');
+});
+
+test('eine fremde Datei wird abgelehnt, ohne den Stand zu verlieren', async ({
+  page,
+}, testInfo) => {
+  await page.fill('#inGroup', 'Klasse 8A');
+  await page.locator('#inGroup').blur();
+  const fremd = testInfo.outputPath('fremd.json');
+  await import('node:fs/promises').then((fs) => fs.writeFile(fremd, 'das ist kein JSON'));
+  await page.setInputFiles('#fileInput', fremd);
+  await expect(page.locator('#mlModal')).toBeVisible();
+  await expect(page.locator('#mlModalTitle')).toContainText('Datei');
+  await page.click('#mlModalOk');
+  await expect(page.locator('#mlModal')).toBeHidden();
+  // Der Stand muss unveraendert sein - das verspricht die Meldung.
+  await expect(page.locator('#inGroup')).toHaveValue('Klasse 8A');
+});
+
+test('Zuruecksetzen fragt nach und laesst sich abbrechen', async ({ page }) => {
+  await page.fill('#inGroup', 'Klasse 9B');
+  await page.locator('#inGroup').blur();
+  await page.click('#btnReset');
+  await expect(page.locator('#mlModal')).toBeVisible();
+  await page.click('#mlModalCancel');
+  await expect(page.locator('#inGroup')).toHaveValue('Klasse 9B');
+
+  await page.click('#btnReset');
+  await page.click('#mlModalOk');
+  await expect(page.locator('#inGroup')).not.toHaveValue('Klasse 9B');
+});
+
+test('eine Regel laesst sich loeschen', async ({ page }) => {
+  const zeilen = page.locator('#listGood .rule-row');
+  const vorher = await zeilen.count();
+  const ersterText = await zeilen.first().locator('input').inputValue();
+  await zeilen.first().locator('.row-del').click();
+  await expect(zeilen).toHaveCount(vorher - 1);
+  await expect(page.locator('#chat')).not.toContainText(ersterText);
+});
+
+test('eine Regel laesst sich mit den Pfeiltasten verschieben', async ({ page }) => {
+  const zeilen = page.locator('#listGood .rule-row');
+  const zweiter = await zeilen.nth(1).locator('input').inputValue();
+  await zeilen.nth(1).locator('.row-grip').focus();
+  await page.keyboard.press('ArrowUp');
+  await expect(zeilen.first().locator('input')).toHaveValue(zweiter);
 });

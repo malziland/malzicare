@@ -6,6 +6,7 @@
 node_modules/
 .playwright/
 test-results/
+.abdeckung/
 playwright-report/
 
 # Bau-Ergebnisse

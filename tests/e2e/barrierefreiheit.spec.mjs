@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './hilfen.mjs';
 import AxeBuilder from '@axe-core/playwright';
 
 const SEITEN = ['/', '/impressum.html', '/datenschutz.html', '/agb.html'];

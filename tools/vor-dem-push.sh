@@ -47,6 +47,7 @@ lauf "Cache-Buster"           node tools/cache-buster.mjs
 lauf "Geheimnis-Scan"         node tools/scan-secrets.mjs
 lauf "Unit-Tests"             node tools/run-tests.mjs
 lauf "Oberflaechentests"      npx playwright test
+lauf "Abdeckung ueber 80 %"   node tools/abdeckung.mjs
 
 # Was die Pipeline zusaetzlich prueft.
 lauf "Abhaengigkeiten"        npm audit --audit-level=high

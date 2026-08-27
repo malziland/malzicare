@@ -4,7 +4,14 @@ Editor für Klassenchat-Regeln. Eine Klasse trägt ihre Vereinbarungen ein und
 druckt sie als A3-Plakat – in der Optik der App, die sie selbst benutzt:
 WhatsApp, Snapchat, TikTok oder Signal.
 
-Live: <https://malzi.care>
+**Live: <https://malzi.care>**
+
+![Der Editor: links die Eingaben, rechts das Plakat in der Vorschau](docs/bilder/editor.png)
+
+Links werden Regeln, Admins und Folgen eingetragen, rechts entsteht das Plakat
+mit – und zwar in der Optik der App, die die Klasse wirklich benutzt:
+
+![Dasselbe Plakat in WhatsApp-, Snapchat-, TikTok- und Signal-Optik](docs/bilder/vier-optiken.png)
 
 ## Was ihn ausmacht
 
@@ -82,10 +89,11 @@ Der Ablauf, die Rückwege und der Stand der Nachweise stehen in
 
 ## Mitarbeiten
 
-Fehlerberichte und Vorschläge sind willkommen. Vor jedem Commit läuft
-`npm run verify` – eine übersprungene Prüfung gilt als Fehlschlag, nicht als
-Hinweis. Sicherheitsrelevantes bitte nicht öffentlich melden, siehe
-[SECURITY.md](SECURITY.md).
+Fehlerberichte, Rückmeldungen aus dem Unterricht und Verbesserungen sind
+willkommen – wie und was, steht in [CONTRIBUTING.md](CONTRIBUTING.md). Für den
+Umgangston gilt der [Verhaltenskodex](CODE_OF_CONDUCT.md); ein Projekt über
+Chat-Regeln sollte sich an eigene halten. Sicherheitsrelevantes bitte nicht
+öffentlich melden, siehe [SECURITY.md](SECURITY.md).
 
 ## Lizenz
 

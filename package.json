@@ -19,6 +19,7 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "node tools/run-tests.mjs",
     "test:e2e": "playwright test",
+    "test:abdeckung": "npx playwright test --project=chromium && node tools/abdeckung.mjs",
     "verify": "node tools/pruefkette.mjs",
     "vor-dem-push": "sh tools/vor-dem-push.sh",
     "build": "node tools/build.mjs",
