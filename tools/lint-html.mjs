@@ -15,6 +15,19 @@ const site = JSON.parse(await readFile(path.join(ROOT, 'site.json'), 'utf8'));
 const BASE = site.base_url.replace(/\/$/, '');
 const BUSTER = String(site.cache_buster);
 
+/* Die eigene Seite - mit Abschluss nach dem Namen, sonst zaehlt jede fremde
+   Adresse mit, die ihn als Anfang traegt. */
+const EIGENE_ADRESSE = /^https?:\/\/(www\.)?(malzi\.care|klassenchat\.malziland\.at)([/?#]|$)/i;
+
+/** Vergleicht Adressen ueber ihre Herkunft, nicht ueber den Wortanfang. */
+function herkunft(u) {
+  try {
+    return new URL(u).origin;
+  } catch {
+    return u;
+  }
+}
+
 const fehler = [];
 const geprueft = { seiten: 0, verweise: 0, adressen: 0 };
 
@@ -36,7 +49,25 @@ for (const rel of htmlDateien) {
   if (!/<title>[^<]{10,}<\/title>/.test(html)) melde(rel, 'kein brauchbarer Titel');
   if (!/<meta\s+name="description"\s+content="[^"]{40,}"/.test(html))
     melde(rel, 'keine Beschreibung (meta description)');
-  if (!/<link\s+rel="canonical"\s+href="[^"]+"/.test(html)) melde(rel, 'kein canonical');
+  /* Die canonical-Angabe entscheidet, unter welcher Adresse die Seite gilt.
+     Sie wird ausdruecklich gegen die Basis geprueft - im allgemeinen
+     Adress-Durchlauf weiter unten wuerde eine falsche Angabe als "fremde
+     Adresse" gelten und stillschweigend uebersprungen. */
+  const kanonisch = /<link\s+rel="canonical"\s+href="([^"]+)"/.exec(html);
+  if (!kanonisch) {
+    melde(rel, 'kein canonical');
+  } else {
+    const erwartet = rel === 'index.html' ? BASE + '/' : `${BASE}/${rel}`;
+    if (kanonisch[1] !== erwartet) {
+      melde(rel, `canonical zeigt auf ${kanonisch[1]}, erwartet ${erwartet}`);
+    }
+    geprueft.adressen++;
+  }
+
+  const ogUrl = /<meta\s+property="og:url"\s+content="([^"]+)"/.exec(html);
+  if (ogUrl && herkunft(ogUrl[1]) !== herkunft(BASE)) {
+    melde(rel, `og:url zeigt auf eine fremde Herkunft: ${ogUrl[1]}`);
+  }
 
   // Lokale Verweise muessen auf vorhandene Dateien zeigen.
   for (const m of html.matchAll(/(?:href|src)="([^"#][^"]*)"/g)) {
@@ -60,9 +91,15 @@ for (const rel of htmlDateien) {
   // Absolute Adressen auf die eigene Seite.
   for (const m of html.matchAll(/https?:\/\/[^"'\s<>)]+/g)) {
     const url = m[0];
-    if (!/klassenchat|malzi\.care|malzicare/i.test(url)) continue;
+    // Nur die eigene Seite pruefen. Der Verweis auf den Quelltext zeigt auf
+    // github.com und enthaelt den Projektnamen - er ist keine eigene Adresse.
+    // Der Abschluss nach dem Namen ist wichtig: Ohne ihn gilt auch
+    // malzi.care.fremde-seite.example als eigene Adresse.
+    if (!EIGENE_ADRESSE.test(url)) continue;
     geprueft.adressen++;
-    if (!url.startsWith(BASE)) melde(rel, `fremde Basis-Adresse: ${url} (erwartet ${BASE})`);
+    if (herkunft(url) !== herkunft(BASE)) {
+      melde(rel, `fremde Basis-Adresse: ${url} (erwartet ${BASE})`);
+    }
   }
 }
 
@@ -75,9 +112,15 @@ for (const rel of ['sitemap.xml', 'robots.txt', 'llms.txt', 'site.webmanifest'])
   const text = await readFile(path.join(PUBLIC_DIR, rel), 'utf8');
   for (const m of text.matchAll(/https?:\/\/[^"'\s<>)]+/g)) {
     const url = m[0];
-    if (!/klassenchat|malzi\.care|malzicare/i.test(url)) continue;
+    // Nur die eigene Seite pruefen. Der Verweis auf den Quelltext zeigt auf
+    // github.com und enthaelt den Projektnamen - er ist keine eigene Adresse.
+    // Der Abschluss nach dem Namen ist wichtig: Ohne ihn gilt auch
+    // malzi.care.fremde-seite.example als eigene Adresse.
+    if (!EIGENE_ADRESSE.test(url)) continue;
     geprueft.adressen++;
-    if (!url.startsWith(BASE)) melde(rel, `fremde Basis-Adresse: ${url} (erwartet ${BASE})`);
+    if (herkunft(url) !== herkunft(BASE)) {
+      melde(rel, `fremde Basis-Adresse: ${url} (erwartet ${BASE})`);
+    }
   }
 }
 

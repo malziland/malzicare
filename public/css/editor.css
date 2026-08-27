@@ -785,3 +785,30 @@ body.shot .poster { box-shadow: none; }
     background: none;
   }
 }
+
+/* Verweis auf den Quelltext - Aufbau und Werte wie der gleichnamige Knopf auf
+   malzi.me, damit die Dienste zusammengehoerig aussehen. */
+.opensource-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ml-warmgray-text);
+  text-decoration: none;
+  border: 1px solid var(--ml-warmgray-40);
+  border-radius: var(--radius-md);
+  background: var(--ml-white);
+  transition: color 120ms var(--ease), border-color 120ms var(--ease);
+}
+
+.opensource-link:hover {
+  color: var(--ml-teal);
+  border-color: var(--ml-teal);
+}
+
+.opensource-link svg {
+  flex: none;
+}

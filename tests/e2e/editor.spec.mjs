@@ -211,3 +211,45 @@ test('eine Regel laesst sich mit den Pfeiltasten verschieben', async ({ page }) 
   await page.keyboard.press('ArrowUp');
   await expect(zeilen.first().locator('input')).toHaveValue(zweiter);
 });
+
+test('ein Lesefehler meldet sich, statt still zu scheitern', async ({ page }, testInfo) => {
+  /* Der einzige Pfad, den kein anderer Test erreicht: Wenn der Browser die
+     gewaehlte Datei nicht lesen kann. Von aussen laesst sich das nicht
+     ausloesen - deshalb wird der Leser fuer diesen einen Test so ersetzt,
+     dass er scheitert. Geprueft wird das Verhalten des Editors, nicht der
+     Browser: Er muss es sagen und den Stand behalten. */
+  await page.evaluate(() => {
+    window.FileReader = function () {};
+    window.FileReader.prototype.readAsText = function () {
+      setTimeout(() => this.onerror && this.onerror(new Error('Lesefehler')), 0);
+    };
+  });
+
+  await page.fill('#inGroup', 'Klasse 10A');
+  await page.locator('#inGroup').blur();
+
+  const datei = testInfo.outputPath('entwurf.json');
+  await import('node:fs/promises').then((fs) =>
+    fs.writeFile(datei, JSON.stringify({ app: 'klassenchat-plakat-v1', groupName: 'Andere' }))
+  );
+  await page.setInputFiles('#fileInput', datei);
+
+  await expect(page.locator('#mlModal')).toBeVisible();
+  await expect(page.locator('#mlModalTitle')).toContainText('nicht gelesen');
+  await page.click('#mlModalOk');
+  // Der Stand muss unveraendert sein - genau das verspricht die Meldung.
+  await expect(page.locator('#inGroup')).toHaveValue('Klasse 10A');
+});
+
+for (const seite of ['/', '/impressum.html', '/datenschutz.html', '/agb.html']) {
+  test(`der Verweis auf den Quelltext steht auf ${seite}`, async ({ page }) => {
+    await page.goto(seite);
+    const knopf = page.locator('a.opensource-link');
+    await expect(knopf).toBeVisible();
+    await expect(knopf).toContainText('Open Source auf GitHub');
+    await expect(knopf).toHaveAttribute('href', 'https://github.com/malziland/malzicare');
+    // Neuer Tab, damit ein angefangener Entwurf nicht aus dem Blick geraet.
+    await expect(knopf).toHaveAttribute('target', '_blank');
+    await expect(knopf).toHaveAttribute('rel', /noopener/);
+  });
+}

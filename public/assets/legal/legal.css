@@ -72,3 +72,24 @@ a.wortmarke:focus-visible {
   display: inline-flex;
   margin-bottom: 26px;
 }
+
+/* Verweis auf den Quelltext - dieselben Werte wie in css/editor.css. */
+.opensource-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted, #6a6156);
+  text-decoration: none;
+  border: 1px solid var(--border, #82796e66);
+  border-radius: var(--radius-md, 10px);
+  background: var(--surface, #fff);
+}
+.opensource-link:hover {
+  color: var(--ml-teal, #156480);
+  border-color: var(--ml-teal, #156480);
+  text-decoration: none;
+}

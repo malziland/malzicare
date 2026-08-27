@@ -5,6 +5,33 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [1.4.0] – 2026-08-27
+
+### Neu
+
+- **Verweis auf den Quelltext** in der Fußzeile jeder Seite – Aufbau und Werte
+  wie der gleichnamige Knopf auf malzi.me, damit die Dienste zusammengehörig
+  aussehen. _Der Link führt ins Leere, solange das Repository privat ist._
+- **Prüfungen des Barrierefreiheitsbaums** (`tests/e2e/vorlesen.spec.mjs`):
+  Sie lesen, was ein Screenreader vorlesen würde – Namen aller Bedienelemente,
+  Bereiche zum Springen, Überschriften ohne Sprung, Dialogrolle, und dass das
+  Plakat Text hergibt statt eines Bildes. Sie ersetzen keine Prüfung durch
+  einen Menschen mit VoiceOver, fangen aber ab, was dabei am meisten stört.
+- **Test für den Lesefehler beim Öffnen eines Entwurfs** – der letzte Pfad, den
+  kein Test erreichte. Damit laufen alle 61 Funktionen in mindestens einem Test.
+
+### Behoben
+
+- **Überschriften sprangen von `h1` auf `h3`.** Ein Screenreader meldet dabei
+  eine fehlende Ebene. Die acht Karten der Seitenleiste sind jetzt `h2`.
+- **Die Regellisten und die Admin-Liste hatten keinen vorlesbaren Namen.** Wer
+  sie durchhört, wusste nicht, in welcher Spalte er ist; sie tragen jetzt ihre
+  Überschrift als Namen.
+- **Die Adressprüfung ließ gefälschte Adressen durch.** `malzi.care.fremde.example`
+  galt als eigene Adresse, weil der Vergleich am Wortanfang hing statt an der
+  Herkunft. Die `canonical`-Angabe wird jetzt ausdrücklich geprüft – drei
+  Gegenproben belegen es.
+
 ## [1.3.0] – 2026-08-27
 
 ### Geändert
