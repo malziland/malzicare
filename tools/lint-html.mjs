@@ -153,14 +153,6 @@ const BRAUCHT_KEINEN_VERWEIS = [
     datei: 'assets/fonts/OFL.txt',
     grund: 'Lizenztext der Schrift Poppins, muss mitgeliefert werden',
   },
-  {
-    datei: 'assets/malziland-logo-petrol.svg',
-    grund: 'Markenmaterial, fuer spaetere Verwendung vorgehalten',
-  },
-  {
-    datei: 'assets/malziland-m-white.png',
-    grund: 'Wasserzeichen fuer ein dunkles Thema, noch nicht in Gebrauch',
-  },
 ];
 const IMMER_NOETIG =
   /^(index|impressum|datenschutz|nutzungsbedingungen)\.html$|^(robots\.txt|sitemap\.xml|llms\.txt|site\.webmanifest|favicon\.ico|\.htaccess)$/;

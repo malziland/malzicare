@@ -7,6 +7,28 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
+## [1.8.0] – 2026-08-28
+
+### Entfernt
+
+Durchsicht des Repositorys: Was gehört öffentlich, was nicht?
+
+- **`CLAUDE.md`** – sieben ihrer neun Regeln standen bereits in
+  `CONTRIBUTING.md`, im README oder in den ADRs. Doppelte Angaben driften
+  auseinander; die zwei Punkte, die es nur dort gab, stehen jetzt in der
+  Beitragsanleitung, wo sie jeden Mitwirkenden erreichen.
+- **`docs/bilder/github-vorschau.png`** (297 KB) – die Karte wird einmal in den
+  GitHub-Einstellungen hinterlegt und danach nie wieder gebraucht.
+  `tools/bilder-bauen.mjs` legt sie jetzt in den temporären Ordner.
+- **Zwei ungenutzte Markendateien aus `public/`** (212 KB) – sie gingen bei
+  jeder Auslieferung mit, ohne je abgerufen zu werden. In der Git-Historie
+  bleiben sie erhalten.
+
+### Geändert
+
+- Die README-Bilder entstehen in einfacher statt doppelter Punktdichte: Sie
+  werden ohnehin auf Textbreite skaliert. **1,25 MB → 499 KB.**
+
 ## [1.7.0] – 2026-08-27
 
 ### Öffentlich

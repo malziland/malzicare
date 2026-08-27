@@ -29,6 +29,17 @@ der Editor wird auf iPhones benutzt. Ein Test wacht darüber.
 `node tools/cache-buster.mjs --erhoehen`. Sonst sehen Besucher bis zu sieben
 Tage die alte Fassung. Auch darüber wacht eine Prüfung.
 
+## Was nicht angefasst wird
+
+- **`public/js/vendor/`** – Fremdcode, unverändert ausgeliefert. Herkunft,
+  Version und Aktualisierungsweg stehen in [docs/fremdcode.md](docs/fremdcode.md).
+- **Die Formatkennung `klassenchat-plakat-v1` und der Speicherschlüssel** in
+  `public/js/zustand.js`: Wer eine ältere Entwurfsdatei öffnet, soll sie öffnen
+  können. Eine Umbenennung macht gespeicherte Stände unlesbar.
+- **Der PDF-Dateiname `Klassenchat-Regeln.pdf`** – er beschreibt das Ergebnis,
+  nicht die Marke.
+- **Kein Modul über 15 KB** – ein Test wacht darüber (ADR-0004).
+
 ## Was gebraucht wird
 
 - Fehlerberichte mit Browser, Gerät und dem Weg zum Fehler

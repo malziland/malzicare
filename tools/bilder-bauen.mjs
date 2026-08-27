@@ -18,7 +18,7 @@ const basis = `http://localhost:${port}`;
 const { chromium } = await import('@playwright/test');
 const browser = await chromium.launch();
 
-async function seite(breite, hoehe, skalierung = 2) {
+async function seite(breite, hoehe, skalierung = 1) {
   const ctx = await browser.newContext({
     viewport: { width: breite, height: hoehe },
     deviceScaleFactor: skalierung,
@@ -28,7 +28,9 @@ async function seite(breite, hoehe, skalierung = 2) {
 
 // 1. Der Editor als Ganzes
 {
-  const { ctx, p } = await seite(1440, 900);
+  // Einfache Punktdichte genuegt: Im README wird das Bild ohnehin auf
+  // Textbreite skaliert. Bei doppelter waren es 477 KB fuer nichts.
+  const { ctx, p } = await seite(1440, 900, 1);
   await p.goto(basis + '/', { waitUntil: 'networkidle' });
   await p.waitForTimeout(900);
   await p.screenshot({ path: path.join(ZIEL, 'editor.png') });
@@ -38,7 +40,7 @@ async function seite(breite, hoehe, skalierung = 2) {
 
 // 2. Das Plakat in allen vier Optiken, nebeneinander
 {
-  const { ctx, p } = await seite(1400, 520, 2);
+  const { ctx, p } = await seite(1400, 520, 1);
   const bilder = [];
   for (const [id, name] of [
     ['segWa', 'WhatsApp'],
@@ -120,8 +122,13 @@ async function seite(breite, hoehe, skalierung = 2) {
       box-shadow:0 8px 28px #0000000f">
   </body>`);
   await p.waitForTimeout(700);
-  await p.screenshot({ path: path.join(ZIEL, 'github-vorschau.png') });
-  console.log('  docs/bilder/github-vorschau.png  1280x640 (fuer die GitHub-Einstellungen)');
+  /* Bewusst NICHT in docs/bilder: Die Karte wird einmal in den
+     GitHub-Einstellungen hinterlegt und danach nie wieder gebraucht. Sie im
+     Repo mitzuschleppen kostete 297 KB fuer einen einmaligen Handgriff. */
+  const ablage = process.env.TMPDIR || '/tmp';
+  await p.screenshot({ path: path.join(ablage, 'malzicare-github-vorschau.png') });
+  console.log(`  ${ablage}/malzicare-github-vorschau.png  1280x640`);
+  console.log('    -> einmalig unter Settings > General > Social preview hinterlegen');
   await ctx.close();
 }
 
