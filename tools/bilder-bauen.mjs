@@ -68,7 +68,64 @@ async function seite(breite, hoehe, skalierung = 2) {
   console.log('  docs/bilder/vier-optiken.png');
 }
 
+// 3. Das Vorschaubild der Seite (og:image, 1200 x 630)
+{
+  const { ctx, p } = await seite(1200, 630, 2);
+  await p.goto(basis + '/', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(900);
+  /* Gezeigt wird das Plakat mit der Wortmarke darueber - wer den Link teilt,
+     soll sehen, was das Werkzeug macht UND wie es heisst. */
+  const daten = await p.locator('#poster').screenshot();
+  await p.setContent(`<body style="margin:0;width:1200px;height:630px;background:#f9f7f4;
+      font-family:Poppins,system-ui,sans-serif;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:18px;overflow:hidden">
+    <div style="display:inline-flex;align-items:center;gap:5px;font-size:34px;line-height:1;
+        letter-spacing:-0.02em;color:#156480;font-weight:400">malzi<span
+        style="display:inline-flex;align-items:center;justify-content:center;
+        padding:6px 13.2px 8px 12.7px;border-radius:9px;background:#156480;color:#f9f7f4;
+        font-weight:700">CARE</span></div>
+    <div style="font-size:19px;color:#6e675e">Klassenchat-Regeln gemeinsam festlegen und als A3-Plakat drucken</div>
+    <img src="data:image/png;base64,${daten.toString('base64')}"
+      style="width:900px;height:360px;object-fit:cover;object-position:top center;
+      border-radius:12px 12px 0 0;border:1px solid #e2ded8;border-bottom:none;
+      box-shadow:0 8px 28px #0000000f">
+  </body>`);
+  await p.waitForTimeout(700);
+  const fertig = await p.screenshot({ type: 'jpeg', quality: 88 });
+  const { writeFile: schreib } = await import('node:fs/promises');
+  await schreib(path.join(PUBLIC_DIR, 'assets', 'og-image.jpg'), fertig);
+  console.log(`  public/assets/og-image.jpg  1200x630, ${Math.round(fertig.length / 1024)} KB`);
+  await ctx.close();
+}
+
+// 4. Die Karte, die GitHub beim Teilen zeigt (1280 x 640)
+{
+  const { ctx, p } = await seite(1280, 640, 2);
+  await p.goto(basis + '/', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(900);
+  const daten = await p.locator('#poster').screenshot();
+  await p.setContent(`<body style="margin:0;width:1280px;height:640px;background:#f9f7f4;
+      font-family:Poppins,system-ui,sans-serif;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:14px;overflow:hidden">
+    <div style="display:inline-flex;align-items:center;gap:5px;font-size:40px;line-height:1;
+        letter-spacing:-0.02em;color:#156480;font-weight:400">malzi<span
+        style="display:inline-flex;align-items:center;justify-content:center;
+        padding:7px 15.5px 9px 14.9px;border-radius:11px;background:#156480;color:#f9f7f4;
+        font-weight:700">CARE</span></div>
+    <div style="font-size:20px;color:#404749;font-weight:500">Editor für Klassenchat-Regeln</div>
+    <div style="font-size:15px;color:#6e675e">Läuft im Browser · kein Konto · kein Server · MIT-Lizenz</div>
+    <img src="data:image/png;base64,${daten.toString('base64')}"
+      style="width:920px;height:330px;object-fit:cover;object-position:top center;
+      border-radius:12px 12px 0 0;border:1px solid #e2ded8;border-bottom:none;
+      box-shadow:0 8px 28px #0000000f">
+  </body>`);
+  await p.waitForTimeout(700);
+  await p.screenshot({ path: path.join(ZIEL, 'github-vorschau.png') });
+  console.log('  docs/bilder/github-vorschau.png  1280x640 (fuer die GitHub-Einstellungen)');
+  await ctx.close();
+}
+
 await browser.close();
 server.close();
-console.log('\nBilder liegen in docs/bilder/ - ausserhalb von public/, sie werden also');
-console.log('nicht mit ausgeliefert.');
+console.log('\nDie Bilder in docs/bilder/ liegen ausserhalb von public/ und werden nicht');
+console.log('mit ausgeliefert. Das Vorschaubild der Seite (og-image.jpg) schon.');

@@ -7,7 +7,7 @@
 # Entscheidung von Christoph Krieger am 27.08.2026: gleicher Schutz, aber der
 # Zeitpunkt gehoert dem Menschen.
 #
-# Anders als bei malziME laufen hier ALLE Pruefungen mit, auch die
+# Es laufen ALLE Pruefungen mit, auch die
 # Oberflaechentests: Sie brauchen zusammen weniger als eine Minute. Was hier
 # gruen ist, ist auch in der Pipeline gruen.
 #
@@ -45,6 +45,8 @@ lauf "Linter"                 npx eslint public/js/app.js tools tests eslint.con
 lauf "Verweise und Adressen"  node tools/lint-html.mjs
 lauf "Cache-Buster"           node tools/cache-buster.mjs
 lauf "Geheimnis-Scan"         node tools/scan-secrets.mjs
+lauf "Fremdcode"              node tools/fremdcode.mjs
+lauf "Sperrliste"             node tools/sperrliste.mjs
 lauf "Unit-Tests"             node tools/run-tests.mjs
 lauf "Oberflaechentests"      npx playwright test
 lauf "Abdeckung ueber 80 %"   node tools/abdeckung.mjs

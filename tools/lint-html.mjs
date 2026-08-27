@@ -64,6 +64,15 @@ for (const rel of htmlDateien) {
     geprueft.adressen++;
   }
 
+  /* Auch die Vorschaubilder brauchen den Cache-Buster: Soziale Netze halten
+     sie monatelang fest, und ohne neuen Namen bekommt niemand das neue Bild. */
+  for (const m of html.matchAll(
+    /content="(https:\/\/[^"]*\/assets\/[^"]+\.(?:jpg|png))(\?v=(\d+))?"/g
+  )) {
+    if (!m[2]) melde(rel, `Vorschaubild ohne Cache-Buster: ${m[1]}`);
+    else if (m[3] !== BUSTER) melde(rel, `Vorschaubild mit Cache-Buster ${m[3]} statt ${BUSTER}`);
+  }
+
   const ogUrl = /<meta\s+property="og:url"\s+content="([^"]+)"/.exec(html);
   if (ogUrl && herkunft(ogUrl[1]) !== herkunft(BASE)) {
     melde(rel, `og:url zeigt auf eine fremde Herkunft: ${ogUrl[1]}`);

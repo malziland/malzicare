@@ -76,8 +76,7 @@ body {
   white-space: nowrap;
 }
 
-/* Wortmarke malziCARE - Aufbau, Abstaende und Rundung wie die Wortmarke von
-   malzi.me: "malzi" in der Textfarbe, die Endung als Kachel. Kein Bild,
+/* Wortmarke malziCARE: "malzi" in der Textfarbe, die Endung als Kachel. Kein Bild,
    sondern dieselbe Schrift, die die Seite ohnehin laedt: so bleibt sie in
    jeder Groesse scharf, laesst sich vorlesen und kostet keinen Ladevorgang.
    Eine Marke bricht nicht um - daher nowrap. */
@@ -89,8 +88,7 @@ body {
   white-space: nowrap;
   font-family: 'Poppins', system-ui, sans-serif;
   font-weight: 400;
-  /* 18px statt der 22px von malzi.me: Dort steht die Marke im grossen
-     Seitenkopf, hier in einer Werkzeugleiste neben 15px-Text. */
+  /* 18px: Die uebernommenen Werte stammen aus einem grossen Seitenkopf, hier in einer Werkzeugleiste neben 15px-Text. */
   font-size: 18px;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -108,8 +106,7 @@ body {
      Schrift beidseitig 8,25 px vom Rand - Unterschied 0,00 px.
      Senkrecht bleiben 0,75 px: Grossbuchstaben sitzen in Poppins nicht mittig
      in der Zeilenbox, und der Browser rundet die Textlage auf ganze Pixel.
-     Zum Vergleich, gleich gemessen: die Vorlage malzi.me liegt bei 1,09 px
-     waagrecht und 4,58 px senkrecht. Ein negativer Buchstabenabstand
+     Ein negativer Buchstabenabstand
      entfaellt - er wirkt auch hinter dem letzten Zeichen. */
   padding: 3px 6.99px 4px 6.71px;
   border-radius: 5px;
@@ -786,8 +783,7 @@ body.shot .poster { box-shadow: none; }
   }
 }
 
-/* Verweis auf den Quelltext - Aufbau, Platz und Werte wie auf malzi.me:
-   ein eigener zentrierter Bereich zwischen Inhalt und Fusszeile, nicht in
+/* Verweis auf den Quelltext: ein eigener zentrierter Bereich zwischen Inhalt und Fusszeile, nicht in
    der Fusszeile. */
 .page-extras {
   flex: none;

@@ -115,7 +115,7 @@ test('das Plakat ist keine Bilderwueste: sein Inhalt steht als Text da', async (
 });
 
 test('der Verweis auf den Quelltext steht in einem benannten Bereich', async ({ page }) => {
-  // Wie auf malzi.me ein eigener Bereich zwischen Inhalt und Fusszeile.
+  // Ein eigener Bereich zwischen Inhalt und Fusszeile.
   // Ohne Namen kann ein Screenreader ihn nicht ansteuern.
   await page.goto('/');
   const bereich = page.locator('aside.page-extras');

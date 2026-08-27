@@ -1,0 +1,42 @@
+name: Fehler melden
+description: Etwas funktioniert nicht wie erwartet
+labels: [fehler]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke fürs Melden. Je genauer der Weg zum Fehler steht, desto schneller
+        ist er behoben – und desto eher entsteht daraus ein Test, der ihn nicht
+        wiederkommen lässt.
+  - type: textarea
+    id: was
+    attributes:
+      label: Was ist passiert?
+      description: Was hast du erwartet, was geschah stattdessen?
+    validations:
+      required: true
+  - type: textarea
+    id: weg
+    attributes:
+      label: Wie kommt man dorthin?
+      placeholder: |
+        1. malzi.care geöffnet
+        2. auf „Snapchat" geklickt
+        3. Regel eingetragen
+        4. auf „PDF herunterladen" – dann …
+    validations:
+      required: true
+  - type: input
+    id: geraet
+    attributes:
+      label: Gerät und Browser
+      placeholder: iPhone 15, Safari · Windows 11, Chrome · iPad, Safari
+    validations:
+      required: true
+  - type: checkboxes
+    id: keine-namen
+    attributes:
+      label: Bitte bestätigen
+      options:
+        - label: Ich habe keine echten Namen von Schülerinnen oder Schülern in diese Meldung geschrieben.
+          required: true

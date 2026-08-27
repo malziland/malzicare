@@ -1,0 +1,23 @@
+name: Idee oder Rückmeldung aus dem Unterricht
+description: Ein Vorschlag, eine fehlende Kleinigkeit, eine Erfahrung aus der Klasse
+labels: [idee]
+body:
+  - type: textarea
+    id: worum
+    attributes:
+      label: Worum geht es?
+    validations:
+      required: true
+  - type: textarea
+    id: warum
+    attributes:
+      label: Woran hat es in der Praxis gefehlt?
+      description: |
+        Am hilfreichsten sind Beobachtungen aus einer echten Einheit: Wo hat es
+        gehakt, was hätte geholfen?
+  - type: markdown
+    attributes:
+      value: |
+        **Zwei Dinge bleiben wie sie sind:** kein Konto und keine Übertragung von
+        Inhalten. Vorschläge, die daran rühren, brauchen vorher eine Absprache –
+        siehe [CONTRIBUTING](../blob/main/CONTRIBUTING.md).

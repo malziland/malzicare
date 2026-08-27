@@ -19,3 +19,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Diese Lizenz gilt für den Quelltext. Der Name "malziCARE", die Wortmarke,
+"malziland - learning | training | consulting e.U." sowie die zugehörigen
+Zeichen und Symbole sind davon NICHT erfasst und bleiben vorbehalten. Wer den
+Code weiterverwendet, ersetzt Name und Zeichen durch eigene.
+
+Die mitgelieferte Schrift Poppins steht unter der SIL Open Font License 1.1
+(public/assets/fonts/OFL.txt), die Bibliotheken in public/js/vendor/ unter der
+MIT-Lizenz ihrer jeweiligen Rechteinhaber. Einzelheiten: docs/LIZENZEN.md

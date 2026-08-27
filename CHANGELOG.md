@@ -5,13 +5,60 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [1.5.0] – 2026-08-27
+
+### Entfernt
+
+- **Verweise auf ein anderes Projekt desselben Anbieters** an vierzehn Stellen
+  in Changelog, Kommentaren und CSS. Sie standen dort als Begründung für
+  übernommene Werte – für Außenstehende Rauschen. `tools/sperrliste.mjs` hält
+  sie künftig fern, zusammen mit offenen Notizen (`TODO`) und
+  Entwicklungsadressen im ausgelieferten Text.
+
+### Behoben
+
+- **Lizenzverstoß bei einer mitgelieferten Bibliothek.** `html-to-image` lag
+  ohne Copyright-Hinweis und ohne Lizenztext im Verzeichnis. Die MIT-Lizenz
+  verlangt genau das eine: dass beides in jeder Kopie mitgeht – und jeder
+  Browser, der die Seite lädt, bekommt eine Kopie. Der Hinweis ist nachgetragen.
+- Die **AGB** waren auf ein geschlossenes Modell geschrieben („bleiben geistiges
+  Eigentum des Anbieters"). Vollständig überarbeitet: Geltungsbereich (die AGB
+  gelten für den unter malzi.care betriebenen Dienst, nicht für eigene
+  Installationen), Weiterbestand bei Einstellung des Betriebs, Abgrenzung von
+  Lizenz und Marke, Haftung für quelloffenen Code und für Beiträge Dritter.
+- **jsPDF war zwei Hauptversionen alt** (2.5.2 statt 4.2.1) – ohne Dependabot
+  hätte das niemand bemerkt. Aktualisiert; der PDF-Test prüft jetzt auch den
+  Inhalt der Datei statt nur den Namen.
+- Die Vorschaubilder trugen keinen Cache-Buster: Soziale Netze hätten
+  monatelang das alte Bild gezeigt.
+
+### Neu
+
+- **`docs/LIZENZEN.md`** – was für welchen Teil gilt: eigener Code (MIT),
+  Bibliotheken (MIT), Schrift (OFL), und ausdrücklich, dass **Name, Wortmarke
+  und Zeichen nicht mitlizenziert** sind. Wer den Code weiterverwendet, tut das
+  unter eigenem Namen. Derselbe Vorbehalt steht jetzt auch in `LICENSE`.
+- **`tools/fremdcode.mjs`** wacht über die mitgelieferten Bibliotheken: Version,
+  Lizenzhinweis, Rechteinhaber und Prüfsumme. `--neuigkeiten` meldet neuere
+  Fassungen. Läuft in der Prüfkette mit.
+- **`docs/fremdcode.md`** – Herkunft, Prüfsummen und der Weg zum Aktualisieren.
+- **Vorschaubilder**, erzeugt aus der laufenden Seite: das `og:image` der Seite
+  und eine Karte für GitHub.
+- Issue-Vorlagen und eine Dependabot-Konfiguration für die Werkzeuge.
+
+### Geändert
+
+- Kontaktadresse ist **info@malzi.care** (15 Fundstellen). Eine Prüfung
+  verlangt auf allen Seiten dieselbe Adresse.
+- Der Verweis auf den Quelltext steht in einem eigenen Bereich zwischen Inhalt
+  und Fußzeile statt in der Fußzeile.
+
 ## [1.4.0] – 2026-08-27
 
 ### Neu
 
-- **Verweis auf den Quelltext** in der Fußzeile jeder Seite – Aufbau und Werte
-  wie der gleichnamige Knopf auf malzi.me, damit die Dienste zusammengehörig
-  aussehen. _Der Link führt ins Leere, solange das Repository privat ist._
+- **Verweis auf den Quelltext** auf jeder Seite, im Stil der übrigen Dienste
+  des Anbieters. _Der Link führt ins Leere, solange das Repository privat ist._
 - **Prüfungen des Barrierefreiheitsbaums** (`tests/e2e/vorlesen.spec.mjs`):
   Sie lesen, was ein Screenreader vorlesen würde – Namen aller Bedienelemente,
   Bereiche zum Springen, Überschriften ohne Sprung, Dialogrolle, und dass das
@@ -70,9 +117,7 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 - **Ränder der Kachel an den Bildpunkten ausgemessen**, nicht aus der Textbox
   gerechnet: waagrecht 0,00 px Unterschied (vorher 0,58 px). Senkrecht bleiben
   0,75 px – Großbuchstaben sitzen in Poppins nicht mittig in der Zeilenbox, und
-  der Browser rundet die Textlage auf ganze Pixel. Zum Vergleich, gleich
-  gemessen: die Vorlage malzi.me liegt bei 1,09 px waagrecht und 4,58 px
-  senkrecht.
+  der Browser rundet die Textlage auf ganze Pixel.
 - Der Zusatz „Klassenchat-Regeln" neben der Marke entfällt – das Plakat zeigt
   den Gegenstand selbst.
 
@@ -106,8 +151,7 @@ sichtbar wurden.
 ### Geändert
 
 - Die Wortmarke sitzt jetzt richtig: 18 px statt 22 px, rechter Innenrand um
-  den Buchstabenabstand ausgeglichen, weniger Verdichtung. Die Werte von
-  malzi.me sind auf zwei Buchstaben abgestimmt, nicht auf vier.
+  den Buchstabenabstand ausgeglichen, weniger Verdichtung. Die übernommenen Werte waren auf zwei Buchstaben abgestimmt, nicht auf vier.
 - Auf allen Unterseiten führt die Wortmarke zurück zum Editor; der Textlink
   „Zurück zum Editor" entfällt.
 - Stand der Nutzungsvereinbarung und der Datenschutzerklärung: 27. August 2026.

@@ -66,6 +66,23 @@ test('der PDF-Export liefert eine Datei mit dem erwarteten Namen', async ({ page
   expect(download.suggestedFilename()).toBe('Klassenchat-Regeln.pdf');
   const pfad = await download.path();
   expect(pfad).toBeTruthy();
+
+  /* Der Dateiname allein sagt nichts - beim Sprung von jsPDF 2 auf 4 haette
+     eine kaputte Datei denselben Namen getragen. Geprueft wird deshalb der
+     Inhalt: gueltiger Dateikopf, plausible Groesse, und A3 quer in Punkten
+     (420 x 297 mm sind 1190,55 x 841,89 pt). */
+  const { readFile } = await import('node:fs/promises');
+  const roh = await readFile(pfad);
+  expect(roh.subarray(0, 5).toString(), 'kein PDF-Dateikopf').toBe('%PDF-');
+  expect(roh.length, 'die Datei ist zu klein fuer ein Plakat').toBeGreaterThan(50_000);
+
+  const text = roh.toString('latin1');
+  const masse = /\/MediaBox\s*\[\s*0\s+0\s+([\d.]+)\s+([\d.]+)/.exec(text);
+  expect(masse, 'keine Seitengroesse im PDF gefunden').toBeTruthy();
+  const [breite, hoehe] = [Number(masse[1]), Number(masse[2])];
+  expect(Math.round(breite), 'Breite ist nicht A3 quer').toBe(1191);
+  expect(Math.round(hoehe), 'Hoehe ist nicht A3 quer').toBe(842);
+  expect(text, 'der Titel fehlt in den Dateiangaben').toContain('Klassenchat-Regeln');
 });
 
 test('der Editor ist mit der Tastatur bedienbar', async ({ page }) => {

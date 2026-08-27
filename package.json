@@ -26,14 +26,15 @@
     "run": "node tools/serve.mjs",
     "deploy": "node tools/deploy.mjs",
     "verify:live": "node tools/live-check.mjs",
-    "scan:secrets": "node tools/scan-secrets.mjs"
+    "scan:secrets": "node tools/scan-secrets.mjs",
+    "fremdcode": "node tools/fremdcode.mjs --neuigkeiten"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.50.1",
     "eslint": "^10.9.1",
-    "globals": "^15.15.0",
+    "globals": "^17.11.0",
     "prettier": "^3.5.0",
     "ssh2-sftp-client": "^12.1.1"
   }

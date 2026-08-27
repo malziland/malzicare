@@ -16,6 +16,8 @@ const SCHRITTE = [
   ['Verweise und Adressen', process.execPath, ['tools/lint-html.mjs']],
   ['Cache-Buster', process.execPath, ['tools/cache-buster.mjs']],
   ['Geheimnis-Scan', process.execPath, ['tools/scan-secrets.mjs']],
+  ['Mitgelieferter Fremdcode', process.execPath, ['tools/fremdcode.mjs']],
+  ['Sperrliste', process.execPath, ['tools/sperrliste.mjs']],
   ['Unit-Tests', process.execPath, ['tools/run-tests.mjs']],
   ['Oberflaechentests', 'npx', ['playwright', 'test']],
   ['Abdeckung', process.execPath, ['tools/abdeckung.mjs']],
