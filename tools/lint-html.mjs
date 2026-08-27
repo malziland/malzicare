@@ -47,7 +47,9 @@ for (const rel of htmlDateien) {
     if (ohneQuery === '') continue;
     const abs = path.join(PUBLIC_DIR, dir, ohneQuery);
     if (!existsSync(abs)) melde(rel, `Verweis zeigt ins Leere: ${ziel}`);
-    if (/\.(css|js)$/.test(ohneQuery)) {
+    // Symbole und Manifest zaehlen mit: Ohne Buster zeigt der Browser sie
+    // bis zu sieben Tage lang aus dem Zwischenspeicher (siehe .htaccess).
+    if (/\.(css|js|ico|png|webmanifest)$/.test(ohneQuery)) {
       const v = /[?&]v=([^&"]*)/.exec(ziel);
       if (!v) melde(rel, `Verweis ohne Cache-Buster: ${ziel}`);
       else if (v[1] !== BUSTER)

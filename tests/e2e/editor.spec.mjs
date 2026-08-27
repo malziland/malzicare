@@ -86,3 +86,30 @@ test('der Editor ist mit der Tastatur bedienbar', async ({ page }) => {
     `kein sichtbarer Fokus: ${JSON.stringify(umriss)}`
   ).toBeTruthy();
 });
+
+for (const seite of ['/impressum.html', '/datenschutz.html', '/agb.html']) {
+  test(`die Wortmarke fuehrt von ${seite} zurueck zum Editor`, async ({ page }) => {
+    await page.goto(seite);
+    const marke = page.locator('a.wortmarke');
+    await expect(marke).toBeVisible();
+    await expect(marke).toContainText('malziCARE');
+    // Sie ersetzt den frueheren Textlink - der darf nicht zurueckkommen.
+    await expect(page.getByText('Zurück zum Editor')).toHaveCount(0);
+    await marke.click();
+    await expect(page.locator('#poster')).toBeVisible();
+  });
+}
+
+test('die Marke traegt ein eigenes Symbol, nicht das der Dachmarke', async ({ page }) => {
+  await page.goto('/');
+  const symbole = await page.evaluate(() =>
+    [...document.querySelectorAll('link[rel*="icon"]')].map((l) => l.getAttribute('href'))
+  );
+  expect(symbole.length).toBeGreaterThan(0);
+  for (const s of symbole) {
+    // Ohne Cache-Buster zeigt der Browser bis zu sieben Tage das alte Symbol.
+    expect(s, `Symbol ohne Cache-Buster: ${s}`).toMatch(/\?v=/);
+    const antwort = await page.request.get(s);
+    expect(antwort.status(), `Symbol nicht abrufbar: ${s}`).toBe(200);
+  }
+});

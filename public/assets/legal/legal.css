@@ -19,3 +19,49 @@
 section p a,
 li a { text-decoration: underline; }
 .footer__brand { text-decoration: underline; }
+
+/* --- Wortmarke malziCARE, 27.08.2026 ------------------------------------
+   Dieselben Werte wie in css/editor.css. Auf den Unterseiten ist sie zugleich
+   der Weg zurueck - deshalb ein Link, aber ohne Unterstreichung und ohne
+   Linkfarbe: sie ist eine Marke, kein Fliesstext. Der Fokusring bleibt,
+   sonst waere sie mit der Tastatur unsichtbar erreichbar. */
+.wortmarke {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ml-teal, #156480);
+}
+.wortmarke-care {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px calc(7px + 0.01em) 4px 7px;
+  border-radius: 5px;
+  background: var(--ml-teal, #156480);
+  color: #f9f7f4;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+a.wortmarke {
+  text-decoration: none;
+  color: var(--ml-teal, #156480);
+}
+a.wortmarke:hover .wortmarke-care {
+  opacity: 0.88;
+}
+a.wortmarke:focus-visible {
+  outline: 2px solid var(--ml-teal, #156480);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.seiten-wortmarke {
+  display: inline-flex;
+  margin-bottom: 26px;
+}

@@ -89,9 +89,11 @@ body {
   white-space: nowrap;
   font-family: 'Poppins', system-ui, sans-serif;
   font-weight: 400;
-  font-size: 22px;
+  /* 18px statt der 22px von malzi.me: Dort steht die Marke im grossen
+     Seitenkopf, hier in einer Werkzeugleiste neben 15px-Text. */
+  font-size: 18px;
   line-height: 1;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.02em;
   color: var(--ml-teal);
 }
 
@@ -99,12 +101,18 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 5px 3px;
-  border-radius: 4px;
+  /* Rechts der Ausgleich fuer den Buchstabenabstand: Ein negatives
+     letter-spacing wirkt AUCH hinter dem letzten Buchstaben und macht den
+     rechten Innenrand kleiner als den linken. Bei zwei Buchstaben faellt
+     das kaum auf, bei vieren schon. */
+  padding: 3px calc(7px + 0.01em) 4px 7px;
+  border-radius: 5px;
   background: var(--ml-teal);
   color: #f9f7f4;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  /* Deutlich weniger Verdichtung als bei "ME": C, A, R und E haben sehr
+     unterschiedliche Breiten, eng gesetzt wirken sie ungleichmaessig. */
+  letter-spacing: -0.01em;
 }
 
 /* Was der Dienst tut, steht neben der Marke: der Name allein erklaert ihn
