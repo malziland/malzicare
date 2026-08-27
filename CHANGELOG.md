@@ -9,10 +9,10 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ### Entfernt
 
-- **Verweise auf ein anderes Projekt desselben Anbieters** an vierzehn Stellen
-  in Changelog, Kommentaren und CSS. Sie standen dort als Begründung für
+- **Verweise auf ein anderes meiner Projekte** an vierzehn Stellen in
+  Changelog, Kommentaren und CSS. Sie standen dort als Begründung für
   übernommene Werte – für Außenstehende Rauschen. `tools/sperrliste.mjs` hält
-  sie künftig fern, zusammen mit offenen Notizen (`TODO`) und
+  sie künftig fern, zusammen mit liegengebliebenen Arbeitsnotizen und
   Entwicklungsadressen im ausgelieferten Text.
 
 ### Behoben
@@ -21,9 +21,9 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
   ohne Copyright-Hinweis und ohne Lizenztext im Verzeichnis. Die MIT-Lizenz
   verlangt genau das eine: dass beides in jeder Kopie mitgeht – und jeder
   Browser, der die Seite lädt, bekommt eine Kopie. Der Hinweis ist nachgetragen.
-- Die **AGB** waren auf ein geschlossenes Modell geschrieben („bleiben geistiges
-  Eigentum des Anbieters"). Vollständig überarbeitet: Geltungsbereich (die AGB
-  gelten für den unter malzi.care betriebenen Dienst, nicht für eigene
+- Die **AGB** waren auf ein geschlossenes Modell geschrieben – die Software
+  bleibe mein geistiges Eigentum. Vollständig überarbeitet: Geltungsbereich (die AGB
+  gelten für den Dienst, den ich unter malzi.care betreibe, nicht für eigene
   Installationen), Weiterbestand bei Einstellung des Betriebs, Abgrenzung von
   Lizenz und Marke, Haftung für quelloffenen Code und für Beiträge Dritter.
 - **jsPDF war zwei Hauptversionen alt** (2.5.2 statt 4.2.1) – ohne Dependabot
@@ -34,7 +34,7 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ### Neu
 
-- **`docs/LIZENZEN.md`** – was für welchen Teil gilt: eigener Code (MIT),
+- **`docs/LIZENZEN.md`** – was für welchen Teil gilt: mein Code (MIT),
   Bibliotheken (MIT), Schrift (OFL), und ausdrücklich, dass **Name, Wortmarke
   und Zeichen nicht mitlizenziert** sind. Wer den Code weiterverwendet, tut das
   unter eigenem Namen. Derselbe Vorbehalt steht jetzt auch in `LICENSE`.
@@ -57,8 +57,8 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ### Neu
 
-- **Verweis auf den Quelltext** auf jeder Seite, im Stil der übrigen Dienste
-  des Anbieters. _Der Link führt ins Leere, solange das Repository privat ist._
+- **Verweis auf den Quelltext** auf jeder Seite, im Stil meiner übrigen
+  Dienste. _Der Link führt ins Leere, solange das Repository privat ist._
 - **Prüfungen des Barrierefreiheitsbaums** (`tests/e2e/vorlesen.spec.mjs`):
   Sie lesen, was ein Screenreader vorlesen würde – Namen aller Bedienelemente,
   Bereiche zum Springen, Überschriften ohne Sprung, Dialogrolle, und dass das

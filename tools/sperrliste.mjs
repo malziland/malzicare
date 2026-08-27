@@ -20,8 +20,11 @@ const GESPERRT = [
   },
   {
     muster: /\bTODO\b|\bFIXME\b|\bXXX\b/,
-    probe: 'TODO: spaeter aufraeumen',
-    grund: 'offene Notiz im ausgelieferten Text - gehoert in ein Issue',
+    // Die Probe wird zusammengesetzt, damit diese Datei ihr eigenes Muster
+    // nicht ausloest - dieselbe Falle wie im Changelog, wo das Wort als
+    // Beispiel stand und die Pruefung anschlug.
+    probe: 'TO' + 'DO: spaeter aufraeumen',
+    grund: 'liegengebliebene Arbeitsnotiz im ausgelieferten Text',
   },
   {
     muster: /localhost:\d+/,
