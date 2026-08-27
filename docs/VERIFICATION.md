@@ -12,14 +12,15 @@ eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 
 ## Grundlage
 
-| Anforderung           | Befehl                         | Ergebnis                                                        | Ungültig, sobald                                  |
-| --------------------- | ------------------------------ | --------------------------------------------------------------- | ------------------------------------------------- |
-| Prüfkette vollständig | `npm run verify`               | 6 Schritte, alle grün                                           | jeder Commit                                      |
-| Unit-Tests            | `npm run test:unit`            | 2 Testdateien, 8 Tests, 8 grün, 0 rot                           | jeder Commit                                      |
-| Oberflächentests      | `npm run test:e2e`             | 36 grün (18 Tests × Chromium und WebKit)                        | jeder Commit                                      |
-| Verweise und Adressen | `node tools/lint-html.mjs`     | 4 Seiten, 46 lokale Verweise, 18 eigene Adressen, keine Befunde | jede Änderung in `public/`                        |
-| Geheimnis-Scan        | `npm run scan:secrets`         | 52 versionierte Textdateien, 6 Muster, keine Funde              | jeder Commit, spätestens vor der Veröffentlichung |
-| Abhängigkeiten        | `npm audit --audit-level=high` | läuft in der Pipeline bei jedem Push                            | jede Änderung an `package-lock.json`              |
+| Anforderung           | Befehl                              | Ergebnis                                                                                                 | Ungültig, sobald                                  |
+| --------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Prüfkette vollständig | `npm run verify`                    | 6 Schritte, alle grün                                                                                    | jeder Commit                                      |
+| Unit-Tests            | `npm run test:unit`                 | 2 Testdateien, 8 Tests, 8 grün, 0 rot                                                                    | jeder Commit                                      |
+| Oberflächentests      | `npm run test:e2e`                  | 36 grün (18 Tests × Chromium und WebKit)                                                                 | jeder Commit                                      |
+| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 46 lokale Verweise, 18 eigene Adressen, keine Befunde                                          | jede Änderung in `public/`                        |
+| Geheimnis-Scan        | `npm run scan:secrets`              | 52 versionierte Textdateien, 6 Muster, keine Funde                                                       | jeder Commit, spätestens vor der Veröffentlichung |
+| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                     | jede Änderung an `package-lock.json`              |
+| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33103787728 auf `main` grün: Prüfkette und Abhängigkeitsprüfung, 36 Oberflächentests auf dem Runner | jeder Push                                        |
 
 ## Dass die Prüfungen überhaupt scheitern können
 
@@ -65,11 +66,18 @@ Live-Standes, die Wirkungsprüfung der `.htaccess` und deren Negativprobe.
 Prüfbar, sobald die Zugangsdaten in `.env` stehen – der Ablauf dafür steht im
 Runbook.
 
-**Die Pipeline ist nie gelaufen.** Sie ist angelegt, aber das Repository hat
-noch keine Gegenstelle. Prüfbar mit dem ersten Push.
-
 **Screenreader-Prüfung von Hand.** Automatische Prüfung findet nur einen Teil.
 Fällig vor der Veröffentlichung des Repositories.
+
+## Gegenstelle
+
+Das Repository liegt seit dem 27.08.2026 auf GitHub unter `malziland/malzicare`,
+**privat**. Die Veröffentlichung ist Schritt 4 der Reihenfolge und ausdrücklich
+noch nicht erfolgt.
+
+Nachgemessen an der Gegenstelle, nicht aus der eigenen Ausgabe geschlossen:
+`git ls-remote --heads --tags origin` zeigt `main` und `v1.0.0` auf dem
+erwarteten Stand, `gh repo view` meldet `"isPrivate": true`.
 
 ## Abnahme
 
