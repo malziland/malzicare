@@ -1,0 +1,11 @@
+# Cache-Regeln Klassenchat-Plakat-Editor
+# HTML wird bei jedem Aufruf neu geprueft (Updates kommen sofort an),
+# Assets duerfen lange gecacht werden (Versionierung laeuft ueber ?v=).
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(css|js|png|jpg|jpeg|ico|svg|woff2|webmanifest|xml|txt)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>

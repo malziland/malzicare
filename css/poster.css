@@ -1,0 +1,726 @@
+/* Das Plakat: fixe A3-Querformat-Fläche (420 × 297 mm), auf dem Bildschirm
+   per transform skaliert, im Druck 1:1 die Seite.
+   Vier Chat-Skins (nachempfunden, ohne Original-Logos): WhatsApp, Snapchat,
+   TikTok, Signal — gesteuert über CSS-Variablen auf .skin-*. */
+
+.poster {
+  width: 420mm;
+  height: 297mm;
+  background: #eceae5;
+  font-family: var(--font-sans);
+  display: flex;
+  gap: 50px;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 18px 50px rgba(57, 66, 70, 0.18);
+  overflow: hidden;
+}
+
+/* ---------- Skin-Variablen ---------- */
+
+/* WhatsApp (aktuelles Light Theme: heller Header, Beige-Wallpaper mit
+   Doodles, hellgrüne eigene Bubbles, blaue Doppelhäkchen, grüner Send-FAB) */
+.skin-wa {
+  --hdr-bg: #ffffff;
+  --hdr-fg: #0b1014;
+  --hdr-sub: #667781;
+  --hdr-ic: #54656f;
+  --hdr-line: #e9edef;
+  --av-bg: #dfe5e7;
+  --av-fg: #ffffff;
+  --screen-bg: #f6f1eb;
+  --day-bg: #ffffff;
+  --day-fg: #667781;
+  --chip-bg: #fff0d3;
+  --chip-fg: #5c5142;
+  --bub-good-bg: #d9fdd3;
+  --bub-good-fg: #0b1014;
+  --bub-bad-bg: #ffffff;
+  --bub-bad-fg: #0b1014;
+  --meta-good: #748b79;
+  --meta-bad: #8a9297;
+  --ticks: #007bfc;
+  --field-bg: #ffffff;
+  --field-fg: #8696a0;
+  --send-bg: #1dab61;
+  --send-fg: #ffffff;
+  --accent: #1dab61;
+  --accent-deep: #0f7a3d;
+  --on-accent: #ffffff;
+  --chipA-bg: #e6f6ec;
+  --chipA-fg: #0f7a3d;
+  --chipA-bd: #bfe6cd;
+  --chat-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%23eae0d4' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40 62 C34 54 22 54 22 64 C22 72 32 78 40 84 C48 78 58 72 58 64 C58 54 46 54 40 62 Z'/%3E%3Cpath d='M138 28 h54 a8 8 0 0 1 8 8 v26 a8 8 0 0 1 -8 8 h-28 l-13 13 v-13 h-13 a8 8 0 0 1 -8 -8 v-26 a8 8 0 0 1 8 -8 Z'/%3E%3Cpath d='M64 196 v-36 l24 -6 v32'/%3E%3Ccircle cx='58' cy='198' r='7'/%3E%3Ccircle cx='82' cy='188' r='7'/%3E%3Crect x='150' y='166' width='54' height='40' rx='9'/%3E%3Ccircle cx='177' cy='186' r='12'/%3E%3Ccircle cx='120' cy='102' r='17'/%3E%3Cpath d='M113 104 q7 7 14 0'/%3E%3Ccircle cx='218' cy='84' r='9'/%3E%3Cpath d='M218 68 v-6 M218 100 v6 M202 84 h-6 M234 84 h6 M207 73 l-4 -4 M229 73 l4 -4 M207 95 l-4 4 M229 95 l4 4'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Snapchat (weißer Chat, Namens-Labels in Versalien, Farbbalken statt
+   Bubbles, gelber Avatar, keine Zeitstempel) */
+.skin-sc {
+  --hdr-bg: #ffffff;
+  --hdr-fg: #16191c;
+  --hdr-sub: #7c8590;
+  --hdr-ic: #16191c;
+  --hdr-line: #eceff1;
+  --av-bg: #fffc00;
+  --av-fg: #16191c;
+  --screen-bg: #ffffff;
+  --day-bg: transparent;
+  --day-fg: #7c8590;
+  --chip-bg: transparent;
+  --chip-fg: #16191c;
+  --bub-good-bg: #ffffff;
+  --bub-good-fg: #16191c;
+  --bub-bad-bg: #ffffff;
+  --bub-bad-fg: #16191c;
+  --meta-good: #9aa3a8;
+  --meta-bad: #9aa3a8;
+  --ticks: #9aa3a8;
+  --field-bg: #f2f2f2;
+  --field-fg: #8a9297;
+  --send-bg: #fffc00;
+  --send-fg: #16191c;
+  --accent: #a08600;
+  --accent-deep: #7a6600;
+  --on-accent: #ffffff;
+  --chipA-bg: #fff8c4;
+  --chipA-fg: #7a6a00;
+  --chipA-bd: #f1e27e;
+  --chat-pattern: none;
+}
+
+/* TikTok (weißer DM-Screen, helle Bubbles, Marken-Cyan/-Pink als Akzente,
+   roter Send-Button) */
+.skin-tt {
+  --hdr-bg: #ffffff;
+  --hdr-fg: #161823;
+  --hdr-sub: #86878b;
+  --hdr-ic: #161823;
+  --hdr-line: #ececee;
+  --av-bg: #161823;
+  --av-fg: #ffffff;
+  --screen-bg: #f5f5f5;
+  --day-bg: transparent;
+  --day-fg: #8a8a8f;
+  --chip-bg: #ffffff;
+  --chip-fg: #161823;
+  --bub-good-bg: #79d5ee;
+  --bub-good-fg: #161823;
+  --bub-bad-bg: #ffffff;
+  --bub-bad-fg: #161823;
+  --meta-good: rgba(22, 24, 35, 0.55);
+  --meta-bad: #a0a1a6;
+  --ticks: rgba(22, 24, 35, 0.55);
+  --field-bg: #f1f1f2;
+  --field-fg: #b7b7b7;
+  --send-bg: #fe2c55;
+  --send-fg: #ffffff;
+  --accent: #fe2c55;
+  --accent-deep: #c4143c;
+  --on-accent: #ffffff;
+  --chipA-bg: #ffe3ea;
+  --chipA-fg: #c4143c;
+  --chipA-bd: #ffc2d1;
+  --chat-pattern: none;
+}
+
+/* Signal (weißer Chat, blaue eigene Bubbles mit weißem Text, graue fremde) */
+.skin-si {
+  --hdr-bg: #ffffff;
+  --hdr-fg: #000000;
+  --hdr-sub: #6f6f74;
+  --hdr-ic: #1b1b1d;
+  --hdr-line: #ececee;
+  --av-bg: #e3e6f8;
+  --av-fg: #5c6bc0;
+  --screen-bg: #ffffff;
+  --day-bg: #e9e9e9;
+  --day-fg: #5e5e5e;
+  --chip-bg: #eaf0ff;
+  --chip-fg: #2447c9;
+  --bub-good-bg: #315ff4;
+  --bub-good-fg: #ffffff;
+  --bub-bad-bg: #e9e9e9;
+  --bub-bad-fg: #000000;
+  --meta-good: rgba(255, 255, 255, 0.75);
+  --meta-bad: #5e5e5e;
+  --ticks: rgba(255, 255, 255, 0.85);
+  --field-bg: #f0f0f0;
+  --field-fg: #5e5e5e;
+  --send-bg: #315ff4;
+  --send-fg: #ffffff;
+  --accent: #315ff4;
+  --accent-deep: #2447c9;
+  --on-accent: #ffffff;
+  --chipA-bg: #e4edff;
+  --chipA-fg: #2447c9;
+  --chipA-bd: #c3d6fb;
+  --chat-pattern: none;
+}
+
+/* ---------- Handy (reale Proportionen ≈ 2,06:1 wie ein iPhone) ---------- */
+
+.phone {
+  flex: none;
+  align-self: center;
+  width: 500px;
+  height: 1030px;
+  background: #101418;
+  border-radius: 64px;
+  padding: 12px;
+  box-shadow: inset 0 0 0 2px #2c3238;
+}
+
+.screen {
+  height: 100%;
+  border-radius: 53px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--screen-bg);
+}
+
+.ph-top {
+  flex: none;
+  background: var(--hdr-bg);
+  color: var(--hdr-fg);
+  border-bottom: 1.5px solid var(--hdr-line);
+}
+
+.ph-status {
+  display: flex;
+  align-items: center;
+  padding: 16px 30px 4px;
+  font-size: 17px;
+  font-weight: 500;
+}
+.ph-time { flex: 1; }
+.ph-notch {
+  width: 116px;
+  height: 32px;
+  background: #101418;
+  border-radius: 999px;
+}
+.ph-sticons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+.ph-sticons svg { height: 14px; width: auto; display: block; }
+
+.ph-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px 14px;
+}
+.ph-back { color: var(--hdr-ic); }
+.ph-back svg { width: 26px; height: 26px; display: block; }
+.ph-avatar {
+  flex: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--av-bg);
+  color: var(--av-fg);
+  display: grid;
+  place-items: center;
+}
+.ph-avatar svg { width: 30px; height: 30px; }
+.ph-initials {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.skin-sc .ph-hicons svg,
+.skin-sc .ph-back svg {
+  background: #ebeff2;
+  border-radius: 50%;
+  padding: 7px;
+  width: 22px;
+  height: 22px;
+}
+.ph-headtext { min-width: 0; }
+.ph-title {
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ph-sub {
+  font-size: 13.5px;
+  color: var(--hdr-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ph-hicons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--hdr-ic);
+}
+.ph-hicons svg { width: 25px; height: 25px; display: block; }
+.ph-hic { display: flex; }
+.skin-sc .ph-menu { display: none; }
+.skin-si .ph-menu { display: none; }
+.skin-tt .ph-video, .skin-tt .ph-phone { display: none; }
+
+/* ---------- Chatverlauf ---------- */
+
+.chat {
+  --cs: 1;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: calc(10px * var(--cs));
+  padding: calc(18px * var(--cs)) 22px;
+  background-image: var(--chat-pattern);
+  background-size: 260px 260px;
+}
+
+.chat-day {
+  align-self: center;
+  background: var(--day-bg);
+  color: var(--day-fg);
+  font-size: calc(12.5px * var(--cs));
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: calc(5px * var(--cs)) 14px;
+  border-radius: 8px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+.skin-sc .chat-day, .skin-tt .chat-day { box-shadow: none; }
+
+/* Abschnitts-Überschriften: bewusst deutlich abgesetzt (mehr Abstand,
+   kräftige Fläche bzw. Farb-Label) */
+.chat-chip {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-size: calc(15px * var(--cs));
+  font-weight: 700;
+  padding: calc(8px * var(--cs)) 16px;
+  border-radius: 10px;
+  margin-top: calc(16px * var(--cs));
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+.chat > .chat-chip:first-child,
+.chat-day + .chat-chip { margin-top: calc(6px * var(--cs)); }
+
+.bubble {
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  gap: calc(9px * var(--cs));
+  padding: calc(8px * var(--cs)) calc(12px * var(--cs));
+  border-radius: 13px;
+  font-size: calc(17px * var(--cs));
+  font-weight: 500;
+  line-height: 1.3;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.b-good {
+  align-self: flex-end;
+  background: var(--bub-good-bg);
+  color: var(--bub-good-fg);
+  border-bottom-right-radius: 4px;
+}
+.b-bad {
+  align-self: flex-start;
+  background: var(--bub-bad-bg);
+  color: var(--bub-bad-fg);
+  border-bottom-left-radius: 4px;
+}
+
+/* WhatsApp: Sprechblasen-Schwänzchen an der jeweils ersten Bubble eines Abschnitts */
+.skin-wa .bubble { position: relative; }
+.skin-wa .chat-chip + .b-good { border-top-right-radius: 4px; }
+.skin-wa .chat-chip + .b-good::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -8px;
+  border-left: 9px solid var(--bub-good-bg);
+  border-bottom: 11px solid transparent;
+}
+.skin-wa .chat-chip + .b-bad { border-top-left-radius: 4px; }
+.skin-wa .chat-chip + .b-bad::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -8px;
+  border-right: 9px solid var(--bub-bad-bg);
+  border-bottom: 11px solid transparent;
+}
+
+.b-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.b-ic {
+  flex: none;
+  width: calc(23px * var(--cs));
+  height: calc(23px * var(--cs));
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+}
+.ic-good { background: #22a85d; }
+.ic-bad { background: #e5484d; }
+.b-ic svg { width: 62%; height: 62%; }
+.skin-si .b-good .b-ic { background: #ffffff; color: #315ff4; }
+
+.b-meta {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 5px;
+  align-self: flex-end;
+  transform: translateY(2px);
+}
+.b-time {
+  font-size: calc(10.5px * var(--cs));
+  font-weight: 400;
+}
+.b-good .b-time { color: var(--meta-good); }
+.b-bad .b-time { color: var(--meta-bad); }
+.b-ticks { color: var(--ticks); }
+.b-ticks svg { width: calc(15px * var(--cs)); height: auto; display: block; }
+
+/* Snapchat: linksbündig, Versalien-Label mit Farbbalken statt Bubbles */
+.skin-sc .chat-chip {
+  align-self: flex-start;
+  box-shadow: none;
+  border-radius: 0;
+  padding: calc(8px * var(--cs)) 0 0;
+  margin-top: calc(20px * var(--cs));
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: calc(13.5px * var(--cs));
+}
+.skin-sc .chip-good { color: #3462f0; }
+.skin-sc .chip-bad { color: #d0213c; }
+.skin-sc .chat-day {
+  align-self: flex-start;
+  padding-left: 0;
+  border-radius: 0;
+}
+.skin-sc .bubble {
+  align-self: flex-start;
+  max-width: 92%;
+  box-shadow: none;
+  border-radius: 6px;
+  border-left: 4px solid;
+  padding: calc(4px * var(--cs)) 0 calc(4px * var(--cs)) calc(12px * var(--cs));
+}
+.skin-sc .b-good { border-color: #3462f0; }
+.skin-sc .b-bad { border-color: #f23c57; }
+.skin-sc .b-meta { display: none; }
+.skin-sc .ph-send { display: none; }
+
+/* TikTok: keine Zeitstempel pro Nachricht, dezente Chips */
+.skin-tt .b-meta { display: none; }
+.skin-tt .chat-chip { box-shadow: none; border-radius: 999px; }
+.skin-tt .bubble { border-radius: 16px; box-shadow: none; }
+.skin-tt .b-good { border-bottom-right-radius: 5px; }
+.skin-tt .b-bad { border-bottom-left-radius: 5px; }
+
+/* Signal: Chips als getönte Pillen, Häkchen weiß auf Blau */
+.skin-si .chat-chip { box-shadow: none; border-radius: 999px; }
+.skin-si .chip-bad { background: #fdebee; color: #c0223b; }
+.skin-si .bubble { border-radius: 16px; box-shadow: none; }
+.skin-si .b-good { border-bottom-right-radius: 5px; }
+.skin-si .b-bad { border-bottom-left-radius: 5px; }
+
+/* ---------- Eingabezeile ---------- */
+
+.ph-inputbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px 28px;
+}
+.ph-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: var(--field-bg);
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: var(--field-fg);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
+}
+.ph-placeholder {
+  flex: 1;
+  font-size: 16.5px;
+  color: var(--field-fg);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ph-fic svg { width: 21px; height: 21px; display: block; }
+.ph-lead {
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.ph-lead-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ebeff2;
+  color: #2c3137;
+}
+.ph-lead-circle svg { width: 23px; height: 23px; }
+.ph-lead-plain { color: #1b1b1d; }
+.ph-lead-plain svg { width: 26px; height: 26px; }
+.ph-trail {
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #1b1b1d;
+}
+.ph-trail svg { width: 24px; height: 24px; }
+.ph-send {
+  flex: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--send-bg);
+  color: var(--send-fg);
+  display: grid;
+  place-items: center;
+}
+.ph-send svg { width: 24px; height: 24px; }
+
+/* ---------- Rechte Spalte ---------- */
+
+.rightcol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 6px 2px 6px 0;
+  overflow: hidden;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent-deep);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.eyebrow-line {
+  flex: none;
+  width: 34px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.p-title {
+  margin: 0;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: #394246;
+  overflow-wrap: anywhere;
+}
+
+.p-sub {
+  margin: 0;
+  font-size: 20.5px;
+  line-height: 1.5;
+  color: #5d666d;
+  max-width: 58ch;
+  overflow-wrap: anywhere;
+}
+
+.pinned {
+  background: #ffffff;
+  border-radius: 18px;
+  border-left: 9px solid var(--accent);
+  box-shadow: 0 10px 26px rgba(57, 66, 70, 0.07);
+  padding: 26px 34px;
+}
+.pinned-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #394246;
+  margin-bottom: 18px;
+}
+.pin-ic { color: var(--accent-deep); }
+.pin-ic svg { width: 18px; height: 18px; display: block; }
+
+.pinned-cols {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 40px;
+}
+.pinned-cols.single { grid-template-columns: 1fr; }
+.pinned-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: #8a9096;
+  margin-bottom: 12px;
+}
+.admin-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.admin-chip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--chipA-fg);
+  background: var(--chipA-bg);
+  border: 1.5px solid var(--chipA-bd);
+  border-radius: 999px;
+  padding: 7px 20px;
+}
+
+.pen-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.pen-list.cols2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px 26px;
+}
+.pen-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  color: #394246;
+  line-height: 1.3;
+}
+.pen-dot {
+  flex: none;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.pen-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.pen-text strong { font-weight: 700; }
+
+.sign {
+  flex: 1;
+  min-height: 230px;
+  position: relative;
+  background: #ffffff;
+  border: 2.5px dashed #c7cdd2;
+  border-radius: 18px;
+  padding: 26px 34px;
+  overflow: hidden;
+}
+.sign-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.sign-check {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  display: grid;
+  place-items: center;
+}
+.sign-check svg { width: 18px; height: 18px; }
+.sign-title {
+  font-size: 29px;
+  font-weight: 700;
+  color: #394246;
+}
+.sign-date {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6a737a;
+  white-space: nowrap;
+}
+.sign-text {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #6a737a;
+  max-width: 78ch;
+  position: relative;
+  z-index: 1;
+}
+.sign-mark {
+  position: absolute;
+  right: -24px;
+  bottom: -34px;
+  color: #edf0f2;
+}
+.sign-mark svg { width: 300px; height: 300px; display: block; }
+
+/* ---------- Druck ---------- */
+
+@page {
+  size: 420mm 297mm;
+  margin: 0;
+}
+
+@media print {
+  html, body { margin: 0; padding: 0; }
+  .stage-inner {
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .poster {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .poster, .poster * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,26 @@
+# Klassenchat-Plakat-Editor
+
+> Kostenloser Online-Editor, mit dem Schulklassen und Lehrkräfte ihre Klassenchat-Regeln als druckfertiges A3-Plakat gestalten. Die Chat-Ansicht ist wahlweise WhatsApp, Snapchat, TikTok oder Signal nachempfunden; Regeln, Admins, Konsequenzen und alle Texte sind frei editierbar. Der Export erzeugt direkt in der App ein PDF im Querformat (420 × 297 mm) mit dem Dateinamen „Klassenchat-Regeln.pdf".
+
+Der Editor wurde von Christoph Krieger entwickelt, Trainer und Berater für Medienkompetenz bei malziland – learning | training | consulting e.U. (Neuhofen an der Krems, Österreich). Er entstand aus der Praxis von Saferinternet-Workshops an Schulen: Die Klasse erarbeitet ihre Chat-Regeln gemeinsam, trägt sie in den Editor ein und unterschreibt das gedruckte Plakat.
+
+Zentrale Eigenschaften:
+
+- Zero-Knowledge-Architektur: Alle Plakat-Inhalte (Gruppenname, Vornamen, Regeln) bleiben ausschließlich im Browser der Nutzer:innen — es gibt keine Server-Datenbank, der Betreiber kann die Inhalte technisch nicht einsehen
+- Kein Konto, keine Anmeldung, keine Cookies, kein Tracking
+- Vier originalgetreu nachempfundene Chat-Ansichten: WhatsApp, Snapchat, TikTok, Signal (ohne Original-Logos, zu Bildungszwecken)
+- Frei editierbar: Regeln, Admins, Konsequenz-Stufen, alle Überschriften und Texte, Workshop-Datum
+- PDF-Export direkt im Browser: exakt A3 quer (420 × 297 mm), eine Seite, druckfertig
+- Entwürfe als Datei speicherbar und wieder öffnbar — jede Person arbeitet an ihrer eigenen lokalen Version
+- Automatisches lokales Speichern; funktioniert auf Desktop, Tablet und Smartphone
+
+## Kontakt
+
+- [malziland – Website](https://www.malziland.at): Training, Coaching und Beratung von Christoph Krieger
+- E-Mail: info@malziland.at
+
+## Nutzung
+
+- [Editor starten](https://klassenchat.malziland.at/): Regeln eintragen, Ansicht wählen, PDF herunterladen
+- [Datenschutz](https://klassenchat.malziland.at/datenschutz.html): Zero-Knowledge-Prinzip verständlich erklärt
+- [Impressum](https://klassenchat.malziland.at/impressum.html)

@@ -1,0 +1,16 @@
+# Zugangsdaten — niemals ins Repo
+.env
+.env.local
+
+# Abhaengigkeiten und Werkzeug-Caches
+node_modules/
+.playwright/
+test-results/
+playwright-report/
+
+# Bau-Ergebnisse
+dist/
+*.zip
+
+# Betriebssystem
+.DS_Store

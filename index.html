@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klassenchat-Plakat-Editor – Klassenchat-Regeln als A3-Plakat | malziland</title>
+<meta name="description" content="Kostenloser Online-Editor für Klassenchat-Regeln: WhatsApp-, Snapchat-, TikTok- oder Signal-Optik wählen, Regeln, Admins und Konsequenzen eintragen und das fertige Plakat als A3-PDF herunterladen. Zero-Knowledge – alle Inhalte bleiben auf deinem Gerät. Von Christoph Krieger (malziland) für Workshops an Schulen.">
+<meta name="author" content="Christoph Krieger, malziland">
+<link rel="canonical" href="https://klassenchat.malziland.at/">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<meta name="theme-color" content="#156480">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="malziland">
+<meta property="og:locale" content="de_AT">
+<meta property="og:title" content="Klassenchat-Plakat-Editor – Klassenchat-Regeln als A3-Plakat">
+<meta property="og:description" content="Regeln für den Klassenchat gemeinsam festlegen und als Plakat in echter WhatsApp-, Snapchat-, TikTok- oder Signal-Optik drucken. Kostenlos, ohne Anmeldung, direkt im Browser.">
+<meta property="og:url" content="https://klassenchat.malziland.at/">
+<meta property="og:image" content="https://klassenchat.malziland.at/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Klassenchat-Plakat-Editor – Klassenchat-Regeln als A3-Plakat">
+<meta name="twitter:description" content="Regeln für den Klassenchat gemeinsam festlegen und als Plakat in echter WhatsApp-, Snapchat-, TikTok- oder Signal-Optik drucken. Kostenlos, ohne Anmeldung, Zero-Knowledge.">
+<meta name="twitter:image" content="https://klassenchat.malziland.at/assets/og-image.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Klassenchat-Plakat-Editor",
+  "alternateName": "Klassenchat-Regeln-Plakat",
+  "url": "https://klassenchat.malziland.at/",
+  "description": "Kostenloser Online-Editor, mit dem Schulklassen und Lehrkräfte ihre Klassenchat-Regeln als A3-Plakat gestalten: Chat-Ansicht in WhatsApp-, Snapchat-, TikTok- oder Signal-Optik, frei editierbare Regeln, Admins und Konsequenzen, Export als druckfertiges PDF im Querformat.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Aktueller Webbrowser, kein Konto erforderlich",
+  "image": "https://klassenchat.malziland.at/assets/og-image.jpg",
+  "inLanguage": "de",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "audience": { "@type": "EducationalAudience", "educationalRole": "teacher" },
+  "author": {
+    "@type": "Person",
+    "name": "Christoph Krieger",
+    "url": "https://www.malziland.at",
+    "email": "info@malziland.at",
+    "jobTitle": "Trainer und Berater für Medienkompetenz",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "malziland – learning | training | consulting e.U.",
+      "url": "https://www.malziland.at"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "malziland – learning | training | consulting e.U.",
+    "url": "https://www.malziland.at",
+    "email": "info@malziland.at",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Tassilostrasse 22",
+      "addressLocality": "Neuhofen an der Krems",
+      "postalCode": "4501",
+      "addressCountry": "AT"
+    }
+  }
+}
+</script>
+<link rel="stylesheet" href="css/fonts.css?v=31">
+<link rel="stylesheet" href="css/editor.css?v=31">
+<link rel="stylesheet" href="css/poster.css?v=31">
+</head>
+<body>
+
+<header class="topbar">
+  <h1 class="topbar-title">Klassenchat-Plakat-Editor</h1>
+  <div class="topbar-actions">
+    <div class="segmented" role="group" aria-label="Chat-Ansicht wählen">
+      <button type="button" class="seg-btn is-active" id="segWa" data-platform="whatsapp" aria-pressed="true">WhatsApp</button>
+      <button type="button" class="seg-btn" id="segSc" data-platform="snapchat" aria-pressed="false">Snapchat</button>
+      <button type="button" class="seg-btn" id="segTt" data-platform="tiktok" aria-pressed="false">TikTok</button>
+      <button type="button" class="seg-btn" id="segSi" data-platform="signal" aria-pressed="false">Signal</button>
+    </div>
+    <button type="button" class="btn-ghost" id="btnReset" title="Alle Eingaben verwerfen und die Vorlage laden"><span class="btn-label-long">Auf Vorlage zurücksetzen</span><span class="btn-label-short">Zurücksetzen</span></button>
+    <button type="button" class="btn btn-secondary" id="btnLoad" title="Einen gespeicherten Plakat-Entwurf (Datei) wieder öffnen">Entwurf öffnen</button>
+    <button type="button" class="btn btn-secondary" id="btnSave" title="Den aktuellen Stand als Datei speichern – zum Weitergeben oder Wiederverwenden">Entwurf speichern</button>
+    <button type="button" class="btn btn-primary" id="btnExport" title="Erzeugt direkt die fertige Datei Klassenchat-Regeln.pdf in A3 quer">PDF herunterladen</button>
+    <input type="file" id="fileInput" accept=".json,application/json" hidden>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="sidebar">
+
+    <div class="tabs" role="tablist" aria-label="Bearbeitungsbereiche">
+      <button type="button" class="tab is-active" id="tabInhalt" role="tab" aria-selected="true" aria-controls="panelInhalt">Inhalt</button>
+      <button type="button" class="tab" id="tabTexte" role="tab" aria-selected="false" aria-controls="panelTexte">Texte</button>
+    </div>
+
+    <div class="tab-panel" id="panelInhalt" role="tabpanel" aria-labelledby="tabInhalt">
+
+      <section class="card">
+        <label class="field-label" for="inGroup">Gruppenname</label>
+        <input type="text" id="inGroup" maxlength="40" autocomplete="off">
+        <label class="field-label label-gap" for="inDate">Datum des Workshops</label>
+        <div class="date-wrap">
+          <input type="text" id="inDate" maxlength="40" autocomplete="off" placeholder="z. B. 21. Juli 2026">
+          <button type="button" class="date-btn" id="btnDatePick" aria-label="Datum aus Kalender wählen" aria-expanded="false" title="Kalender öffnen"></button>
+          <div class="datepick" id="datePick" hidden></div>
+        </div>
+        <p class="hint">Das Datum erscheint im Unterschriftenfeld – leer lassen, wenn nicht gewünscht.</p>
+      </section>
+
+      <section class="card">
+        <h3 class="card-title">Admins</h3>
+        <div class="chip-wrap" id="adminChips"></div>
+        <div class="add-row">
+          <input type="text" id="inAdmin" placeholder="Vorname" maxlength="25" autocomplete="off" aria-label="Admin-Vorname">
+          <button type="button" class="btn-icon" id="btnAddAdmin" title="Admin hinzufügen" aria-label="Admin hinzufügen"></button>
+        </div>
+        <p class="hint">Erscheinen automatisch unter dem Gruppennamen im Chat-Kopf.</p>
+      </section>
+
+      <section class="card">
+        <h3 class="card-title card-title-good" id="sideTitleGood">Das tut unserem Chat gut</h3>
+        <div class="rule-list" id="listGood"></div>
+        <button type="button" class="btn-add" id="btnAddGood">Regel hinzufügen</button>
+      </section>
+
+      <section class="card">
+        <h3 class="card-title card-title-bad" id="sideTitleBad">Das hat bei uns keinen Platz</h3>
+        <div class="rule-list" id="listBad"></div>
+        <button type="button" class="btn-add" id="btnAddBad">Regel hinzufügen</button>
+      </section>
+
+      <section class="card">
+        <h3 class="card-title" id="sideTitlePen">Wenn jemand nicht mitmacht</h3>
+        <div class="rule-list" id="listPen"></div>
+        <button type="button" class="btn-add" id="btnAddPen">Stufe hinzufügen</button>
+        <p class="hint">Die Reihenfolge ergibt die Stufen – zum Umsortieren einfach ziehen.</p>
+      </section>
+    </div>
+
+    <div class="tab-panel" id="panelTexte" role="tabpanel" aria-labelledby="tabTexte" hidden>
+
+      <section class="card">
+        <h3 class="card-title">Plakat-Kopf</h3>
+        <label class="field-label" for="inTxtEyebrow">Kleine Zeile oben</label>
+        <input type="text" id="inTxtEyebrow" maxlength="60" autocomplete="off">
+        <label class="field-label label-gap" for="inTxtTitle">Überschrift</label>
+        <input type="text" id="inTxtTitle" maxlength="70" autocomplete="off">
+        <label class="field-label label-gap" for="inTxtSubtitle">Beschreibung</label>
+        <textarea id="inTxtSubtitle" rows="3" maxlength="220"></textarea>
+        <p class="hint">{App} wird automatisch durch WhatsApp, Snapchat, TikTok oder Signal ersetzt – funktioniert in allen drei Feldern.</p>
+      </section>
+
+      <section class="card">
+        <h3 class="card-title">Überschriften im Chat</h3>
+        <label class="field-label" for="inTxtChipGood">Erster Abschnitt</label>
+        <input type="text" id="inTxtChipGood" maxlength="45" autocomplete="off">
+        <label class="field-label label-gap" for="inTxtChipBad">Zweiter Abschnitt</label>
+        <input type="text" id="inTxtChipBad" maxlength="45" autocomplete="off">
+        <label class="field-label label-gap" for="inTxtDay">Datums-Chip</label>
+        <input type="text" id="inTxtDay" maxlength="25" autocomplete="off">
+      </section>
+
+      <section class="card">
+        <h3 class="card-title">Angepinnte Karte</h3>
+        <label class="field-label" for="inTxtPinned">Kartentitel</label>
+        <input type="text" id="inTxtPinned" maxlength="45" autocomplete="off">
+        <label class="field-label label-gap" for="inTxtAdminsLabel">Beschriftung Admins</label>
+        <input type="text" id="inTxtAdminsLabel" maxlength="45" autocomplete="off">
+        <label class="field-label label-gap" for="inTxtPensLabel">Beschriftung Verstöße</label>
+        <input type="text" id="inTxtPensLabel" maxlength="45" autocomplete="off">
+      </section>
+
+      <section class="card">
+        <h3 class="card-title">Unterschriftenfeld</h3>
+        <label class="field-label" for="inSignTitle">Überschrift</label>
+        <input type="text" id="inSignTitle" maxlength="40" autocomplete="off">
+        <label class="field-label label-gap" for="inSignText">Text</label>
+        <textarea id="inSignText" rows="3" maxlength="220"></textarea>
+      </section>
+    </div>
+
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="stage-inner" id="stageInner">
+
+      <div class="poster skin-wa" id="poster" lang="de">
+        <div class="phone">
+          <div class="screen">
+            <div class="ph-top">
+              <div class="ph-status">
+                <span class="ph-time">8:14</span>
+                <span class="ph-notch" aria-hidden="true"></span>
+                <span class="ph-sticons" id="phStIcons" aria-hidden="true"></span>
+              </div>
+              <div class="ph-header">
+                <span class="ph-back" id="phBack" aria-hidden="true"></span>
+                <span class="ph-avatar" id="phAvatar" aria-hidden="true"></span>
+                <div class="ph-headtext">
+                  <div class="ph-title" id="phTitle">Klasse 1A</div>
+                  <div class="ph-sub" id="phSub">alle aus der Klasse</div>
+                </div>
+                <span class="ph-hicons" id="phHIcons" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="chat" id="chat"></div>
+            <div class="ph-inputbar" id="phInputbar" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="rightcol" id="rightcol">
+          <div class="eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span class="eyebrow-text" id="txtEyebrow">Klassenvereinbarung · Unser Gruppenchat</span>
+          </div>
+          <p class="p-title" id="txtTitle">Die Regeln für unseren Klassenchat</p>
+          <p class="p-sub" id="pSub"></p>
+
+          <div class="pinned">
+            <div class="pinned-head"><span class="pin-ic" id="pinIc" aria-hidden="true"></span><span id="txtPinned">Angepinnt in der Gruppe</span></div>
+            <div class="pinned-cols">
+              <div>
+                <div class="pinned-label" id="txtAdminsLabel">Admins</div>
+                <div class="admin-chips" id="posterAdmins"></div>
+              </div>
+              <div>
+                <div class="pinned-label" id="txtPensLabel">Wenn jemand nicht mitmacht</div>
+                <div class="pen-list" id="posterPens"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sign">
+            <div class="sign-head">
+              <span class="sign-check" id="signCheck" aria-hidden="true"></span>
+              <span class="sign-title" id="signTitle">Das sind wir</span>
+              <span class="sign-date" id="signDate"></span>
+            </div>
+            <p class="sign-text" id="signText"></p>
+            <span class="sign-mark" id="signMark" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="mlModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mlModalTitle">
+    <h2 id="mlModalTitle"></h2>
+    <p class="modal-msg" id="mlModalMsg"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" id="mlModalCancel">Abbrechen</button>
+      <button type="button" class="btn btn-secondary" id="mlModalAlt" hidden></button>
+      <button type="button" class="btn btn-primary" id="mlModalOk">OK</button>
+    </div>
+  </div>
+</div>
+
+<footer class="app-footer">
+  <span>&copy; 2026 Klassenchat-Plakat-Editor &bull; powered by malziland</span>
+  <span class="app-footer-sep">&bull;</span>
+  <a href="datenschutz.html">Datenschutz</a>
+  <span class="app-footer-sep">&bull;</span>
+  <a href="impressum.html">Impressum</a>
+  <span class="app-footer-sep">&bull;</span>
+  <a href="agb.html">AGB</a>
+  <span class="app-footer-sep">&bull;</span>
+  <span class="app-version">v31</span>
+</footer>
+
+<script src="js/vendor/html-to-image.js?v=31"></script>
+<script src="js/vendor/jspdf.umd.min.js?v=31"></script>
+<script src="js/app.js?v=31"></script>
+</body>
+</html>
