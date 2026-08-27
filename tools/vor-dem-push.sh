@@ -43,6 +43,7 @@ echo "-----------------------------------------------------------"
 lauf "Formatierung"           npx prettier --check .
 lauf "Linter"                 npx eslint public/js/app.js tools tests eslint.config.js
 lauf "Verweise und Adressen"  node tools/lint-html.mjs
+lauf "Cache-Buster"           node tools/cache-buster.mjs
 lauf "Geheimnis-Scan"         node tools/scan-secrets.mjs
 lauf "Unit-Tests"             node tools/run-tests.mjs
 lauf "Oberflaechentests"      npx playwright test

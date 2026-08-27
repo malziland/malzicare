@@ -11,10 +11,11 @@
   },
   "scripts": {
     "setup": "node tools/setup.mjs",
-    "lint": "npm run lint:js && npm run lint:format && npm run lint:html",
+    "lint": "npm run lint:js && npm run lint:format && npm run lint:html && npm run lint:cache",
     "lint:js": "eslint public/js/app.js tools tests",
     "lint:format": "prettier --check .",
     "lint:html": "node tools/lint-html.mjs",
+    "lint:cache": "node tools/cache-buster.mjs",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "node tools/run-tests.mjs",
     "test:e2e": "playwright test",

@@ -14,6 +14,7 @@ const SCHRITTE = [
   ['Formatierung', 'npx', ['prettier', '--check', '.']],
   ['Linter', 'npx', ['eslint', 'public/js/app.js', 'tools', 'tests', 'eslint.config.js']],
   ['Verweise und Adressen', process.execPath, ['tools/lint-html.mjs']],
+  ['Cache-Buster', process.execPath, ['tools/cache-buster.mjs']],
   ['Geheimnis-Scan', process.execPath, ['tools/scan-secrets.mjs']],
   ['Unit-Tests', process.execPath, ['tools/run-tests.mjs']],
   ['Oberflaechentests', 'npx', ['playwright', 'test']],
