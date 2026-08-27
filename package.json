@@ -16,7 +16,7 @@
     "lint:format": "prettier --check .",
     "lint:html": "node tools/lint-html.mjs",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "node --test tests/unit/",
+    "test:unit": "node tools/run-tests.mjs",
     "test:e2e": "playwright test",
     "build": "node tools/build.mjs",
     "run": "node tools/serve.mjs",

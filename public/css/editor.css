@@ -566,6 +566,10 @@ textarea {
 }
 
 /* Fußzeile wie bei malziLINK: © · powered by malziland · Rechtslinks */
+/* Der Markenlink steht mitten im Fliesstext. Ohne Unterstreichung waere er
+   nur an der Farbe zu erkennen - fuer Menschen mit Farbsehschwaeche gar
+   nicht. */
+.app-footer-brand { text-decoration: underline; }
 .app-footer {
   flex: none;
   display: flex;
@@ -587,7 +591,6 @@ textarea {
 }
 .app-footer a:hover { color: var(--ml-teal); text-decoration: underline; }
 .app-footer-sep { opacity: 0.5; }
-.app-version { opacity: 0.55; }
 
 /* ---------- Designte Modals (nur Zurücksetzen und Fehlerfälle) ---------- */
 

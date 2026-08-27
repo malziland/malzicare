@@ -58,14 +58,16 @@
 .skin-sc {
   --hdr-bg: #ffffff;
   --hdr-fg: #16191c;
-  --hdr-sub: #7c8590;
+  /* Original #7c8590 (3,7:1). Angehoben, weil hier die Admin-Namen stehen
+     und das Plakat aus zwei bis drei Metern gelesen wird. */
+  --hdr-sub: #6c757f;
   --hdr-ic: #16191c;
   --hdr-line: #eceff1;
   --av-bg: #fffc00;
   --av-fg: #16191c;
   --screen-bg: #ffffff;
   --day-bg: transparent;
-  --day-fg: #7c8590;
+  --day-fg: #6c757f;
   --chip-bg: transparent;
   --chip-fg: #16191c;
   --bub-good-bg: #ffffff;
@@ -93,14 +95,15 @@
 .skin-tt {
   --hdr-bg: #ffffff;
   --hdr-fg: #161823;
-  --hdr-sub: #86878b;
+  /* Original #86878b (3,6:1) - siehe Anmerkung bei .skin-sc. */
+  --hdr-sub: #74757a;
   --hdr-ic: #161823;
   --hdr-line: #ececee;
   --av-bg: #161823;
   --av-fg: #ffffff;
   --screen-bg: #f5f5f5;
   --day-bg: transparent;
-  --day-fg: #8a8a8f;
+  --day-fg: #6e6e73;
   --chip-bg: #ffffff;
   --chip-fg: #161823;
   --bub-good-bg: #79d5ee;
@@ -589,7 +592,10 @@
   font-weight: 700;
   letter-spacing: 0.11em;
   text-transform: uppercase;
-  color: #8a9096;
+  /* Dunkler als das urspruengliche #8a9096: das war 3,2:1 auf Weiss und
+     damit unter WCAG AA. Die Beschriftungen gehoeren zum Plakat, nicht zur
+     App-Nachbildung, und werden gedruckt. */
+  color: #70777d;
   margin-bottom: 12px;
 }
 .admin-chips {
