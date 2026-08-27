@@ -18,10 +18,16 @@ zwei bis drei Metern gelesen – daran ist die Gestaltung ausgerichtet.
 ## Loslegen
 
 ```bash
-npm run setup     # Abhängigkeiten und Testbrowser einrichten
-npm run run       # Editor lokal starten
-npm run verify    # alle Prüfungen: Format, Linter, Verweise, Geheimnisse, Tests
+npm run setup          # Abhängigkeiten und Testbrowser einrichten
+npm run run            # Editor lokal starten
+npm run verify         # alle Prüfungen: Format, Linter, Verweise, Geheimnisse, Tests
+npm run vor-dem-push   # dieselben Prüfungen wie die Pipeline, vor dem Push
 ```
+
+`vor-dem-push` unterscheidet sich von `verify` in einem Punkt: Es bleibt beim
+ersten Mangel nicht stehen, sondern zeigt alle auf einmal – und prüft zusätzlich,
+was die Pipeline prüft. Es läuft nur, wenn du es aufrufst; es gibt bewusst keinen
+Git-Hook, der bei jedem Commit dazwischenfunkt.
 
 Ein Nachbau von Grund auf, in einem leeren Verzeichnis:
 

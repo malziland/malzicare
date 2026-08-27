@@ -23,6 +23,16 @@ Der Ablauf in dieser Reihenfolge, jeder Schritt ein Riegel:
 
 Ohne Verbindung, nur zum Prüfen des Ablaufs: `npm run deploy -- --probe`.
 
+## Vor dem Push
+
+```bash
+npm run vor-dem-push
+```
+
+Fährt dieselben Prüfungen ab wie die Pipeline, zeigt **alle** Mängel auf einmal
+und prüft zusätzlich, dass `.env` nicht versioniert ist. Dauert unter einer
+Minute; ein roter Pipeline-Lauf kostet ein Vielfaches davon.
+
 ## Nachmessen
 
 ```bash

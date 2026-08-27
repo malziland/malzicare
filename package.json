@@ -19,6 +19,7 @@
     "test:unit": "node tools/run-tests.mjs",
     "test:e2e": "playwright test",
     "verify": "node tools/pruefkette.mjs",
+    "vor-dem-push": "sh tools/vor-dem-push.sh",
     "build": "node tools/build.mjs",
     "run": "node tools/serve.mjs",
     "deploy": "node tools/deploy.mjs",

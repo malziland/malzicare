@@ -23,7 +23,8 @@ lesbar sein; die App-Nachbildung tritt dahinter zurück (ADR-0003).
 ## Vor jedem Commit
 
 ```bash
-npm run verify
+npm run verify         # vor jedem Commit
+npm run vor-dem-push   # vor jedem Push: dasselbe wie die Pipeline, alle Mängel auf einmal
 ```
 
 Läuft die Kette nicht durch, wird nicht committet. Ein übersprungener Schritt
