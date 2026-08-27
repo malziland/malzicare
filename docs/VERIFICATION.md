@@ -4,7 +4,9 @@ Diese Datei ist die kanonische Quelle für alle veränderlichen Zahlen des
 Projekts – Testanzahlen, Prüfumfänge, Messwerte. An keiner anderen Stelle
 steht eine dieser Zahlen; sonst driften sie auseinander.
 
-**Stand aller Einträge: 2026-08-27, Commit `8c8fe92`, Tag `v1.0.0`.**
+**Stand aller Einträge: 2026-08-27, Tag `v1.0.0`.** Auf einen Commit-Hash
+verweist diese Datei bewusst nicht: Sie liegt selbst in dem Commit, den sie
+benennen müsste. Welcher Stand gemeint ist, sagt `git rev-parse v1.0.0`.
 Jeder Eintrag trägt einen Auslöser, der ihn ungültig macht. Ist er
 eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 
@@ -49,11 +51,11 @@ folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 
 ## Reproduzierbarkeit und Rückweg
 
-| Anforderung               | Befehl                                                                 | Ergebnis                                                                            | Ungültig, sobald               |
-| ------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------ |
-| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 68 Dateien, alle 6 Schritte grün                                                    | jeder neue Tag                 |
-| Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung `8c8fe920b2`, Tag `v1.0.0`, Arbeitsbaum sauber | jeder neue Tag                 |
-| Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                  | Änderung an `tools/deploy.mjs` |
+| Anforderung               | Befehl                                                                 | Ergebnis                                                                             | Ungültig, sobald               |
+| ------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------ |
+| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 68 Dateien, alle 6 Schritte grün                                                     | jeder neue Tag                 |
+| Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber | jeder neue Tag                 |
+| Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                   | Änderung an `tools/deploy.mjs` |
 
 ## Was noch offen ist
 
