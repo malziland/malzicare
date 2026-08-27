@@ -113,3 +113,16 @@ test('das Plakat ist keine Bilderwueste: sein Inhalt steht als Text da', async (
   expect(text).toContain('Verwarnung');
   expect(text.length, 'das Plakat gibt kaum Text her').toBeGreaterThan(200);
 });
+
+test('der Verweis auf den Quelltext steht in einem benannten Bereich', async ({ page }) => {
+  // Wie auf malzi.me ein eigener Bereich zwischen Inhalt und Fusszeile.
+  // Ohne Namen kann ein Screenreader ihn nicht ansteuern.
+  await page.goto('/');
+  const bereich = page.locator('aside.page-extras');
+  await expect(bereich).toHaveAttribute('aria-label', /.+/);
+  await expect(bereich.locator('a.opensource-link')).toBeVisible();
+
+  // Er steht vor der Fusszeile, nicht darin.
+  const drin = await page.evaluate(() => !!document.querySelector('footer a.opensource-link'));
+  expect(drin, 'der Verweis steckt in der Fusszeile statt davor').toBeFalsy();
+});

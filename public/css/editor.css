@@ -786,8 +786,19 @@ body.shot .poster { box-shadow: none; }
   }
 }
 
-/* Verweis auf den Quelltext - Aufbau und Werte wie der gleichnamige Knopf auf
-   malzi.me, damit die Dienste zusammengehoerig aussehen. */
+/* Verweis auf den Quelltext - Aufbau, Platz und Werte wie auf malzi.me:
+   ein eigener zentrierter Bereich zwischen Inhalt und Fusszeile, nicht in
+   der Fusszeile. */
+.page-extras {
+  flex: none;
+}
+
+.opensource-box {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  padding: 20px 20px 0;
+  text-align: center;
+}
 .opensource-link {
   display: inline-flex;
   align-items: center;
