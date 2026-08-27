@@ -21,6 +21,6 @@ Zentrale Eigenschaften:
 
 ## Nutzung
 
-- [Editor starten](https://klassenchat.malziland.at/): Regeln eintragen, Ansicht wählen, PDF herunterladen
-- [Datenschutz](https://klassenchat.malziland.at/datenschutz.html): Zero-Knowledge-Prinzip verständlich erklärt
-- [Impressum](https://klassenchat.malziland.at/impressum.html)
+- [Editor starten](https://malzi.care/): Regeln eintragen, Ansicht wählen, PDF herunterladen
+- [Datenschutz](https://malzi.care/datenschutz.html): Zero-Knowledge-Prinzip verständlich erklärt
+- [Impressum](https://malzi.care/impressum.html)

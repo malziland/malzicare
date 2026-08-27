@@ -4,7 +4,7 @@ Editor für Klassenchat-Regeln. Eine Klasse trägt ihre Vereinbarungen ein und
 druckt sie als A3-Plakat – in der Optik der App, die sie selbst benutzt:
 WhatsApp, Snapchat, TikTok oder Signal.
 
-Live: <https://klassenchat.malziland.at>
+Live: <https://malzi.care>
 
 ## Was ihn ausmacht
 
