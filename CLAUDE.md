@@ -36,6 +36,12 @@ npm run vor-dem-push   # vor jedem Push: dasselbe wie die Pipeline, alle Mängel
 Läuft die Kette nicht durch, wird nicht committet. Ein übersprungener Schritt
 ist ein Fehlschlag, kein Hinweis.
 
+## Aufbau des Editors
+
+Elf Module in `public/js/`, geladen als ES-Module (ADR-0004). `app.js` ist der
+Einstieg. Kein Bündler: Was ausgeliefert wird, ist die Datei aus dem
+Repository. Kein Modul darf über 15 KB wachsen – ein Test wacht darüber.
+
 ## Was nicht angefasst wird
 
 - `public/js/vendor/` – Fremdcode, unverändert ausgeliefert

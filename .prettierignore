@@ -1,10 +1,20 @@
-# Der ausgelieferte Bestand wird nicht umformatiert: Whitespace-Aenderungen in
-# HTML und CSS koennen das Plakat-Layout verschieben. Begruendung in
-# docs/adr/0002-formatierer-nur-fuer-werkzeugcode.md
-public/
+# HTML und CSS des ausgelieferten Bestands werden nicht umformatiert:
+# Whitespace ist dort bedeutungstragend und kann das Plakat-Layout
+# verschieben. Begruendung in docs/adr/0002-formatierer-nur-fuer-werkzeugcode.md
+public/*.html
+public/css/
+public/assets/
+public/*.txt
+public/*.xml
+public/*.webmanifest
+
+# Fremdcode wird unveraendert ausgeliefert.
+public/js/vendor/
 
 node_modules/
 dist/
 playwright-report/
 test-results/
+.abdeckung/
+docs/bilder/
 package-lock.json

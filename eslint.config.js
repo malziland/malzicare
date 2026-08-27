@@ -15,8 +15,9 @@ export default [
   {
     files: ['public/js/**/*.js'],
     languageOptions: {
-      ecmaVersion: 2020,
-      sourceType: 'script',
+      ecmaVersion: 2022,
+      // Der ausgelieferte Code besteht seit dem 27.08.2026 aus ES-Modulen.
+      sourceType: 'module',
       // Werden per script-Tag vor app.js geladen (public/index.html).
       globals: { ...globals.browser, htmlToImage: 'readonly', jspdf: 'readonly' },
     },

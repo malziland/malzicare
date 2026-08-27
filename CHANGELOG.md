@@ -5,6 +5,35 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [1.3.0] – 2026-08-27
+
+### Geändert
+
+- **Der Editor besteht aus elf Modulen statt einer Datei mit 1161 Zeilen.**
+  Geladen als ES-Module, ohne Bündler – die ausgelieferte Datei bleibt die, die
+  im Repository steht. Begründung und Schnitt in
+  [ADR-0004](docs/adr/0004-module-statt-einer-datei.md).
+- Die Zerlegung wurde aus einer Abhängigkeitsanalyse erzeugt, nicht
+  abgeschrieben; alle 29 Oberflächentests blieben dabei grün.
+
+### Neu
+
+- **Testabdeckung als Riegel:** `tools/abdeckung.mjs` misst, welcher Anteil des
+  ausgelieferten JavaScripts von den Tests ausgeführt wird, und fällt unter
+  80 % durch. Von 69,0 auf 84,3 % – 60 von 61 Funktionen laufen.
+- Tests für Datumswähler, Entwurf öffnen, Ablehnen fremder Dateien,
+  Zurücksetzen mit Rückfrage, Löschen und Umsortieren per Tastatur.
+- CONTRIBUTING, Verhaltenskodex, Screenshots im README (erzeugt aus der
+  laufenden Seite), `og:`- und `twitter:`-Angaben auch auf den Rechtsseiten.
+- Ein Hinweis, wenn die Seite aus einem Ordner statt über eine Adresse geöffnet
+  wird – vorher wäre sie mit Modulen still leer geblieben.
+
+### Behoben
+
+- Der Prüfschritt für den neutralen Download-Typ sah nur in `app.js` nach und
+  hätte den Umbau überstanden, ohne etwas zu prüfen. Er durchsucht jetzt alle
+  Module.
+
 ## [1.2.0] – 2026-08-27
 
 ### Geändert

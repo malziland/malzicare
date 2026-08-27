@@ -1,6 +1,6 @@
 {
   "_hinweis": "Kanonische Angaben zur ausgelieferten Seite. Wer die Adresse wechselt, aendert sie hier - tools/lint-html.mjs meldet danach jede Stelle im Quelltext, die noch nicht passt.",
   "base_url": "https://malzi.care",
-  "cache_buster": "39",
-  "asset_hash": "25d78bdb4d52c0fd"
+  "cache_buster": "41",
+  "asset_hash": "2cc52b9cc55fe9a1"
 }
