@@ -18,6 +18,7 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "node tools/run-tests.mjs",
     "test:e2e": "playwright test",
+    "verify": "node tools/pruefkette.mjs",
     "build": "node tools/build.mjs",
     "run": "node tools/serve.mjs",
     "deploy": "node tools/deploy.mjs",

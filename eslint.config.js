@@ -33,7 +33,9 @@ export default [
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: 'module',
-      globals: { ...globals.node },
+      // Oberflaechentests fuehren Code im Browser aus (page.evaluate), deshalb
+      // gelten hier beide Umgebungen.
+      globals: { ...globals.node, ...globals.browser },
     },
     ...js.configs.recommended,
   },
