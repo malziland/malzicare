@@ -7,7 +7,7 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
-## [Unveröffentlicht]
+## [1.9.0] – 2026-08-28
 
 ### Behoben
 
