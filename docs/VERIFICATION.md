@@ -12,17 +12,17 @@ eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 
 ## Grundlage
 
-| Anforderung           | Befehl                              | Ergebnis                                                                                                      | Ungültig, sobald                                  |
-| --------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Prüfkette vollständig | `npm run verify`                    | 10 Schritte, alle grün                                                                                        | jeder Commit                                      |
-| Unit-Tests            | `npm run test:unit`                 | 4 Testdateien, 24 Tests, 24 grün, 0 rot                                                                       | jeder Commit                                      |
-| Oberflächentests      | `npm run test:e2e`                  | 92 grün (46 Tests × Chromium und WebKit)                                                                      | jeder Commit                                      |
-| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 86 lokale Verweise, 32 eigene Adressen, keine Befunde                                               | jede Änderung in `public/`                        |
-| Geheimnis-Scan        | `npm run scan:secrets`              | 88 versionierte Textdateien, 6 Muster, keine Funde                                                            | jeder Commit, spätestens vor der Veröffentlichung |
-| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                          | jede Änderung an `package-lock.json`              |
-| Testabdeckung         | `node tools/abdeckung.mjs`          | 87,5 % des ausgelieferten JavaScripts, 83 von 83 Funktionen laufen; Schwelle 80 %                             | jede Änderung in `public/js/`                     |
-| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11,2 KB)                                                         | jede Änderung in `public/js/`                     |
-| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33103787728 grün – für den Stand `v1.8.0`, **nicht** für die Änderung vom 28.08.2026: Der Push steht aus | jeder Push                                        |
+| Anforderung           | Befehl                              | Ergebnis                                                                                                       | Ungültig, sobald                                  |
+| --------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Prüfkette vollständig | `npm run verify`                    | 10 Schritte, alle grün                                                                                         | jeder Commit                                      |
+| Unit-Tests            | `npm run test:unit`                 | 4 Testdateien, 24 Tests, 24 grün, 0 rot                                                                        | jeder Commit                                      |
+| Oberflächentests      | `npm run test:e2e`                  | 92 grün (46 Tests × Chromium und WebKit)                                                                       | jeder Commit                                      |
+| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 86 lokale Verweise, 32 eigene Adressen, keine Befunde                                                | jede Änderung in `public/`                        |
+| Geheimnis-Scan        | `npm run scan:secrets`              | 88 versionierte Textdateien, 6 Muster, keine Funde                                                             | jeder Commit, spätestens vor der Veröffentlichung |
+| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                           | jede Änderung an `package-lock.json`              |
+| Testabdeckung         | `node tools/abdeckung.mjs`          | 87,5 % des ausgelieferten JavaScripts, 83 von 83 Funktionen laufen; Schwelle 80 %                              | jede Änderung in `public/js/`                     |
+| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11,2 KB)                                                          | jede Änderung in `public/js/`                     |
+| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33123541971 grün für `348f46e` (`v1.8.0`) – **nicht** für die Änderung vom 28.08.2026: Der Push steht aus | jeder Push                                        |
 
 ## Dass die Prüfungen überhaupt scheitern können
 

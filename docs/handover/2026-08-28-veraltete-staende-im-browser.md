@@ -90,8 +90,18 @@ hintereinander grün, jede Datei einzeln grün, umgekehrte Reihenfolge grün.
    des Nichtstuns: Der gemeldete Fehler bleibt bestehen – jeder Tab, der heute
    offen ist, zeigt weiter den alten Stand, und die nächste Änderung an einem
    Modul erreicht wiederkehrende Browser bis zu sieben Tage nicht.
-3. **Die Pipeline hat diesen Stand nicht gesehen.** Der letzte grüne Lauf
-   (33103787728) gehört zu `v1.8.0`. Ein Push steht aus und ist nicht erteilt.
+3. **Die Pipeline hat diesen Stand nicht gesehen.** Der letzte grüne Lauf ist
+   33123541971 und gehört zu `348f46e` (`v1.8.0`), gemessen mit
+   `gh run list`. Ein Push steht aus und ist nicht erteilt.
+4. **Auffälligkeit außerhalb des Auftrags, nicht behoben:** Dependabot-Warnungen
+   sind für das Repository abgeschaltet (`gh api …/dependabot/alerts` → HTTP
+   403, „Dependabot alerts are disabled"). Empfehlung: einschalten, es kostet
+   einen Schalter. Folge des Nichtstuns: Eine bekannt gewordene Lücke in einer
+   Entwicklungsabhängigkeit fällt niemandem auf. Nicht Teil dieses Auftrags,
+   deshalb nur gemeldet.
+5. **Nachbarverzeichnis geprüft:** `begleitheft/` enthält zwar HTML, aber nur
+   als Satzvorlage für das PDF – keine ausgelieferte Web-Fläche, also auch
+   keine Cache-Regeln, die dieselbe Ursache tragen könnten.
 
 ## Eingang für das nächste Audit
 
