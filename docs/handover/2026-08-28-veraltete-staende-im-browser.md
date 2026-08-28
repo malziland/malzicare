@@ -81,36 +81,32 @@ hintereinander grün, jede Datei einzeln grün, umgekehrte Reihenfolge grün.
 
 ## Offene Punkte
 
-1. **Erledigt:** Ausgeliefert am 28.08.2026 als `v1.9.0`, Kennung
-   `fe5b7a63b3`. Der Live-Beweis ist geführt – in Chrome und in WebKit, mit
-   Gegenprobe. Einzelheiten in [VERIFICATION.md](../VERIFICATION.md),
-   Abschnitt „Veraltete Stände im Browser"; wiederholbar mit
-   `npm run verify:waechter`.
-2. **Erledigt:** Christoph hat am 28.08.2026 gegen einen periodischen Wecker
-   entschieden („einen Wecker brauchen wir nicht"). Der dauerhaft sichtbare
-   Tab bleibt als benanntes Restrisiko: Geprüft wird nur bei der Rückkehr.
-3. **Erledigt:** Pipeline-Lauf 33175464174 für `fe5b7a6` grün
-   (`pruefung: success`), gemessen mit `gh run view`.
+1. **Der Live-Beweis steht aus, und zwar begründet:** Auf dem Webspace liegt
+   `348f46e`, also der Stand _ohne_ Wächter. Die Wirkung am laufenden System
+   ist erst nach der Auslieferung messbar. Ab dann zeigt sie
+   `node tools/live-check.mjs`, dessen Negativprobe
+   (`--negativprobe`) belegt, dass die Messung rot werden kann.
+2. **Entscheidungsfrage: ausliefern?** Empfehlung ja, über `/release`. Folge
+   des Nichtstuns: Der gemeldete Fehler bleibt bestehen – jeder Tab, der heute
+   offen ist, zeigt weiter den alten Stand, und die nächste Änderung an einem
+   Modul erreicht wiederkehrende Browser bis zu sieben Tage nicht.
+3. **Die Pipeline hat diesen Stand nicht gesehen.** Der letzte grüne Lauf ist
+   33123541971 und gehört zu `348f46e` (`v1.8.0`), gemessen mit
+   `gh run list`. Ein Push steht aus und ist nicht erteilt.
 4. **Auffälligkeit außerhalb des Auftrags, nicht behoben:** Dependabot-Warnungen
    sind für das Repository abgeschaltet (`gh api …/dependabot/alerts` → HTTP
    403, „Dependabot alerts are disabled"). Empfehlung: einschalten, es kostet
    einen Schalter. Folge des Nichtstuns: Eine bekannt gewordene Lücke in einer
    Entwicklungsabhängigkeit fällt niemandem auf. Nicht Teil dieses Auftrags,
    deshalb nur gemeldet.
-5. **Benannte Abweichung, bewusst so:** In `version.json` steht live
-   `"tag": null`. Der Tag wird nach dem Deployment gesetzt, das Paket davor
-   gebaut – beides ist richtig so, aber es schließt sich gegenseitig aus. Die
-   kanonische Kennung ist der Commit (`fe5b7a63b3`), nicht der Tag; im RUNBOOK
-   festgehalten. Bei `v1.8.0` stand dort noch ein Tag, weil damals vorher
-   getaggt wurde.
-6. **Nachbarverzeichnis geprüft:** `begleitheft/` enthält zwar HTML, aber nur
+5. **Nachbarverzeichnis geprüft:** `begleitheft/` enthält zwar HTML, aber nur
    als Satzvorlage für das PDF – keine ausgelieferte Web-Fläche, also auch
    keine Cache-Regeln, die dieselbe Ursache tragen könnten.
 
 ## Eingang für das nächste Audit
 
-- **Vergleichsanker:** `fe5b7a6` (`v1.9.0`, ausgeliefert 28.08.2026), letzter
-  Bericht `docs/VERIFICATION.md`, Stand 28.08.2026.
+- **Vergleichsanker:** `348f46e` (`v1.8.0`), letzter Bericht
+  `docs/VERIFICATION.md`, Stand 28.08.2026.
 - **Geändert:** Auslieferkette (`tools/build.mjs` stempelt jetzt), zwei neue
   ausgelieferte Module, erster Netzaufruf zur Laufzeit im eigenen Code.
 - **Nicht neu zur Diskussion:** stilles Neuladen ohne Rückfrage, Prüfung nur

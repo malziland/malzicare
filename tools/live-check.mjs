@@ -7,17 +7,12 @@
  *      ihre Wirkung ist messbar: HTML ohne Cache, Assets mit langem Cache.
  *      Genau diese Datei fehlte am 21.07.2026 im Paket, ohne dass es auffiel.
  *
- * Aufruf:
- *   node tools/live-check.mjs                 gegen ausgeliefert.json
- *   node tools/live-check.mjs --paket         gegen dist/version.json (nach dem Bauen)
- *   node tools/live-check.mjs --erwartet <commit>
- *   node tools/live-check.mjs --negativprobe
+ * Aufruf: node tools/live-check.mjs [--erwartet <commit>] [--negativprobe]
  */
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
-import { ROOT, DIST_DIR } from './paths.mjs';
+import { DIST_DIR } from './paths.mjs';
 import { ladeEnv } from './env.mjs';
 
 const args = process.argv.slice(2);
@@ -32,26 +27,7 @@ if (!basis) {
   process.exit(2);
 }
 
-/* Wogegen gemessen wird - und das ist die ganze Frage.
- *
- * Bis zum 28.08.2026 war der Sollwert dist/version.json, also das zuletzt
- * GEBAUTE Paket. Damit beantwortete die Pruefung "entspricht live meinem
- * aktuellen Arbeitsstand?" statt "liegt oben noch, was ich hochgeladen habe?".
- * Der Unterschied faellt auf, seit der Bauschritt die Commit-Kennung in jede
- * Seite stempelt: Schon ein reiner Doku-Commit nach der Auslieferung machte
- * die Pruefung rot - fuenf Befunde, obwohl an der Seite nichts falsch war.
- * Eine Pruefung, die ohne Anlass rot ist, wird nach dem zweiten Mal ignoriert.
- *
- * Der Sollwert ist deshalb ausgeliefert.json: eine Kopie der version.json aus
- * dem Paket, das tools/deploy.mjs tatsaechlich uebertragen hat. Sie stammt aus
- * dem lokalen Bauvorgang, nicht vom Server - ein vom Server geholter Sollwert
- * waere im Kreis gemessen und koennte nie rot werden.
- */
-const AUSGELIEFERT = path.join(ROOT, 'ausgeliefert.json');
-const gegenPaket = args.includes('--paket');
-let sollDatei = AUSGELIEFERT;
-if (gegenPaket || !existsSync(AUSGELIEFERT)) sollDatei = path.join(DIST_DIR, 'version.json');
-const lokal = JSON.parse(await readFile(sollDatei, 'utf8'));
+const lokal = JSON.parse(await readFile(path.join(DIST_DIR, 'version.json'), 'utf8'));
 const befunde = [];
 let geprueft = 0;
 
@@ -162,7 +138,6 @@ try {
 }
 
 console.log(`Gemessen gegen ${basis}`);
-console.log(`  Sollwert aus: ${path.relative(ROOT, sollDatei)}`);
 console.log(`  Dateien geprueft: ${geprueft}`);
 console.log(`  Stand live: ${liveVersion ? liveVersion.commit_short : '(nicht lesbar)'}`);
 console.log(`  Stand erwartet: ${(erwartetCommit || lokal.commit).slice(0, 10)}`);

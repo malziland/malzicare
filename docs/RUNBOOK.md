@@ -58,18 +58,7 @@ Minute; ein roter Pipeline-Lauf kostet ein Vielfaches davon.
 npm run verify:live
 ```
 
-Gemessen wird gegen `LIVE_BASE_URL`, und der Sollwert steht in
-`ausgeliefert.json` – einer Kopie der `version.json` aus dem Paket, das zuletzt
-tatsächlich übertragen wurde. **Nicht** gegen den aktuellen Arbeitsstand: Der
-Bauschritt stempelt die Commit-Kennung in jede Seite, also wäre die Prüfung
-schon nach dem ersten Commit nach einer Auslieferung rot, ohne dass an der
-Seite etwas falsch wäre. Eine Prüfung, die ohne Anlass rot ist, wird nach dem
-zweiten Mal ignoriert.
-
-`node tools/live-check.mjs --paket` misst stattdessen gegen `dist/` – das
-braucht `deploy.mjs` unmittelbar nach dem Übertragen.
-
-Geprüft wird:
+Geprüft wird gegen `LIVE_BASE_URL`:
 
 - die Kennung in `version.json` gegen den erwarteten Commit,
 - die Prüfsumme **jeder** Datei,
@@ -82,14 +71,6 @@ Geprüft wird:
   hält sich jede ausgelieferte Seite für veraltet und lädt einmal vergeblich
   neu (siehe [ADR-0006](adr/0006-veraltete-tabs.md)).
 - eine Gegenprobe auf eine Datei, die es nicht geben darf.
-
-Ob der Stand-Wächter im Browser wirklich ausschlägt – das misst `live-check`
-nicht, es prüft nur, was auf dem Server liegt:
-
-```bash
-node tools/live-waechter.mjs   # laedt die Live-Seite in WebKit, stellt einen
-                               # Tabwechsel nach, zwei Proben mit Gegenprobe
-```
 
 Ob die Messung selbst noch funktioniert:
 
@@ -111,13 +92,8 @@ npm run deploy
 git checkout main
 ```
 
-Die Kennung des letzten guten Standes steht in `ausgeliefert.json` – das ist
-die kanonische Angabe, welcher Stand oben liegt, und sie wird von
-`tools/deploy.mjs` nach jedem erfolgreichen Beweis geschrieben. **Verlässlich ist dort `commit`, nicht
-`tag`:** Der Tag entsteht erst nach dem Deployment – vorher wäre er eine Zusage
-auf etwas, das noch nicht oben liegt –, und das Paket wird davor gebaut. In
-`version.json` einer frisch ausgelieferten Fassung steht deshalb `"tag": null`.
-Welcher Tag zu einem Commit gehört, sagt `git describe --tags <commit>`. Vor jedem Ausliefern lohnt der Blick auf
+Die Kennung des letzten guten Standes steht in `docs/VERIFICATION.md` und in
+`version.json` der laufenden Seite. Vor jedem Ausliefern lohnt der Blick auf
 `npm run verify:live` – dann ist die Kennung bekannt, bevor sie gebraucht wird.
 
 ## Notschalter

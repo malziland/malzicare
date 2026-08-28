@@ -7,21 +7,6 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
-## [Unveröffentlicht]
-
-### Behoben
-
-**Die Live-Prüfung war nach jedem Commit rot, auch wenn alles stimmte.** Sie
-maß gegen das zuletzt gebaute Paket und beantwortete damit „entspricht live
-meinem Arbeitsstand?" statt „liegt oben noch, was ich hochgeladen habe?". Seit
-der Bauschritt die Commit-Kennung in jede Seite stempelt, fiel das auf: Schon
-ein reiner Doku-Commit erzeugte fünf Befunde. Eine Prüfung, die ohne Anlass rot
-ist, wird nach dem zweiten Mal ignoriert.
-
-Der Sollwert steht jetzt in `ausgeliefert.json`, das `tools/deploy.mjs` nach
-jedem erfolgreichen Beweis schreibt. Nur die Auslieferung selbst misst noch
-gegen das frisch gebaute Paket (`--paket`). Nichts an der Website ändert sich.
-
 ## [1.9.0] – 2026-08-28
 
 ### Behoben
