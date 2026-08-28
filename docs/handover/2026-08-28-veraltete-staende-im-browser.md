@@ -97,7 +97,13 @@ hintereinander grün, jede Datei einzeln grün, umgekehrte Reihenfolge grün.
    einen Schalter. Folge des Nichtstuns: Eine bekannt gewordene Lücke in einer
    Entwicklungsabhängigkeit fällt niemandem auf. Nicht Teil dieses Auftrags,
    deshalb nur gemeldet.
-5. **Nachbarverzeichnis geprüft:** `begleitheft/` enthält zwar HTML, aber nur
+5. **Benannte Abweichung, bewusst so:** In `version.json` steht live
+   `"tag": null`. Der Tag wird nach dem Deployment gesetzt, das Paket davor
+   gebaut – beides ist richtig so, aber es schließt sich gegenseitig aus. Die
+   kanonische Kennung ist der Commit (`fe5b7a63b3`), nicht der Tag; im RUNBOOK
+   festgehalten. Bei `v1.8.0` stand dort noch ein Tag, weil damals vorher
+   getaggt wurde.
+6. **Nachbarverzeichnis geprüft:** `begleitheft/` enthält zwar HTML, aber nur
    als Satzvorlage für das PDF – keine ausgelieferte Web-Fläche, also auch
    keine Cache-Regeln, die dieselbe Ursache tragen könnten.
 

@@ -101,7 +101,11 @@ git checkout main
 ```
 
 Die Kennung des letzten guten Standes steht in `docs/VERIFICATION.md` und in
-`version.json` der laufenden Seite. Vor jedem Ausliefern lohnt der Blick auf
+`version.json` der laufenden Seite. **Verlässlich ist dort `commit`, nicht
+`tag`:** Der Tag entsteht erst nach dem Deployment – vorher wäre er eine Zusage
+auf etwas, das noch nicht oben liegt –, und das Paket wird davor gebaut. In
+`version.json` einer frisch ausgelieferten Fassung steht deshalb `"tag": null`.
+Welcher Tag zu einem Commit gehört, sagt `git describe --tags <commit>`. Vor jedem Ausliefern lohnt der Blick auf
 `npm run verify:live` – dann ist die Kennung bekannt, bevor sie gebraucht wird.
 
 ## Notschalter
