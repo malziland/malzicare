@@ -63,8 +63,13 @@ Geprüft wird gegen `LIVE_BASE_URL`:
 - die Kennung in `version.json` gegen den erwarteten Commit,
 - die Prüfsumme **jeder** Datei,
 - die **Wirkung** der `.htaccess`: HTML muss `no-cache` liefern, Assets
-  `max-age=604800`. Die Datei selbst ist von außen nicht abrufbar – ihr Fehlen
-  aber messbar. Genau sie fehlte am 21.07.2026 unbemerkt im Paket.
+  `max-age=604800`, `version.json` `no-store`. Die Datei selbst ist von außen
+  nicht abrufbar – ihr Fehlen aber messbar. Genau sie fehlte am 21.07.2026
+  unbemerkt im Paket.
+- ob die Kennung in `index.html` zu der in `version.json` passt. Fallen sie
+  auseinander – etwa nach einer auf halbem Weg abgebrochenen Auslieferung –,
+  hält sich jede ausgelieferte Seite für veraltet und lädt einmal vergeblich
+  neu (siehe [ADR-0006](adr/0006-veraltete-tabs.md)).
 - eine Gegenprobe auf eine Datei, die es nicht geben darf.
 
 Ob die Messung selbst noch funktioniert:

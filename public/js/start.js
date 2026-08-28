@@ -16,6 +16,7 @@ import {
   renderStaticIcons,
   setPlatform,
 } from './plakat.js';
+import { ueberwacheStand } from './stand.js';
 import { persist, setState, state } from './zustand.js';
 
 export function showTab(which) {
@@ -35,6 +36,10 @@ export function init() {
 
   /* Foto-Modus (?foto): nur das Plakat rendern, z. B. für Vorschaubilder */
   if (params.has('foto')) document.body.classList.add('shot');
+
+  /* Der Stand-Waechter laeuft nicht im Foto-Modus: Waehrend eine Aufnahme
+     entsteht, darf die Seite nicht unter der Kamera neu laden. */
+  if (!params.has('foto')) ueberwacheStand(persist);
 
   renderStaticIcons();
   Array.prototype.forEach.call(document.querySelectorAll('textarea'), enhanceTextarea);

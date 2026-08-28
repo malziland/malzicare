@@ -4,43 +4,86 @@ Diese Datei ist die kanonische Quelle für alle veränderlichen Zahlen des
 Projekts – Testanzahlen, Prüfumfänge, Messwerte. An keiner anderen Stelle
 steht eine dieser Zahlen; sonst driften sie auseinander.
 
-**Stand aller Einträge: 2026-08-27, Tag `v1.3.0`.** Auf einen Commit-Hash
-verweist diese Datei bewusst nicht: Sie liegt selbst in dem Commit, den sie
-benennen müsste. Welcher Stand gemeint ist, sagt `git rev-parse v1.0.0`.
+**Stand aller Einträge: 2026-08-28, unveröffentlichter Stand nach `v1.8.0`.**
+Auf einen Commit-Hash verweist diese Datei bewusst nicht: Sie liegt selbst in
+dem Commit, den sie benennen müsste.
 Jeder Eintrag trägt einen Auslöser, der ihn ungültig macht. Ist er
 eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 
 ## Grundlage
 
-| Anforderung           | Befehl                              | Ergebnis                                                                                                 | Ungültig, sobald                                  |
-| --------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Prüfkette vollständig | `npm run verify`                    | 6 Schritte, alle grün                                                                                    | jeder Commit                                      |
-| Unit-Tests            | `npm run test:unit`                 | 2 Testdateien, 8 Tests, 8 grün, 0 rot                                                                    | jeder Commit                                      |
-| Oberflächentests      | `npm run test:e2e`                  | 36 grün (18 Tests × Chromium und WebKit)                                                                 | jeder Commit                                      |
-| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 46 lokale Verweise, 18 eigene Adressen, keine Befunde                                          | jede Änderung in `public/`                        |
-| Geheimnis-Scan        | `npm run scan:secrets`              | 52 versionierte Textdateien, 6 Muster, keine Funde                                                       | jeder Commit, spätestens vor der Veröffentlichung |
-| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                     | jede Änderung an `package-lock.json`              |
-| Testabdeckung         | `node tools/abdeckung.mjs`          | 84,3 % des ausgelieferten JavaScripts, 60 von 61 Funktionen laufen; Schwelle 80 %                        | jede Änderung in `public/js/`                     |
-| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11 KB)                                                      | jede Änderung in `public/js/`                     |
-| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33103787728 auf `main` grün: Prüfkette und Abhängigkeitsprüfung, 36 Oberflächentests auf dem Runner | jeder Push                                        |
+| Anforderung           | Befehl                              | Ergebnis                                                                                                      | Ungültig, sobald                                  |
+| --------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Prüfkette vollständig | `npm run verify`                    | 10 Schritte, alle grün                                                                                        | jeder Commit                                      |
+| Unit-Tests            | `npm run test:unit`                 | 4 Testdateien, 24 Tests, 24 grün, 0 rot                                                                       | jeder Commit                                      |
+| Oberflächentests      | `npm run test:e2e`                  | 92 grün (46 Tests × Chromium und WebKit)                                                                      | jeder Commit                                      |
+| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 86 lokale Verweise, 32 eigene Adressen, keine Befunde                                               | jede Änderung in `public/`                        |
+| Geheimnis-Scan        | `npm run scan:secrets`              | 88 versionierte Textdateien, 6 Muster, keine Funde                                                            | jeder Commit, spätestens vor der Veröffentlichung |
+| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                          | jede Änderung an `package-lock.json`              |
+| Testabdeckung         | `node tools/abdeckung.mjs`          | 87,5 % des ausgelieferten JavaScripts, 83 von 83 Funktionen laufen; Schwelle 80 %                             | jede Änderung in `public/js/`                     |
+| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11,2 KB)                                                         | jede Änderung in `public/js/`                     |
+| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33103787728 grün – für den Stand `v1.8.0`, **nicht** für die Änderung vom 28.08.2026: Der Push steht aus | jeder Push                                        |
 
 ## Dass die Prüfungen überhaupt scheitern können
 
 Eine Prüfung, die nicht rot werden kann, ist selbst der Befund. Jede der
 folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 
-| Prüfung              | Gegenprobe                                             | Ergebnis                                      | Ungültig, sobald                        |
-| -------------------- | ------------------------------------------------------ | --------------------------------------------- | --------------------------------------- |
-| Linter               | Datei mit ungenutzter und undefinierter Variable       | rot, 2 Befunde                                | Änderung an `eslint.config.js`          |
-| Paketvollständigkeit | `.htaccess` aus `public/` entfernt                     | rot: „die unsichtbare .htaccess ist dabei"    | Änderung an `tools/build.mjs`           |
-| Download-Typ         | PDF-Blob auf `application/pdf` gesetzt                 | rot                                           | Änderung an `saveFile`/`runPdfExport`   |
-| Verwaiste Dateien    | unbenutzte Datei in `public/assets/` abgelegt          | rot, 1 Befund                                 | Änderung an `tools/lint-html.mjs`       |
-| Cache-Buster         | Zustand vor der Behebung                               | rot, 3 Befunde                                | Änderung an `site.json`                 |
-| Geheimnis-Scan       | Datei mit echtem Passwort-Literal und Zugangsdaten-URL | rot, 2 Funde                                  | Änderung an den Mustern                 |
-| Geheimnis-Scan       | 4 Gegenproben wie `password: env.FTP_PASSWORD`         | schweigt, wie es soll (im Selbsttest geprüft) | Änderung an den Mustern                 |
-| axe-Messung          | kontrastarmes Element in die Seite eingefügt           | rot                                           | Änderung an der Messfunktion            |
-| Test-Runner          | Aufrufmuster ohne Treffer                              | rot: „Keine Testdatei gefunden"               | Änderung an `tools/run-tests.mjs`       |
-| Live-Prüfung         | `node tools/live-check.mjs --negativprobe`             | rot mit verfälschtem Sollwert, wie verlangt   | jede Änderung an `tools/live-check.mjs` |
+| Prüfung              | Gegenprobe                                                 | Ergebnis                                              | Ungültig, sobald                        |
+| -------------------- | ---------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------- |
+| Linter               | Datei mit ungenutzter und undefinierter Variable           | rot, 2 Befunde                                        | Änderung an `eslint.config.js`          |
+| Paketvollständigkeit | `.htaccess` aus `public/` entfernt                         | rot: „die unsichtbare .htaccess ist dabei"            | Änderung an `tools/build.mjs`           |
+| Download-Typ         | PDF-Blob auf `application/pdf` gesetzt                     | rot                                                   | Änderung an `saveFile`/`runPdfExport`   |
+| Verwaiste Dateien    | unbenutzte Datei in `public/assets/` abgelegt              | rot, 1 Befund                                         | Änderung an `tools/lint-html.mjs`       |
+| Cache-Buster         | Zustand vor der Behebung                                   | rot, 3 Befunde                                        | Änderung an `site.json`                 |
+| Geheimnis-Scan       | Datei mit echtem Passwort-Literal und Zugangsdaten-URL     | rot, 2 Funde                                          | Änderung an den Mustern                 |
+| Geheimnis-Scan       | 4 Gegenproben wie `password: env.FTP_PASSWORD`             | schweigt, wie es soll (im Selbsttest geprüft)         | Änderung an den Mustern                 |
+| axe-Messung          | kontrastarmes Element in die Seite eingefügt               | rot                                                   | Änderung an der Messfunktion            |
+| Test-Runner          | Aufrufmuster ohne Treffer                                  | rot: „Keine Testdatei gefunden"                       | Änderung an `tools/run-tests.mjs`       |
+| Live-Prüfung         | `node tools/live-check.mjs --negativprobe`                 | rot mit verfälschtem Sollwert, wie verlangt           | jede Änderung an `tools/live-check.mjs` |
+| Stand-Wächter        | Aufruf `ueberwacheStand(persist)` aus `start.js` entfernt  | rot, 3 der 5 Oberflächentests                         | Änderung an `public/js/stand.js`        |
+| Import-Stempel       | Stempelschleife aus `tools/build.mjs` entfernt             | rot: „Stempel unvollstaendig", 11 Module              | Änderung an `tools/build.mjs`           |
+| Kennungs-Stempel     | Stempelzeile aus `tools/build.mjs` entfernt                | rot: „traegt die Kennung des Standes nicht", 4 Seiten | Änderung an `tools/build.mjs`           |
+| Stempelfeld je Seite | `meta malzicare-stand` aus `index.html` entfernt           | rot, 1 Befund                                         | Änderung an `tools/lint-html.mjs`       |
+| Import-Verweise      | Import auf eine nicht vorhandene Datei gesetzt             | rot: „Import zeigt ins Leere"                         | Änderung an `tools/lint-html.mjs`       |
+| CSS-Stempel          | Stempelschleife für `url()` aus `tools/build.mjs` entfernt | rot: „url() ohne Cache-Buster", 16 Verweise           | Änderung an `tools/build.mjs`           |
+
+## Veraltete Stände im Browser (28.08.2026)
+
+Gemeldet wurde ein seit Tagen offener Safari-Tab, der weiter die Fassung vor
+dem Umbau auf malziCARE zeigte. Gemessen wurde zuerst der Server, nicht der
+Verdacht:
+
+| Messung                                                                 | Ergebnis                                                                                  |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `curl -sS -D - https://malzi.care/` und `.../klassenchat.malziland.at/` | beide `HTTP 200`, gleicher `ETag "40d8-65a0f0e5a357d"`, gleicher SHA-256 – **eine** Datei |
+| fünf Varianten (mit/ohne `www`, `http`/`https`, beide Domains)          | alle derselbe `ETag`, alle Titel `malziCARE …`                                            |
+| `grep` auf den ausgelieferten Text                                      | „Klassenchat-Plakat-Editor" 0 Treffer, „AGB" 0 Treffer, „v31" 0 Treffer                   |
+| `curl` auf `/klassenchat/` unter beiden Domains                         | `HTTP 404` – kein zweiter, älterer Bestand                                                |
+
+Der Server war also in Ordnung. Der veraltete Stand lag im Browser, und die
+`Cache-Control`-Regeln konnten daran nichts ändern: Sie greifen erst bei einer
+Anfrage, und ein Tab, der nie neu lädt, stellt keine.
+
+Beim Nachmessen kam ein zweiter Weg zutage:
+
+| Messung                                                   | Ergebnis                                                          |
+| --------------------------------------------------------- | ----------------------------------------------------------------- |
+| `curl -I` auf alle 14 Dateien unter `js/`                 | durchweg `cache-control: public, max-age=604800`                  |
+| `grep "url("` über alle Stylesheets                       | 16 Verweise auf die acht Schriftschnitte, keiner mit Cache-Buster |
+| Einbindung in `index.html`                                | `js/app.js?v=…` mit Cache-Buster, aber `import './start.js'` ohne |
+| Abbruchmeldung des Bauschritts nach dem Rückbau des Fixes | 11 Module mit zusammen 38 Import-Zeilen ohne Buster               |
+
+Ein wiederkehrender Browser bekam damit neues HTML und bis zu sieben Tage alte
+Module, und eine geänderte Schriftdatei hätte ihn gar nicht erreicht. Alle drei
+Befunde sind behoben; die Gegenproben stehen in der Tabelle
+oben, die Entscheidungen in [ADR-0006](adr/0006-veraltete-tabs.md).
+
+**Offen bis zur Auslieferung:** Der Nachweis am laufenden System. Er ist heute
+nicht zu führen – auf dem Webspace liegt noch der Stand ohne Wächter. Nach dem
+Deployment zeigt ihn `node tools/live-check.mjs`, das seit dieser Änderung
+zusätzlich prüft, ob `version.json` mit `no-store` ausgeliefert wird und ob die
+Kennung in `index.html` zu der in `version.json` passt.
 
 ## Barrierefreiheit (Profil UI)
 

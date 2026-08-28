@@ -7,6 +7,52 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
+## [Unveröffentlicht]
+
+### Behoben
+
+**Ein lange geöffneter Tab zeigte auf Dauer die alte Seite.** Gemeldet am
+28.08.2026: In einem seit Tagen offenen Safari-Tab stand weiter der Name von
+vor dem Umbau, in der Fußzeile „AGB" statt „Nutzungsbedingungen". Auf dem
+Server lag der neue Stand – unter beiden Adressen dieselbe Datei mit demselben
+`ETag` und `cache-control: no-cache`.
+
+Die Cache-Regeln waren also richtig und haben trotzdem nichts genutzt: Sie
+greifen erst bei einer Anfrage, und ein Tab, der nie neu lädt, stellt keine.
+Jemanden aufzufordern, seinen Zwischenspeicher zu leeren, ist keine Lösung –
+wer mit einer Klasse vor der Tafel steht, räumt keinen Browser auf.
+
+Die Seite sieht deshalb jetzt selbst nach: Kehrt jemand zum Tab zurück,
+vergleicht sie ihre Kennung mit der auf dem Server und lädt still neu, wenn
+sie abweicht. Der Plakat-Stand bleibt dabei erhalten. Mitten in einer Eingabe,
+während ein PDF entsteht und im Foto-Modus passiert nichts. Begründung und
+verworfene Wege in [ADR-0006](docs/adr/0006-veraltete-tabs.md).
+
+**Die Module wurden bis zu sieben Tage alt ausgeliefert.** Beim Nachmessen
+gefunden: `index.html` fordert `js/app.js` mit Cache-Buster an, aber dessen
+`import './start.js'` trägt einen Namen, der sich nie ändert. Alle zwölf
+Module kamen live mit `max-age=604800`. Ein wiederkehrender Browser bekam
+neues HTML und alte Module – eine Mischung, die so nie jemand getestet hat.
+Der Bauschritt hängt den Cache-Buster jetzt an jeden Import.
+
+Beim Nachlauf nach derselben Denkfigur kam eine Ebene tiefer dasselbe zutage:
+Die **acht Schriftschnitte** hängen an `url()`-Verweisen im CSS, die keinen
+Buster trugen – in `fonts.css` und noch einmal in `legal.css`, zusammen 16
+Verweise. Auch sie werden jetzt gestempelt; eingebettete `data:`-Grafiken
+bleiben unberührt.
+
+### Hinzugefügt
+
+- `version.json` wird nicht mehr zwischengespeichert (`no-store`). Eine
+  Standmeldung aus dem Zwischenspeicher sagt nur, was früher einmal galt.
+- Der Bauschritt bricht ab, wenn eine Seite ohne Kennung oder ein Import ohne
+  Cache-Buster übrig bleibt. Er liest dafür nach, was er geschrieben hat.
+- `node tools/live-check.mjs` misst nach jeder Auslieferung, ob die Kennung in
+  `index.html` und die in `version.json` zusammenpassen. Fallen sie
+  auseinander, hielte sich jede ausgelieferte Seite für veraltet.
+- Die `import`-Verweise zwischen den Modulen liefen bisher durch keine
+  Prüfung; `tools/lint-html.mjs` prüft sie jetzt mit.
+
 ## [1.8.0] – 2026-08-28
 
 ### Entfernt

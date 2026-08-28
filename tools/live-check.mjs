@@ -86,6 +86,7 @@ for (const [rel, soll] of Object.entries(lokal.files)) {
 const wirkung = [
   ['index.html', /no-cache/, 'HTML muss bei jedem Aufruf neu geprueft werden'],
   ['css/editor.css', /max-age=604800/, 'Assets muessen lange gecacht werden duerfen'],
+  ['version.json', /no-store/, 'die Standmeldung darf nie aus dem Zwischenspeicher kommen'],
 ];
 for (const [pfad, muster, zweck] of wirkung) {
   try {
@@ -101,7 +102,31 @@ for (const [pfad, muster, zweck] of wirkung) {
   }
 }
 
-// ---- 4. Gegenprobe: eine Datei, die es nicht geben darf ----------------
+// ---- 4. Kann der Stand-Waechter live vergleichen? ----------------------
+/* Der Waechter im Browser haelt die Kennung in der Seite gegen die in
+   version.json. Weichen die beiden auf dem SERVER voneinander ab - etwa weil
+   eine Auslieferung auf halbem Weg abgebrochen ist -, dann haelt sich jede
+   ausgelieferte Seite fuer veraltet und laedt bei jeder Rueckkehr einmal
+   vergeblich neu. Von aussen sieht man davon nichts; hier schon. */
+if (liveVersion) {
+  try {
+    const a = await hole('index.html');
+    const html = await a.text();
+    const m = /<meta name="malzicare-stand" content="([^"]*)">/.exec(html);
+    if (!m) {
+      befunde.push('index.html traegt keine Kennung des Standes - der Waechter ist dort aus');
+    } else if (m[1] !== liveVersion.commit_short) {
+      befunde.push(
+        `Kennung in index.html (${m[1]}) und in version.json ` +
+          `(${liveVersion.commit_short}) weichen voneinander ab`
+      );
+    }
+  } catch (e) {
+    befunde.push(`Kennung in index.html nicht messbar: ${e.message}`);
+  }
+}
+
+// ---- 5. Gegenprobe: eine Datei, die es nicht geben darf ----------------
 try {
   const a = await hole('gibt-es-nicht-' + lokal.commit_short + '.html');
   if (a.ok)

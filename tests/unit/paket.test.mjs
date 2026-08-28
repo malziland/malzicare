@@ -1,17 +1,24 @@
 /* Das Auslieferpaket muss vollstaendig sein - besonders die Dateien, die man
  * nicht sieht. Am 21.07.2026 fehlte die .htaccess im von Hand gepackten ZIP;
  * live war davon nichts zu bemerken. */
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { build } from '../../tools/build.mjs';
-import { PUBLIC_DIR, DIST_DIR, listFiles } from '../../tools/paths.mjs';
+import { PUBLIC_DIR, listFiles } from '../../tools/paths.mjs';
 
-const version = await build({ quiet: true });
+/* In ein eigenes Verzeichnis, nicht nach dist/: node --test laesst die
+   Testdateien parallel laufen, und zwei Laeufe in dasselbe Ziel loeschen
+   einander die Dateien unter den Fuessen weg. */
+const ZIEL = await mkdtemp(path.join(tmpdir(), 'malzicare-paket-'));
+after(() => rm(ZIEL, { recursive: true, force: true }));
+
+const version = await build({ quiet: true, ziel: ZIEL });
 const quellen = await listFiles(PUBLIC_DIR);
-const paket = await listFiles(DIST_DIR);
+const paket = await listFiles(ZIEL);
 
 test('jede Datei aus public/ liegt im Paket', () => {
   const fehlend = quellen.filter((f) => !paket.includes(f));
@@ -32,7 +39,7 @@ test('jede Pruefsumme im Manifest passt zur Datei im Paket', async () => {
   assert.equal(Object.keys(version.files).length, quellen.length);
   for (const [rel, soll] of Object.entries(version.files)) {
     const ist = createHash('sha256')
-      .update(await readFile(path.join(DIST_DIR, rel)))
+      .update(await readFile(path.join(ZIEL, rel)))
       .digest('hex');
     assert.equal(ist, soll, `Pruefsumme weicht ab: ${rel}`);
   }

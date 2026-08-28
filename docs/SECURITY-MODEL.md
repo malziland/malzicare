@@ -23,14 +23,26 @@ Auf dem Gerät der Nutzerin, sonst nirgends:
 | erzeugtes PDF                  | das fertige Plakat        | vom Nutzer                                       |
 
 **Es gibt keinen Server, der Inhalte entgegennimmt.** Kein Konto, keine
-Datenbank, keine Schnittstelle, kein Tracking, keine externen Aufrufe zur
-Laufzeit – Schriften und Bibliotheken liegen im Auslieferverzeichnis. Damit
+Datenbank, keine Schnittstelle, kein Tracking, kein Aufruf an einen fremden
+Rechner – Schriften und Bibliotheken liegen im Auslieferverzeichnis. Damit
 existiert die Datenschutzfrage „wie lange speichert der Betreiber?" nicht:
 Er speichert nichts, weil nichts bei ihm ankommt.
 
-Belegbar am Quelltext: `public/js/app.js` kennt keinen `fetch`- oder
-`XMLHttpRequest`-Aufruf; alle Verweise in `public/` zeigen auf lokale Dateien
-(geprüft durch `tools/lint-html.mjs`).
+Einen Aufruf zur Laufzeit gibt es seit dem 28.08.2026, und er geht an dieselbe
+Adresse, von der die Seite selbst kommt: `public/js/stand.js` holt
+`version.json`, um zu erkennen, dass ein lange offener Tab veraltet ist
+([ADR-0006](adr/0006-veraltete-tabs.md)). Gesendet wird dabei nichts – kein
+Inhalt, keine Kennung, kein Wiedererkennungswert. Es ist derselbe Vorgang wie
+das Laden einer CSS-Datei, nur wiederholt er sich, ohne dass jemand etwas
+anklickt.
+
+Belegbar am Quelltext, mit `grep -rn 'fetch(\|XMLHttpRequest' public/js/*.js`:
+genau ein Treffer, in `stand.js`. Alle Verweise in `public/` zeigen auf lokale
+Dateien, die `import`-Zeilen eingeschlossen (geprüft durch
+`tools/lint-html.mjs`). Die beiden mitgelieferten Bibliotheken unter
+`js/vendor/` bringen eigene `fetch`-Aufrufe mit; sie werden ausschließlich mit
+Daten aus dem Dokument aufgerufen und stehen in der Tabelle darunter als
+einmalig geprüfter Fremdcode.
 
 ## Vertrauensgrenzen
 

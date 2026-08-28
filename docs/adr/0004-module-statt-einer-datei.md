@@ -33,13 +33,26 @@ Der Code liegt in elf Modulen mit klaren Aufgaben, geladen als **ES-Module**
 `app.js` bleibt der Einstiegspunkt und importiert `start.js` – der Name in
 `index.html` ändert sich dadurch nicht.
 
+Später hinzugekommen (28.08.2026, [ADR-0006](0006-veraltete-tabs.md)):
+`stand.js` erkennt, dass ein lange offener Tab veraltet ist, und
+`infoseite.js` bindet das auf Impressum, Datenschutz und Nutzungsbedingungen
+ein.
+
 ## Begründung
 
 **Warum kein Bündler:** Er brächte einen Bauschritt zwischen Quelle und
-Auslieferung. Heute ist die ausgelieferte Datei dieselbe, die im Repository
-steht – wer im Browser hineinsieht, sieht den Quelltext. Das ist bei einem
-Projekt, das Schulen prüfen können sollen, mehr wert als eine gesparte
-HTTP-Anfrage. Über HTTP/2 kosten elf kleine Dateien kaum mehr als eine große.
+Auslieferung. Wer im Browser in eine Datei hineinsieht, soll den Quelltext
+sehen – nicht das Ergebnis einer Maschine. Das ist bei einem Projekt, das
+Schulen prüfen können sollen, mehr wert als eine gesparte HTTP-Anfrage. Über
+HTTP/2 kosten elf kleine Dateien kaum mehr als eine große.
+
+Seit dem 28.08.2026 ist die ausgelieferte Datei nicht mehr in jedem Byte die
+aus dem Repository: `tools/build.mjs` hängt an jede `import`-Zeile den
+Cache-Buster, sonst liefert der Webspace die Module bis zu sieben Tage alt aus
+([ADR-0006](0006-veraltete-tabs.md)). Was der Bauschritt tut, bleibt aber
+lesbar und umkehrbar – aus `'./dom.js'` wird `'./dom.js?v=54'`, mehr nicht.
+Es wird nichts gebündelt, nichts umgeschrieben, nichts unkenntlich gemacht.
+Der Grund für die Entscheidung gilt damit unverändert.
 
 **Warum die Reihenfolge erst Tests, dann Zerlegung:** Vor dem Umbau lag die
 Abdeckung bei 69 %, 11 Funktionen liefen in keinem Test. Eine Zerlegung ohne

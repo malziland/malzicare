@@ -1,9 +1,17 @@
 # Cache-Regeln malziCARE
 # HTML wird bei jedem Aufruf neu geprueft (Updates kommen sofort an),
-# Assets duerfen lange gecacht werden (Versionierung laeuft ueber ?v=).
+# Assets duerfen lange gecacht werden (Versionierung laeuft ueber ?v=, den
+# tools/build.mjs auch an jeden Modul-Import stempelt).
 <IfModule mod_headers.c>
   <FilesMatch "\.(html)$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # version.json meldet, welcher Stand hier liegt. Eine Antwort darauf aus dem
+  # Zwischenspeicher waere wertlos: Sie sagte nur, was frueher einmal galt -
+  # und genau daran haengt der Stand-Waechter im Browser.
+  <FilesMatch "^version\.json$">
+    Header set Cache-Control "no-store"
   </FilesMatch>
   <FilesMatch "\.(css|js|png|jpg|jpeg|ico|svg|woff2|webmanifest|xml|txt)$">
     Header set Cache-Control "public, max-age=604800"

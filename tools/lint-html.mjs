@@ -49,6 +49,12 @@ for (const rel of htmlDateien) {
   if (!/<title>[^<]{10,}<\/title>/.test(html)) melde(rel, 'kein brauchbarer Titel');
   if (!/<meta\s+name="description"\s+content="[^"]{40,}"/.test(html))
     melde(rel, 'keine Beschreibung (meta description)');
+  /* Ohne dieses Feld stempelt der Bauschritt nichts in die Seite, und der
+     Stand-Waechter im Browser haette nichts zu vergleichen - er waere still
+     abgeschaltet. tools/build.mjs bricht dann ab; hier faellt es schon vor
+     dem Bauen auf. */
+  if (!/<meta name="malzicare-stand" content="[^"]*">/.test(html))
+    melde(rel, 'kein Feld fuer die Kennung des Standes (meta malzicare-stand)');
   /* Die canonical-Angabe entscheidet, unter welcher Adresse die Seite gilt.
      Sie wird ausdruecklich gegen die Basis geprueft - im allgemeinen
      Adress-Durchlauf weiter unten wuerde eine falsche Angabe als "fremde
@@ -108,6 +114,29 @@ for (const rel of htmlDateien) {
     geprueft.adressen++;
     if (herkunft(url) !== herkunft(BASE)) {
       melde(rel, `fremde Basis-Adresse: ${url} (erwartet ${BASE})`);
+    }
+  }
+}
+
+/* Die Module laden einander per import. Diese Verweise stehen in keiner href-
+   oder src-Angabe und liefen deshalb durch keine Pruefung - ein Tippfehler
+   faellt erst im Browser auf, und dort als leere Seite. Seit dem 28.08.2026
+   haengt mehr daran: tools/build.mjs stempelt genau diese Zeilen mit dem
+   Cache-Buster, damit die Module nicht bis zu sieben Tage alt ausgeliefert
+   werden. Was hier falsch steht, wird dort mitgestempelt. */
+const modulDateien = alleDateien.filter(
+  (f) => f.startsWith('js/') && f.endsWith('.js') && !f.startsWith('js/vendor/')
+);
+if (modulDateien.length === 0) {
+  throw new Error('Kein eigenes Modul unter js/ gefunden - die Pruefung waere blind.');
+}
+for (const rel of modulDateien) {
+  const js = await readFile(path.join(PUBLIC_DIR, rel), 'utf8');
+  for (const m of js.matchAll(/(?:\bfrom|\bimport)\s+['"](\.{1,2}\/[^'"]+)['"]/g)) {
+    geprueft.verweise++;
+    const ziel = m[1].split('?')[0];
+    if (!existsSync(path.join(PUBLIC_DIR, path.dirname(rel), ziel))) {
+      melde(rel, `Import zeigt ins Leere: ${m[1]}`);
     }
   }
 }
