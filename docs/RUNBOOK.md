@@ -72,6 +72,14 @@ Geprüft wird gegen `LIVE_BASE_URL`:
   neu (siehe [ADR-0006](adr/0006-veraltete-tabs.md)).
 - eine Gegenprobe auf eine Datei, die es nicht geben darf.
 
+Ob der Stand-Wächter im Browser wirklich ausschlägt – das misst `live-check`
+nicht, es prüft nur, was auf dem Server liegt:
+
+```bash
+node tools/live-waechter.mjs   # laedt die Live-Seite in WebKit, stellt einen
+                               # Tabwechsel nach, zwei Proben mit Gegenprobe
+```
+
 Ob die Messung selbst noch funktioniert:
 
 ```bash

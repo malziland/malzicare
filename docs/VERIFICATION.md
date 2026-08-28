@@ -4,7 +4,7 @@ Diese Datei ist die kanonische Quelle für alle veränderlichen Zahlen des
 Projekts – Testanzahlen, Prüfumfänge, Messwerte. An keiner anderen Stelle
 steht eine dieser Zahlen; sonst driften sie auseinander.
 
-**Stand aller Einträge: 2026-08-28, unveröffentlichter Stand nach `v1.8.0`.**
+**Stand aller Einträge: 2026-08-28, Tag `v1.9.0`, ausgeliefert.**
 Auf einen Commit-Hash verweist diese Datei bewusst nicht: Sie liegt selbst in
 dem Commit, den sie benennen müsste.
 Jeder Eintrag trägt einen Auslöser, der ihn ungültig macht. Ist er
@@ -12,17 +12,17 @@ eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 
 ## Grundlage
 
-| Anforderung           | Befehl                              | Ergebnis                                                                                                       | Ungültig, sobald                                  |
-| --------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Prüfkette vollständig | `npm run verify`                    | 10 Schritte, alle grün                                                                                         | jeder Commit                                      |
-| Unit-Tests            | `npm run test:unit`                 | 4 Testdateien, 24 Tests, 24 grün, 0 rot                                                                        | jeder Commit                                      |
-| Oberflächentests      | `npm run test:e2e`                  | 92 grün (46 Tests × Chromium und WebKit)                                                                       | jeder Commit                                      |
-| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 86 lokale Verweise, 32 eigene Adressen, keine Befunde                                                | jede Änderung in `public/`                        |
-| Geheimnis-Scan        | `npm run scan:secrets`              | 88 versionierte Textdateien, 6 Muster, keine Funde                                                             | jeder Commit, spätestens vor der Veröffentlichung |
-| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                                                           | jede Änderung an `package-lock.json`              |
-| Testabdeckung         | `node tools/abdeckung.mjs`          | 87,5 % des ausgelieferten JavaScripts, 83 von 83 Funktionen laufen; Schwelle 80 %                              | jede Änderung in `public/js/`                     |
-| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11,2 KB)                                                          | jede Änderung in `public/js/`                     |
-| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33123541971 grün für `348f46e` (`v1.8.0`) – **nicht** für die Änderung vom 28.08.2026: Der Push steht aus | jeder Push                                        |
+| Anforderung           | Befehl                              | Ergebnis                                                                          | Ungültig, sobald                                  |
+| --------------------- | ----------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Prüfkette vollständig | `npm run verify`                    | 10 Schritte, alle grün                                                            | jeder Commit                                      |
+| Unit-Tests            | `npm run test:unit`                 | 4 Testdateien, 24 Tests, 24 grün, 0 rot                                           | jeder Commit                                      |
+| Oberflächentests      | `npm run test:e2e`                  | 92 grün (46 Tests × Chromium und WebKit)                                          | jeder Commit                                      |
+| Verweise und Adressen | `node tools/lint-html.mjs`          | 4 Seiten, 86 lokale Verweise, 32 eigene Adressen, keine Befunde                   | jede Änderung in `public/`                        |
+| Geheimnis-Scan        | `npm run scan:secrets`              | 88 versionierte Textdateien, 6 Muster, keine Funde                                | jeder Commit, spätestens vor der Veröffentlichung |
+| Abhängigkeiten        | `npm audit --audit-level=high`      | in der Pipeline grün                                                              | jede Änderung an `package-lock.json`              |
+| Testabdeckung         | `node tools/abdeckung.mjs`          | 87,5 % des ausgelieferten JavaScripts, 83 von 83 Funktionen laufen; Schwelle 80 % | jede Änderung in `public/js/`                     |
+| Modulgröße            | `npm run test:unit`                 | kein Modul über 15 KB (größtes: `plakat.js`, 11,2 KB)                             | jede Änderung in `public/js/`                     |
+| Pipeline              | GitHub Actions, Workflow „Pruefung" | Lauf 33175464174 grün für `fe5b7a6` (`v1.9.0`), Job `pruefung: success`           | jeder Push                                        |
 
 ## Dass die Prüfungen überhaupt scheitern können
 
@@ -79,11 +79,21 @@ Module, und eine geänderte Schriftdatei hätte ihn gar nicht erreicht. Alle dre
 Befunde sind behoben; die Gegenproben stehen in der Tabelle
 oben, die Entscheidungen in [ADR-0006](adr/0006-veraltete-tabs.md).
 
-**Offen bis zur Auslieferung:** Der Nachweis am laufenden System. Er ist heute
-nicht zu führen – auf dem Webspace liegt noch der Stand ohne Wächter. Nach dem
-Deployment zeigt ihn `node tools/live-check.mjs`, das seit dieser Änderung
-zusätzlich prüft, ob `version.json` mit `no-store` ausgeliefert wird und ob die
-Kennung in `index.html` zu der in `version.json` passt.
+**Am laufenden System nachgemessen, 28.08.2026 nach der Auslieferung von
+`fe5b7a63b3`:**
+
+| Messung                                                | Ergebnis                                                                      |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| `curl` auf die Startseite                              | `<meta name="malzicare-stand" content="fe5b7a63b3">`                          |
+| Ressourcen im echten Chrome (`performance.getEntries`) | alle 15 Skripte und alle geladenen Schriften mit `?v=54`                      |
+| Chrome, 79 s offen, Tabwechsel nachgestellt            | genau **eine** Abfrage `version.json?_t=…`, kein Neuladen – der Stand passt   |
+| `node tools/live-waechter.mjs` (WebKit)                | Probe 1 fremder Stand → neu geladen; Probe 2 gleicher Stand → stehengeblieben |
+| `curl -I` auf `/version.json`                          | `cache-control: no-store`                                                     |
+| `node tools/live-check.mjs --negativprobe`             | rot mit verfälschtem Sollwert, wie verlangt                                   |
+
+Probe 2 in `tools/live-waechter.mjs` ist die wichtigere: Ohne sie ginge ein
+Wächter, der einfach immer neu lädt, als bestanden durch – und wäre das
+schlimmere Problem.
 
 ## Barrierefreiheit (Profil UI)
 
@@ -97,13 +107,13 @@ Kennung in `index.html` zu der in `version.json` passt.
 
 ## Reproduzierbarkeit und Rückweg
 
-| Anforderung               | Befehl                                                                 | Ergebnis                                                                                                | Ungültig, sobald               |
-| ------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 69 Dateien, alle 6 Schritte grün                                                                        | jeder neue Tag                 |
-| Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber                    | jeder neue Tag                 |
-| Verbindung zum Webspace   | `node tools/deploy.mjs --verbindung`                                   | Anmeldung erfolgreich, verschlüsselt, 13 Einträge gelesen                                               | jede Änderung der Zugangsdaten |
-| Auslieferung, vollständig | `npm run deploy -- --aufraeumen`                                       | 35 Dateien per SFTP übertragen, Fremddatei entfernt, Live-Check grün: Kennung und 33 Prüfsummen stimmen | jede Auslieferung              |
-| Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                                      | Änderung an `tools/deploy.mjs` |
+| Anforderung               | Befehl                                                                 | Ergebnis                                                                                                                                                          | Ungültig, sobald               |
+| ------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| Rollback-Probe            | `git worktree add --detach <tmp> v1.0.0` + `npm ci` + `npm run verify` | 69 Dateien, alle 6 Schritte grün                                                                                                                                  | jeder neue Tag                 |
+| Reproduzierbarer Build    | ebd. + `node tools/build.mjs`                                          | 34 Dateien + `version.json`, Kennung gleich dem getaggten Commit, Arbeitsbaum sauber                                                                              | jeder neue Tag                 |
+| Verbindung zum Webspace   | `node tools/deploy.mjs --verbindung`                                   | Anmeldung erfolgreich, verschlüsselt, 13 Einträge gelesen                                                                                                         | jede Änderung der Zugangsdaten |
+| Auslieferung, vollständig | `npm run deploy`                                                       | 28.08.2026: 46 Dateien per SFTP übertragen, nichts Fremdes oben (14 Einträge vorher wie nachher), Live-Check grün: Kennung `fe5b7a63b3` und 44 Prüfsummen stimmen | jede Auslieferung              |
+| Auslieferung, Trockenlauf | `node tools/deploy.mjs --probe`                                        | Riegel greifen; ohne Zugangsdaten Rückgabewert 2, kein Teil-Upload                                                                                                | Änderung an `tools/deploy.mjs` |
 
 ## Erste Messung am laufenden System (27.08.2026)
 

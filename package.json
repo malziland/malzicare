@@ -27,7 +27,8 @@
     "deploy": "node tools/deploy.mjs",
     "verify:live": "node tools/live-check.mjs",
     "scan:secrets": "node tools/scan-secrets.mjs",
-    "fremdcode": "node tools/fremdcode.mjs --neuigkeiten"
+    "fremdcode": "node tools/fremdcode.mjs --neuigkeiten",
+    "verify:waechter": "node tools/live-waechter.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
