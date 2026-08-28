@@ -58,7 +58,18 @@ Minute; ein roter Pipeline-Lauf kostet ein Vielfaches davon.
 npm run verify:live
 ```
 
-Geprüft wird gegen `LIVE_BASE_URL`:
+Gemessen wird gegen `LIVE_BASE_URL`, und der Sollwert steht in
+`ausgeliefert.json` – einer Kopie der `version.json` aus dem Paket, das zuletzt
+tatsächlich übertragen wurde. **Nicht** gegen den aktuellen Arbeitsstand: Der
+Bauschritt stempelt die Commit-Kennung in jede Seite, also wäre die Prüfung
+schon nach dem ersten Commit nach einer Auslieferung rot, ohne dass an der
+Seite etwas falsch wäre. Eine Prüfung, die ohne Anlass rot ist, wird nach dem
+zweiten Mal ignoriert.
+
+`node tools/live-check.mjs --paket` misst stattdessen gegen `dist/` – das
+braucht `deploy.mjs` unmittelbar nach dem Übertragen.
+
+Geprüft wird:
 
 - die Kennung in `version.json` gegen den erwarteten Commit,
 - die Prüfsumme **jeder** Datei,
@@ -100,8 +111,9 @@ npm run deploy
 git checkout main
 ```
 
-Die Kennung des letzten guten Standes steht in `docs/VERIFICATION.md` und in
-`version.json` der laufenden Seite. **Verlässlich ist dort `commit`, nicht
+Die Kennung des letzten guten Standes steht in `ausgeliefert.json` – das ist
+die kanonische Angabe, welcher Stand oben liegt, und sie wird von
+`tools/deploy.mjs` nach jedem erfolgreichen Beweis geschrieben. **Verlässlich ist dort `commit`, nicht
 `tag`:** Der Tag entsteht erst nach dem Deployment – vorher wäre er eine Zusage
 auf etwas, das noch nicht oben liegt –, und das Paket wird davor gebaut. In
 `version.json` einer frisch ausgelieferten Fassung steht deshalb `"tag": null`.

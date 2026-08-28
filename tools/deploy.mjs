@@ -18,6 +18,7 @@
  *   node tools/deploy.mjs --eilig       ohne Oberflaechentests (wird gemeldet)
  */
 import { execFileSync } from 'node:child_process';
+import { copyFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ROOT, DIST_DIR, listFiles } from './paths.mjs';
 import { pflichtwerte } from './env.mjs';
@@ -178,7 +179,8 @@ try {
 // ---- Beweis -------------------------------------------------------------
 schritt('Beweis');
 try {
-  execFileSync(process.execPath, [path.join(ROOT, 'tools', 'live-check.mjs')], {
+  // --paket: Hier ist dist/ der Sollwert - genau das wurde gerade uebertragen.
+  execFileSync(process.execPath, [path.join(ROOT, 'tools', 'live-check.mjs'), '--paket'], {
     cwd: ROOT,
     stdio: 'inherit',
   });
@@ -187,4 +189,14 @@ try {
   console.error('Rueckweg steht in docs/RUNBOOK.md.');
   process.exit(1);
 }
+
+/* Erst jetzt, nach dem Beweis: festhalten, WAS oben liegt. Ab hier misst
+   `npm run verify:live` gegen diesen Stand und nicht mehr gegen den jeweils
+   letzten Build - sonst ist die Pruefung schon nach dem naechsten Commit rot,
+   ohne dass an der Seite etwas falsch waere. Die Datei gehoert ins
+   Repository; sie ist die kanonische Angabe, welcher Stand ausgeliefert ist. */
+await copyFile(path.join(DIST_DIR, 'version.json'), path.join(ROOT, 'ausgeliefert.json'));
+console.log(`\nausgeliefert.json geschrieben: Stand ${version.commit_short}.`);
+console.log('Bitte mitcommitten - sie sagt der naechsten Sitzung, was live liegt.');
+
 console.log('\nAusgeliefert und nachgemessen.');
