@@ -7,7 +7,7 @@
   "author": "Christoph Krieger, malziland – learning | training | consulting e.U.",
   "type": "module",
   "engines": {
-    "node": ">=20.11"
+    "node": ">=24"
   },
   "scripts": {
     "setup": "node tools/setup.mjs",
