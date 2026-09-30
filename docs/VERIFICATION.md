@@ -29,24 +29,25 @@ eingetreten, gilt der Nachweis als offen, auch wenn hier noch „grün" steht.
 Eine Prüfung, die nicht rot werden kann, ist selbst der Befund. Jede der
 folgenden Gegenproben wurde ausgeführt, nicht überlegt.
 
-| Prüfung              | Gegenprobe                                                 | Ergebnis                                              | Ungültig, sobald                        |
-| -------------------- | ---------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------- |
-| Linter               | Datei mit ungenutzter und undefinierter Variable           | rot, 2 Befunde                                        | Änderung an `eslint.config.js`          |
-| Paketvollständigkeit | `.htaccess` aus `public/` entfernt                         | rot: „die unsichtbare .htaccess ist dabei"            | Änderung an `tools/build.mjs`           |
-| Download-Typ         | PDF-Blob auf `application/pdf` gesetzt                     | rot                                                   | Änderung an `saveFile`/`runPdfExport`   |
-| Verwaiste Dateien    | unbenutzte Datei in `public/assets/` abgelegt              | rot, 1 Befund                                         | Änderung an `tools/lint-html.mjs`       |
-| Cache-Buster         | Zustand vor der Behebung                                   | rot, 3 Befunde                                        | Änderung an `site.json`                 |
-| Geheimnis-Scan       | Datei mit echtem Passwort-Literal und Zugangsdaten-URL     | rot, 2 Funde                                          | Änderung an den Mustern                 |
-| Geheimnis-Scan       | 4 Gegenproben wie `password: env.FTP_PASSWORD`             | schweigt, wie es soll (im Selbsttest geprüft)         | Änderung an den Mustern                 |
-| axe-Messung          | kontrastarmes Element in die Seite eingefügt               | rot                                                   | Änderung an der Messfunktion            |
-| Test-Runner          | Aufrufmuster ohne Treffer                                  | rot: „Keine Testdatei gefunden"                       | Änderung an `tools/run-tests.mjs`       |
-| Live-Prüfung         | `node tools/live-check.mjs --negativprobe`                 | rot mit verfälschtem Sollwert, wie verlangt           | jede Änderung an `tools/live-check.mjs` |
-| Stand-Wächter        | Aufruf `ueberwacheStand(persist)` aus `start.js` entfernt  | rot, 3 der 5 Oberflächentests                         | Änderung an `public/js/stand.js`        |
-| Import-Stempel       | Stempelschleife aus `tools/build.mjs` entfernt             | rot: „Stempel unvollstaendig", 11 Module              | Änderung an `tools/build.mjs`           |
-| Kennungs-Stempel     | Stempelzeile aus `tools/build.mjs` entfernt                | rot: „traegt die Kennung des Standes nicht", 4 Seiten | Änderung an `tools/build.mjs`           |
-| Stempelfeld je Seite | `meta malzicare-stand` aus `index.html` entfernt           | rot, 1 Befund                                         | Änderung an `tools/lint-html.mjs`       |
-| Import-Verweise      | Import auf eine nicht vorhandene Datei gesetzt             | rot: „Import zeigt ins Leere"                         | Änderung an `tools/lint-html.mjs`       |
-| CSS-Stempel          | Stempelschleife für `url()` aus `tools/build.mjs` entfernt | rot: „url() ohne Cache-Buster", 16 Verweise           | Änderung an `tools/build.mjs`           |
+| Prüfung              | Gegenprobe                                                 | Ergebnis                                              | Ungültig, sobald                           |
+| -------------------- | ---------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------ |
+| Linter               | Datei mit ungenutzter und undefinierter Variable           | rot, 2 Befunde                                        | Änderung an `eslint.config.js`             |
+| Paketvollständigkeit | `.htaccess` aus `public/` entfernt                         | rot: „die unsichtbare .htaccess ist dabei"            | Änderung an `tools/build.mjs`              |
+| Download-Typ         | PDF-Blob auf `application/pdf` gesetzt                     | rot                                                   | Änderung an `saveFile`/`runPdfExport`      |
+| Verwaiste Dateien    | unbenutzte Datei in `public/assets/` abgelegt              | rot, 1 Befund                                         | Änderung an `tools/lint-html.mjs`          |
+| Cache-Buster         | Zustand vor der Behebung                                   | rot, 3 Befunde                                        | Änderung an `site.json`                    |
+| Geheimnis-Scan       | Datei mit echtem Passwort-Literal und Zugangsdaten-URL     | rot, 2 Funde                                          | Änderung an den Mustern                    |
+| Geheimnis-Scan       | 4 Gegenproben wie `password: env.FTP_PASSWORD`             | schweigt, wie es soll (im Selbsttest geprüft)         | Änderung an den Mustern                    |
+| axe-Messung          | kontrastarmes Element in die Seite eingefügt               | rot                                                   | Änderung an der Messfunktion               |
+| Test-Runner          | Aufrufmuster ohne Treffer                                  | rot: „Keine Testdatei gefunden"                       | Änderung an `tools/run-tests.mjs`          |
+| Live-Prüfung         | `node tools/live-check.mjs --negativprobe`                 | rot mit verfälschtem Sollwert, wie verlangt           | jede Änderung an `tools/live-check.mjs`    |
+| Stand-Wächter        | Aufruf `ueberwacheStand(persist)` aus `start.js` entfernt  | rot, 3 der 5 Oberflächentests                         | Änderung an `public/js/stand.js`           |
+| Import-Stempel       | Stempelschleife aus `tools/build.mjs` entfernt             | rot: „Stempel unvollstaendig", 11 Module              | Änderung an `tools/build.mjs`              |
+| Kennungs-Stempel     | Stempelzeile aus `tools/build.mjs` entfernt                | rot: „traegt die Kennung des Standes nicht", 4 Seiten | Änderung an `tools/build.mjs`              |
+| Stempelfeld je Seite | `meta malzicare-stand` aus `index.html` entfernt           | rot, 1 Befund                                         | Änderung an `tools/lint-html.mjs`          |
+| Import-Verweise      | Import auf eine nicht vorhandene Datei gesetzt             | rot: „Import zeigt ins Leere"                         | Änderung an `tools/lint-html.mjs`          |
+| CSS-Stempel          | Stempelschleife für `url()` aus `tools/build.mjs` entfernt | rot: „url() ohne Cache-Buster", 16 Verweise           | Änderung an `tools/build.mjs`              |
+| Finder-Dateien       | Kopierfilter aus `tools/build.mjs` entfernt (30.09.2026)   | rot: „Im Paket liegt: assets/.DS_Store"               | Änderung an `tools/build.mjs`, `paths.mjs` |
 
 ## Veraltete Stände im Browser (28.08.2026)
 

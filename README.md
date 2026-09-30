@@ -70,12 +70,15 @@ npm run setup && npm run verify
 
 Die Trennung ist kein Ordnungssinn, sondern ein Riegel: Was nicht in `public/`
 liegt, kann nicht versehentlich mit ausgeliefert werden – und was darin liegt,
-wird vollständig ausgeliefert, unsichtbare Dateien eingeschlossen.
+wird vollständig ausgeliefert, unsichtbare Dateien wie die `.htaccess`
+eingeschlossen. Ausgenommen sind nur Dateien, die das Betriebssystem ungefragt
+anlegt, etwa die `.DS_Store` des Finders; welche das sind, steht an einer
+Stelle in `tools/paths.mjs`.
 
 ## Ausliefern
 
 ```bash
-npm run deploy            # Riegel, Upload per FTPS, Messung danach
+npm run deploy            # Riegel, Upload per SFTP, Messung danach
 npm run deploy -- --probe # Trockenlauf ohne Verbindung
 npm run verify:live       # nur nachmessen, was oben liegt
 ```
