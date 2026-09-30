@@ -24,9 +24,15 @@ const selbstAngelegt = await access(FINDER).then(
   () => false,
   async () => (await writeFile(FINDER, 'Testdatei aus paket.test.mjs'), true)
 );
-after(() => (selbstAngelegt ? rm(FINDER, { force: true }) : undefined));
 
-const version = await build({ quiet: true, ziel: ZIEL });
+/* Aufgeraeumt wird im finally, nicht in after(): Bricht build() schon beim
+   Laden ab, laufen keine after-Haken, und die Testdatei bliebe liegen. */
+let version;
+try {
+  version = await build({ quiet: true, ziel: ZIEL });
+} finally {
+  if (selbstAngelegt) await rm(FINDER, { force: true });
+}
 const quellen = (await listFiles(PUBLIC_DIR)).filter(gehoertInsPaket);
 const paket = await listFiles(ZIEL);
 

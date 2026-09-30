@@ -159,7 +159,10 @@ try {
   const unterordner = new Set(dateien.map((f) => path.posix.dirname(f)).filter((d) => d !== '.'));
   for (const d of unterordner) {
     for (const e of await c.list(`${basis}/${d}`)) {
-      if (NIE_AUSLIEFERN.has(e.name)) fremd.push({ ...e, name: `${d}/${e.name}` });
+      // Nur Dateien: Ein Ordner dieses Namens waere kein Finder-Rest, und
+      // --aufraeumen loescht Ordner samt Inhalt.
+      if (e.type !== 'd' && NIE_AUSLIEFERN.has(e.name))
+        fremd.push({ ...e, name: `${d}/${e.name}` });
     }
   }
 
