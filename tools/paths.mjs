@@ -40,3 +40,12 @@ export async function listFiles(dir) {
   await walk('');
   return out.sort();
 }
+
+/** Dateien, die das Betriebssystem ungefragt anlegt und die nie ausgeliefert
+ *  werden. Der Finder legt eine .DS_Store in jeden Ordner, den er einmal
+ *  geoeffnet hat; am 30.09.2026 lag so eine live unter /assets/.DS_Store und
+ *  verriet die Dateinamen des Ordners. listFiles() bleibt trotzdem
+ *  vollstaendig - wer misst, muss auch das sehen, was nicht hingehoert. */
+export const NIE_AUSLIEFERN = new Set(['.DS_Store']);
+
+export const gehoertInsPaket = (rel) => !NIE_AUSLIEFERN.has(rel.split('/').pop());

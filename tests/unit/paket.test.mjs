@@ -3,12 +3,12 @@
  * live war davon nichts zu bemerken. */
 import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { access, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { build } from '../../tools/build.mjs';
-import { PUBLIC_DIR, listFiles } from '../../tools/paths.mjs';
+import { PUBLIC_DIR, listFiles, gehoertInsPaket, NIE_AUSLIEFERN } from '../../tools/paths.mjs';
 
 /* In ein eigenes Verzeichnis, nicht nach dist/: node --test laesst die
    Testdateien parallel laufen, und zwei Laeufe in dasselbe Ziel loeschen
@@ -16,9 +16,25 @@ import { PUBLIC_DIR, listFiles } from '../../tools/paths.mjs';
 const ZIEL = await mkdtemp(path.join(tmpdir(), 'malzicare-paket-'));
 after(() => rm(ZIEL, { recursive: true, force: true }));
 
+/* Eine Finder-Datei, wie sie am 30.09.2026 live in assets/ lag. Ohne sie waere
+   der Test auf jedem Rechner gruen, auf dem der Finder den Ordner nie
+   geoeffnet hat - also auch in der Pipeline. Eine vorhandene bleibt liegen. */
+const FINDER = path.join(PUBLIC_DIR, 'assets', '.DS_Store');
+const selbstAngelegt = await access(FINDER).then(
+  () => false,
+  async () => (await writeFile(FINDER, 'Testdatei aus paket.test.mjs'), true)
+);
+after(() => (selbstAngelegt ? rm(FINDER, { force: true }) : undefined));
+
 const version = await build({ quiet: true, ziel: ZIEL });
-const quellen = await listFiles(PUBLIC_DIR);
+const quellen = (await listFiles(PUBLIC_DIR)).filter(gehoertInsPaket);
 const paket = await listFiles(ZIEL);
+
+test('Finder-Dateien kommen nicht ins Paket', () => {
+  const muell = paket.filter((f) => NIE_AUSLIEFERN.has(f.split('/').pop()));
+  assert.deepEqual(muell, [], `Im Paket liegt: ${muell.join(', ')}`);
+  assert.equal(version.files['assets/.DS_Store'], undefined, 'im Manifest vermerkt');
+});
 
 test('jede Datei aus public/ liegt im Paket', () => {
   const fehlend = quellen.filter((f) => !paket.includes(f));

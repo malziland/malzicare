@@ -2,10 +2,11 @@
  *
  * Drei Aufgaben, alle gegen denselben Fehler gerichtet: dass jemand etwas
  * anderes bekommt, als er bekommen soll.
- *   1. dist/ enthaelt public/ vollstaendig, Dotfiles eingeschlossen. Das wird
- *      nach dem Kopieren nachgemessen, nicht angenommen. Am 21.07.2026 fehlte
- *      die unsichtbare .htaccess im von Hand gepackten ZIP, und live war
- *      davon nichts zu sehen.
+ *   1. dist/ enthaelt public/ vollstaendig, Dotfiles eingeschlossen, und
+ *      nichts sonst. Das wird nach dem Kopieren nachgemessen, nicht
+ *      angenommen. Am 21.07.2026 fehlte die unsichtbare .htaccess im von Hand
+ *      gepackten ZIP; am 30.09.2026 lag umgekehrt eine .DS_Store des Finders
+ *      live im Ordner assets/. Was nie ins Paket gehoert, steht in paths.mjs.
  *   2. Das Paket wird gestempelt - Naeheres bei stempeln().
  *   3. dist/version.json traegt die Kennung des Standes und die Pruefsumme
  *      jeder Datei. Damit kann nach der Auslieferung von aussen geprueft
@@ -15,7 +16,7 @@ import { rm, mkdir, cp, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
-import { ROOT, PUBLIC_DIR, DIST_DIR, listFiles } from './paths.mjs';
+import { ROOT, PUBLIC_DIR, DIST_DIR, listFiles, gehoertInsPaket } from './paths.mjs';
 
 function git(...args) {
   try {
@@ -132,18 +133,26 @@ async function stempeln(kennung, buster, ziel) {
    Zustand, weil ein gruener Lauf nichts mehr beweist. Wer baut, sagt jetzt,
    wohin. */
 export async function build({ quiet = false, ziel = DIST_DIR } = {}) {
-  const sources = await listFiles(PUBLIC_DIR);
+  const sources = (await listFiles(PUBLIC_DIR)).filter(gehoertInsPaket);
   if (sources.length === 0) throw new Error('public/ ist leer - da stimmt etwas nicht.');
 
   await rm(ziel, { recursive: true, force: true });
   await mkdir(ziel, { recursive: true });
-  await cp(PUBLIC_DIR, ziel, { recursive: true });
+  await cp(PUBLIC_DIR, ziel, {
+    recursive: true,
+    filter: (quelle) => gehoertInsPaket(path.basename(quelle)),
+  });
 
-  // Nachmessen statt annehmen: jede Quelldatei muss im Paket liegen.
+  // Nachmessen statt annehmen: jede Quelldatei muss im Paket liegen, und
+  // nichts darf dabei sein, was nicht hingehoert.
   const built = await listFiles(ziel);
   const fehlend = sources.filter((f) => !built.includes(f));
   if (fehlend.length > 0) {
     throw new Error(`Im Paket fehlen ${fehlend.length} Datei(en): ${fehlend.join(', ')}`);
+  }
+  const zuviel = built.filter((f) => !sources.includes(f));
+  if (zuviel.length > 0) {
+    throw new Error(`Im Paket liegt, was nicht hingehoert: ${zuviel.join(', ')}`);
   }
 
   /* Erst stempeln, dann messen. Der Stempel aendert Dateien, und ein Manifest,

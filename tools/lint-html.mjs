@@ -9,7 +9,7 @@
 import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
-import { ROOT, PUBLIC_DIR, listFiles } from './paths.mjs';
+import { ROOT, PUBLIC_DIR, listFiles, gehoertInsPaket } from './paths.mjs';
 
 const site = JSON.parse(await readFile(path.join(ROOT, 'site.json'), 'utf8'));
 const BASE = site.base_url.replace(/\/$/, '');
@@ -35,7 +35,8 @@ function melde(datei, text) {
   fehler.push(`${datei}: ${text}`);
 }
 
-const alleDateien = await listFiles(PUBLIC_DIR);
+// Was nie ausgeliefert wird (Finder-Dateien), muss auch nicht eingebunden sein.
+const alleDateien = (await listFiles(PUBLIC_DIR)).filter(gehoertInsPaket);
 const htmlDateien = alleDateien.filter((f) => f.endsWith('.html'));
 if (htmlDateien.length === 0)
   throw new Error('Keine HTML-Datei gefunden - Pruefung waere sinnlos.');

@@ -19,7 +19,7 @@
  */
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
-import { ROOT, DIST_DIR, listFiles } from './paths.mjs';
+import { ROOT, DIST_DIR, listFiles, NIE_AUSLIEFERN } from './paths.mjs';
 import { pflichtwerte } from './env.mjs';
 import { build } from './build.mjs';
 
@@ -151,6 +151,18 @@ try {
   const oben = await c.list(env.SFTP_REMOTE_DIR);
   const paketNamen = new Set(dateien.map((f) => f.split('/')[0]));
   const fremd = oben.filter((e) => !paketNamen.has(e.name));
+
+  // Finder-Dateien auch in den Unterordnern des Pakets. Der Abgleich oben
+  // sieht nur die oberste Ebene - so blieb am 30.09.2026 assets/.DS_Store
+  // unbemerkt online.
+  const basis = env.SFTP_REMOTE_DIR.replace(/\/$/, '');
+  const unterordner = new Set(dateien.map((f) => path.posix.dirname(f)).filter((d) => d !== '.'));
+  for (const d of unterordner) {
+    for (const e of await c.list(`${basis}/${d}`)) {
+      if (NIE_AUSLIEFERN.has(e.name)) fremd.push({ ...e, name: `${d}/${e.name}` });
+    }
+  }
+
   if (fremd.length > 0) {
     console.log(`\n${fremd.length} Eintrag/Eintraege oben gehoeren nicht zum Paket:`);
     for (const e of fremd) console.log(`  ${e.type === 'd' ? 'ORDNER' : 'Datei '}  ${e.name}`);
