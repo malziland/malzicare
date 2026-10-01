@@ -7,6 +7,24 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
+## [1.9.1] – 2026-10-01
+
+### Behoben
+
+**Eine Systemdatei des Mac lag öffentlich auf der Seite.** Unter
+`/assets/.DS_Store` war eine Datei abrufbar, die der Finder ungefragt anlegt;
+sie verrät die Dateinamen des Ordners. Das Bauskript nahm solche Dateien mit
+ins Paket, und das Aufräumen beim Hochladen sah nur die oberste Ebene. Jetzt
+bleiben sie beim Bauen draußen, und die Auslieferung findet sie auch in
+Unterordnern. Mit dieser Fassung ist die Datei vom Server entfernt.
+
+### Geändert
+
+Nur Werkzeuge, an der Seite selbst ändert sich nichts: Entwicklungswerkzeuge
+auf den neuesten Stand gebracht (dabei eine Sicherheitslücke in einer
+Hilfsbibliothek geschlossen), und geprüft wird lokal wie in der Pipeline mit
+Node 24.
+
 ## [1.9.0] – 2026-08-28
 
 ### Behoben
