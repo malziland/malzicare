@@ -64,6 +64,8 @@ export function sanitize(data) {
      jeder Besuch den ganzen Stand sichert. Eigene Eingaben bleiben unberührt. */
   if (Array.isArray(data.penalties) && data.penalties.join('|') === ALTE_BEISPIELFOLGEN.join('|'))
     s.penalties = DEFAULTS.penalties.slice();
+  /* Migration: unveraenderte alte Admin-Beschriftung bekommt die Empfehlung (1.10.2). */
+  if (texts.adminsLabel === 'Admins') s.texts.adminsLabel = DEFAULTS.texts.adminsLabel;
   /* Migration alter Speicherstände (signTitle/signText lagen früher oben) */
   if (typeof data.signTitle === 'string' && typeof texts.signTitle !== 'string')
     s.texts.signTitle = data.signTitle.slice(0, 40);

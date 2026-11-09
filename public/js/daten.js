@@ -63,7 +63,7 @@ export const DEFAULTS = {
     chipBad: 'Das hat bei uns keinen Platz',
     day: 'Heute',
     pinned: 'Angepinnt in der Gruppe',
-    adminsLabel: 'Admins',
+    adminsLabel: 'Admins (idealerweise zwei bis vier)',
     pensLabel: 'Wenn jemand nicht mitmacht',
     signTitle: 'Das sind wir',
     signText:

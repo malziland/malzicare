@@ -57,6 +57,17 @@ test('unveraenderte alte Beispielfolgen werden durch die neuen ersetzt', async (
   await expect(page.locator('#poster')).not.toContainText('3 Tage Ausschluss');
 });
 
+test('die alte Admin-Beschriftung bekommt die Empfehlung 2 bis 4', async ({ page }) => {
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'malziland-klassenchat-plakat-v1',
+      JSON.stringify({ texts: { adminsLabel: 'Admins' } })
+    )
+  );
+  await page.reload();
+  await expect(page.locator('#txtAdminsLabel')).toHaveText('Admins (idealerweise zwei bis vier)');
+});
+
 test('selbst eingetragene Folgen bleiben nach dem Neuladen erhalten', async ({ page }) => {
   await page.evaluate(() =>
     localStorage.setItem(
