@@ -119,6 +119,19 @@ body {
 }
 
 
+.export-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.export-hint {
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--ml-warmgray-text);
+  white-space: nowrap;
+}
+
 .topbar-actions {
   margin-left: auto;
   display: flex;
@@ -734,6 +747,10 @@ body.shot .poster { box-shadow: none; }
     background: var(--ml-white);
   }
   .btn-label-long { display: none; }
+  /* Im 2x2-Gitter zaehlt der Knopf als eigene Zelle; der Druckhinweis
+     steht auf dem Handy nur in der Fusszeile. */
+  .export-wrap { display: contents; }
+  .export-hint { display: none; }
   .btn-label-short { display: inline; }
 
   /* flex:none lässt .app auf Inhaltshöhe wachsen — nötig, damit die

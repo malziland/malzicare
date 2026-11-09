@@ -47,7 +47,12 @@ export const DEFAULTS = {
     'Streit',
     'Andere Sprachen',
   ],
-  penalties: ['Verwarnung', '3 Tage Ausschluss', '1 Woche Ausschluss'],
+  penalties: [
+    'Verwarnung',
+    'weitere Verwarnung',
+    'Gespräch mit erwachsener Bezugsperson',
+    '1 Woche Ausschluss aus der Gruppe',
+  ],
   workshopDate: '',
   texts: {
     eyebrow: 'Klassenvereinbarung · Unser Gruppenchat',
