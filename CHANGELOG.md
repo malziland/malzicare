@@ -7,6 +7,24 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
+## [1.10.0] – 2026-11-09
+
+### Geändert
+
+**Empfehlung für die Zahl der Admins.** Unter dem Admin-Feld steht jetzt
+„Empfohlen sind zwei bis vier, die Klasse entscheidet.“ Auf dem Plakat selbst
+bleibt die Beschriftung „Admins“.
+
+**Mildere Beispielfolgen in vier Stufen.** Das Beispielplakat zeigt jetzt:
+Verwarnung, weitere Verwarnung, Gespräch mit erwachsener Bezugsperson,
+1 Woche Ausschluss aus der Gruppe. Darunter der Hinweis, dass es nur ein
+Beispiel ist und die Klasse ihre Folgen selbst festlegt. Gespeicherte
+Entwürfe behalten ihre eigenen Folgen; die neuen Werte gelten nur für ein
+neues Plakat oder nach „Auf Vorlage zurücksetzen“.
+
+**Druckhinweis.** Unter „PDF herunterladen“ und in der Fußzeile steht, dass
+das Plakat zum Ausdrucken in A3 quer gedacht ist.
+
 ## [1.9.1] – 2026-10-01
 
 ### Behoben
