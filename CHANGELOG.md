@@ -7,6 +7,16 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
+## [1.10.1] – 2026-11-09
+
+### Behoben
+
+**Die neuen Beispielfolgen kamen bei wiederkehrenden Besucher:innen nicht an.**
+Das Werkzeug sichert bei jedem Besuch den ganzen Stand im Browser, auch die nie
+angefassten Beispielfolgen. Wer vor 1.10.0 schon einmal da war, sah deshalb
+weiter die alten drei Stufen. Jetzt wird genau diese unveränderte alte Liste
+beim Öffnen durch die neue ersetzt; selbst eingetragene Folgen bleiben.
+
 ## [1.10.0] – 2026-11-09
 
 ### Geändert
