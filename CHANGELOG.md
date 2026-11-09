@@ -7,33 +7,32 @@ Jede Fassung mit Datum ist ausgeliefert und unter <https://malzi.care>
 erreichbar. Steht einmal ein Abschnitt „Unveröffentlicht" darüber, ist das
 gemeint, was schon im Repository, aber noch nicht online ist.
 
-## [1.10.1] – 2026-11-09
+## [1.10.2] – 2026-11-09
 
-### Behoben
-
-**Die neuen Beispielfolgen kamen bei wiederkehrenden Besucher:innen nicht an.**
-Das Werkzeug sichert bei jedem Besuch den ganzen Stand im Browser, auch die nie
-angefassten Beispielfolgen. Wer vor 1.10.0 schon einmal da war, sah deshalb
-weiter die alten drei Stufen. Jetzt wird genau diese unveränderte alte Liste
-beim Öffnen durch die neue ersetzt; selbst eingetragene Folgen bleiben.
-
-## [1.10.0] – 2026-11-09
+Zusammenfassung aller Änderungen vom 9. November 2026 (Fassungen 1.10.0,
+1.10.1 und 1.10.2, am selben Tag nacheinander ausgeliefert).
 
 ### Geändert
 
-**Empfehlung für die Zahl der Admins.** Unter dem Admin-Feld steht jetzt
-„Empfohlen sind zwei bis vier, die Klasse entscheidet.“ Auf dem Plakat selbst
-bleibt die Beschriftung „Admins“.
+**Empfehlung für die Zahl der Admins.** Auf dem Plakat steht jetzt
+„Admins (idealerweise zwei bis vier)“, im Editor darunter „Empfohlen sind
+zwei bis vier, die Klasse entscheidet.“
 
-**Mildere Beispielfolgen in vier Stufen.** Das Beispielplakat zeigt jetzt:
+**Mildere Beispielfolgen in vier Stufen.** Das Beispielplakat zeigt:
 Verwarnung, weitere Verwarnung, Gespräch mit erwachsener Bezugsperson,
-1 Woche Ausschluss aus der Gruppe. Darunter der Hinweis, dass es nur ein
-Beispiel ist und die Klasse ihre Folgen selbst festlegt. Gespeicherte
-Entwürfe behalten ihre eigenen Folgen; die neuen Werte gelten nur für ein
-neues Plakat oder nach „Auf Vorlage zurücksetzen“.
+1 Woche Ausschluss aus der Gruppe. Im Editor steht dazu, dass es nur ein
+Beispiel ist und die Klasse ihre Folgen selbst festlegt.
 
 **Druckhinweis.** Unter „PDF herunterladen“ und in der Fußzeile steht, dass
 das Plakat zum Ausdrucken in A3 quer gedacht ist.
+
+### Behoben
+
+**Neue Beispielwerte kamen bei wiederkehrenden Besucher:innen nicht an.**
+Das Werkzeug sichert bei jedem Besuch den ganzen Stand im Browser, auch nie
+angefasste Beispielwerte. Wer schon einmal da war, sah deshalb weiter die
+alten Folgen und die alte Beschriftung. Unveränderte alte Beispielwerte
+werden jetzt beim Öffnen durch die neuen ersetzt; selbst Eingetragenes bleibt.
 
 ## [1.9.1] – 2026-10-01
 
