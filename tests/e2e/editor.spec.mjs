@@ -41,6 +41,34 @@ test('der Wechsel der App aendert die Optik des Plakats', async ({ page }) => {
   await expect.poll(async () => page.locator('#poster').getAttribute('class')).not.toBe(vorher);
 });
 
+test('unveraenderte alte Beispielfolgen werden durch die neuen ersetzt', async ({ page }) => {
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'malziland-klassenchat-plakat-v1',
+      JSON.stringify({
+        groupName: 'Klasse 4D',
+        penalties: ['Verwarnung', '3 Tage Ausschluss', '1 Woche Ausschluss'],
+      })
+    )
+  );
+  await page.reload();
+  await expect(page.locator('#inGroup')).toHaveValue('Klasse 4D');
+  await expect(page.locator('#poster')).toContainText('Gespräch mit erwachsener Bezugsperson');
+  await expect(page.locator('#poster')).not.toContainText('3 Tage Ausschluss');
+});
+
+test('selbst eingetragene Folgen bleiben nach dem Neuladen erhalten', async ({ page }) => {
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'malziland-klassenchat-plakat-v1',
+      JSON.stringify({ penalties: ['Hinweis in der Gruppe', '3 Tage Ausschluss'] })
+    )
+  );
+  await page.reload();
+  await expect(page.locator('#poster')).toContainText('Hinweis in der Gruppe');
+  await expect(page.locator('#poster')).toContainText('3 Tage Ausschluss');
+});
+
 test('eingegebene Regeln ueberleben das Neuladen', async ({ page }) => {
   await page.fill('#inGroup', 'Klasse 3C');
   await page.locator('#inGroup').blur();

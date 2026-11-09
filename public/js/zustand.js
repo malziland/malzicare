@@ -3,6 +3,9 @@
 
 import { DEFAULTS, PLATFORMS, STORAGE_KEY, TEXT_LIMITS } from './daten.js';
 
+/* Die Beispielfolgen bis Fassung 1.9.1, nur fuer die Migration in sanitize(). */
+const ALTE_BEISPIELFOLGEN = ['Verwarnung', '3 Tage Ausschluss', '1 Woche Ausschluss'];
+
 export let state = load();
 
 /* Neu gesetzt wird der Stand nur hier: Ein aus einem anderen Modul
@@ -56,6 +59,11 @@ export function sanitize(data) {
     return !(s.texts[k] || '').trim();
   });
   if (alleTexteLeer) s.texts = JSON.parse(JSON.stringify(DEFAULTS.texts));
+  /* Migration: Wer die Beispielfolgen bis 1.9.1 nie angefasst hat, bekommt
+     die neuen (1.10.0). Sonst bliebe das alte Beispiel für immer stehen, weil
+     jeder Besuch den ganzen Stand sichert. Eigene Eingaben bleiben unberührt. */
+  if (Array.isArray(data.penalties) && data.penalties.join('|') === ALTE_BEISPIELFOLGEN.join('|'))
+    s.penalties = DEFAULTS.penalties.slice();
   /* Migration alter Speicherstände (signTitle/signText lagen früher oben) */
   if (typeof data.signTitle === 'string' && typeof texts.signTitle !== 'string')
     s.texts.signTitle = data.signTitle.slice(0, 40);
